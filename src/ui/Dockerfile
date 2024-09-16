@@ -1,11 +1,17 @@
-FROM nginx:1.24.0-alpine-slim
+# FROM nginx:1.24.0-alpine-slim
 
-#LABEL org.opencontainers.image.source="https://github.com/GoldJns/rateme-nextgen"
+# #LABEL org.opencontainers.image.source="https://github.com/GoldJns/rateme-nextgen"
 
-WORKDIR /usr/share/nginx/html
+# WORKDIR /usr/share/nginx/html
 
-COPY src/main/webapp/ .
+# COPY src/main/webapp/ .
 
-EXPOSE 80
+# EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
+
+# Use a minimal base image
+FROM scratch
+
+# Create an empty container
+CMD ["sh"]

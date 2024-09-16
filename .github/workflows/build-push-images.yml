@@ -26,9 +26,6 @@ jobs:
           distribution: "temurin"
           cache: maven
 
-      # - name: Build with Maven
-      #   run: mvn -B package --file pom.xml
-
       - name: "Login to GitHub Container Registry"
         uses: docker/login-action@v2
         with:
@@ -47,6 +44,7 @@ jobs:
           docker build -t appointment:$TAG -f src/appointment/Dockerfile src/appointment
           docker build -t healthrecord:$TAG -f src/healthrecord/Dockerfile src/healthrecord
           docker build -t userportal:$TAG -f src/userportal/Dockerfile src/userportal
+          docker build -t ui:$TAG -f src/ui/Dockerfile src/ui
 
       - name: "Check Branch Name"
         id: check_branch
@@ -76,3 +74,5 @@ jobs:
           docker push ghcr.io/${{ secrets.PIDUSER }}/healthrecord:$BETA_TAG
           docker tag userportal:$TAG ghcr.io/${{ secrets.PIDUSER }}/userportal:$BETA_TAG
           docker push ghcr.io/${{ secrets.PIDUSER }}/userportal:$BETA_TAG
+          docker tag ui:$TAG ghcr.io/${{ secrets.PIDUSER }}/ui:$BETA_TAG
+          docker push ghcr.io/${{ secrets.PIDUSER }}/ui:$BETA_TAG
