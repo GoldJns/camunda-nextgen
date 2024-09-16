@@ -36,13 +36,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CONTAINER_REGISTRY_ACCESS_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: ./src/appointment
-          file: ./src/appointment/Dockerfile
-          push: true
-          tags: ghcr.io/your-image:latest
       - name: "Get git tag"
         id: git_tag
         run: |
@@ -51,7 +44,7 @@ jobs:
 
       - name: "Build Images"
         run: |
-          docker build -t appointment:$TAG -f Dockerfile .
+          docker build -t appointment:$TAG -f Dockerfile ../../src/appointment
 
       - name: "Check Branch Name"
         id: check_branch
