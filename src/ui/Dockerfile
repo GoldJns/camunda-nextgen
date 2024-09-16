@@ -1,0 +1,11 @@
+FROM nginx:1.24.0-alpine-slim
+
+#LABEL org.opencontainers.image.source="https://github.com/GoldJns/rateme-nextgen"
+
+WORKDIR /usr/share/nginx/html
+
+COPY src/main/webapp/ .
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
