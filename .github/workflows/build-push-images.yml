@@ -8,17 +8,15 @@ on:
       - fix/*
       - chore/*
   workflow_dispatch:
+
 jobs:
   push-docker-images:
     permissions: write-all
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: "."
     steps:
       - name: "Checkout GitHub Action"
-        uses: actions/checkout@main
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -33,48 +31,47 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: "Login to GitHub Container Registry"
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{ secrets.REGISTRY }}
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Get git tag"
+        id: git_tag
         run: |
-          TAG=$(git describe --tags --abbrev=0)
+          TAG=$(git describe --tags --abbrev=0 || echo "latest")
           echo "TAG=$TAG" >> $GITHUB_ENV
-
-        env:
-          TAG: ${{ steps.git_tag.outputs.tag }}
 
       - name: "Build Images"
         run: |
-          docker build -t appointment:$TAG -f Dockerfile
+          docker build -t appointment:$TAG -f Dockerfile .
 
       - name: "Check Branch Name"
         id: check_branch
         run: |
           if [ "${GITHUB_REF#refs/heads/}" != "main" ]; then
             echo "Branch is not 'main'."
-            echo "::set-output name=append_beta::true"
+            echo "append_beta=true" >> $GITHUB_ENV
           else
             echo "On the 'main' branch."
-            echo "::set-output name=append_beta::false"
+            echo "append_beta=false" >> $GITHUB_ENV
           fi
+
       - name: "Push Images"
-        id: push_images
         run: |
-          append_beta=${{ steps.check_branch.outputs.append_beta }}
+          append_beta=${{ env.append_beta }}
           if [ "$append_beta" == "true" ]; then
             BETA_TAG="${TAG}-beta" 
           else
             BETA_TAG="$TAG"
           fi
           echo "Generated tag: $BETA_TAG"
-          BETA_TAG="$BETA_TAG" >> $GITHUB_ENV
           docker tag appointment:$TAG ${{ secrets.REGISTRY }}/${{ secrets.PIDUSER }}/appointment:$BETA_TAG
-        # - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
+          docker push ${{ secrets.REGISTRY }}/${{ secrets.PIDUSER }}/appointment:$BETA_TAG
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
