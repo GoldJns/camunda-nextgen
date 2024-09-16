@@ -18,3 +18,21 @@ updates:
       prefix: "deps"
     open-pull-requests-limit: 10
     rebase-strategy: "auto"
+
+  - package-ecosystem: "maven"
+    directory: "src/healthrecord" # Adjust if your pom.xml is in a different directory
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
+
+  - package-ecosystem: "maven"
+    directory: "src/userportal" # Adjust if your pom.xml is in a different directory
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
