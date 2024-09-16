@@ -45,8 +45,8 @@ jobs:
       - name: "Build Images"
         run: |
           docker build -t appointment:$TAG -f src/appointment/Dockerfile src/appointment
-          docker build -t appointment:$TAG -f src/healthrecord/Dockerfile src/healthrecord
-          docker build -t appointment:$TAG -f src/userportal/Dockerfile src/userportal
+          docker build -t healthrecord:$TAG -f src/healthrecord/Dockerfile src/healthrecord
+          docker build -t userportal:$TAG -f src/userportal/Dockerfile src/userportal
 
       - name: "Check Branch Name"
         id: check_branch
