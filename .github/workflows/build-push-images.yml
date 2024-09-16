@@ -72,16 +72,7 @@ jobs:
           BETA_TAG="$BETA_TAG" >> $GITHUB_ENV
           docker tag appointment:$TAG ghcr.io/${{ secrets.PIDUSER }}/appointment:$BETA_TAG
           docker push ghcr.io/${{ secrets.PIDUSER }}/appointment:$BETA_TAG
-      # - name: SonarQube Scan
-      #   uses: sonarsource/sonarqube-scan-action@v1
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      #   with:
-      #     args: >
-      #       -Dsonar.projectKey=rateme-nextgen
-      #       -Dsonar.python.coverage.reportPaths=coverage.xml
-      #       -Dsonar.tests=src/test/
-      #       -Dsonar.sources=src/main/java/
-      #       -Dsonar.java.binaries=target
-      #       -Dsonar.verbose=true
+          docker tag healthrecord:$TAG ghcr.io/${{ secrets.PIDUSER }}/healthrecord:$BETA_TAG
+          docker push ghcr.io/${{ secrets.PIDUSER }}/healthrecord:$BETA_TAG
+          docker tag userportal:$TAG ghcr.io/${{ secrets.PIDUSER }}/userportal:$BETA_TAG
+          docker push ghcr.io/${{ secrets.PIDUSER }}/userportal:$BETA_TAG
