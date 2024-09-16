@@ -1,4 +1,4 @@
-sion: 2
+version: 2
 updates:
   # For npm dependencies
   - package-ecosystem: "npm"
