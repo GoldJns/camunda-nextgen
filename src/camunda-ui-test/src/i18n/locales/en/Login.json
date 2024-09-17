@@ -1,0 +1,12 @@
+{
+  "register": "Register",
+  "email": "Email Address",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "createAccount": "Create Account",
+  "back": "Back",
+  "welcomeBack": "Welcome Back",
+  "forgotPassword": "Forgot Password?",
+  "noAccount": "Don't have an account?",
+  "login": "Login"
+}
