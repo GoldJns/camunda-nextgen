@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./login.css";
+import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
   const [isSignUpActive, setSignUpActive] = useState(false);
+  const { t } = useTranslation();
 
   const handleSignUpClick = () => {
     setSignUpActive(true);
@@ -19,35 +21,35 @@ const Login: React.FC = () => {
     >
       <div className="form-container sign-up-container">
         <form action="#">
-          <h1>Registrieren</h1>
-          <input type="email" placeholder="E-Mail Adresse" />
-          <input type="password" placeholder="Passwort" />
-          <input type="password" placeholder="Passwort bestätigen" />
-          <button type="button">Account erstellen</button>
+          <h1>{t("register")}</h1>
+          <input type="email" placeholder={t("email")} />
+          <input type="password" placeholder={t("password")} />
+          <input type="password" placeholder={t("confirmPassword")} />
+          <button type="button">{t("createAccount")}</button>
           <a
             href="#"
             id="signIn"
             className="bluetxt"
             onClick={handleSignInClick}
           >
-            Zurück
+            {t("back")}
           </a>
         </form>
       </div>
       <div className="form-container sign-in-container">
         <form action="#">
-          <h1>Willkommen zurück</h1>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button type="button">Anmeldung</button>
-          <a href="#">Passwort vergessen?</a>
+          <h1>{t("welcomeBack")}</h1>
+          <input type="email" placeholder={t("email")} />
+          <input type="password" placeholder={t("password")} />
+          <button type="button">{t("login")}</button>
+          <a href="#">{t("forgotPassword")}</a>
           <a
             href="#"
             id="signUp"
             className="bluetxt"
             onClick={handleSignUpClick}
           >
-            Sie haben kein Konto?
+            {t("noAccount")}
           </a>
         </form>
       </div>
