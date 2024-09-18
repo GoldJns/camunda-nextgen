@@ -13,4 +13,4 @@ deploy_with_helm() {
     helm upgrade --install "$release_name" "$chart_path" --namespace "$NAMESPACE"
 }
 
-deploy_with_helm "main-release" "./charts/parent"
+deploy_with_helm "main-release" "./charts/camunda-nextgen"
