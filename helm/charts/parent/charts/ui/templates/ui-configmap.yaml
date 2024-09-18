@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.configMapName }}
+  name: "{{ .Values.configMapName }}"
   labels:
     app: helm-{{ .Chart.Name }}
   annotations:

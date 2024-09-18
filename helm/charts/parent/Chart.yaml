@@ -25,7 +25,7 @@ appVersion: "1.16.0"
 dependencies:
   - name: ui
     repository: "file://charts/ui"
-  - name: backend
-    repository: "file://charts/backend"
-  - name: database
-    repository: "file://charts/database"
+  # - name: backend
+  #   repository: "file://charts/backend"
+  # - name: database
+  #   repository: "file://charts/database"
