@@ -5,7 +5,7 @@ mysqlpvc:
 
 image:
   registry: ghcr.io/goldjns
-  repository: rateme-nextgen-database
+  repository: health-database
   tag: v1.11.0-beta
   pullPolicy: "Always"
 
@@ -16,10 +16,10 @@ database-service:
   servicePort: 3306
 
 configMap:
-  server: helm-database-service
+  server: health-database-service
   name: mysql-config-map
   username: custom
-  dburl: jdbc:mysql://helm-database-service:3306/rateme_swtp
-  dbname: rateme_swtp
+  dburl: jdbc:mysql://health-database-service:3306/rateme_swtp
+  dbname: health
 
   
