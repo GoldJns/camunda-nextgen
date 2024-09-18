@@ -6,7 +6,7 @@ RUN --mount=type=cache,target=/root/.m2 mvn -f /opt/app/pom.xml -DskipTests=true
 
 FROM eclipse-temurin:17-jre-focal as builder
 WORKDIR application
-COPY --from=maven /opt/app/target/userportal-0.0.1-SNAPSHOT.jar application.jar
+COPY --from=maven /opt/app/target/health-0.0.1-SNAPSHOT.jar application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
 FROM eclipse-temurin:17-jre-focal

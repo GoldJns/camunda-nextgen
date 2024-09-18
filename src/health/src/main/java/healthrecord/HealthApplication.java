@@ -1,13 +1,13 @@
-package userportal;
+package health;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserportalApplication {
+public class HealthApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserportalApplication.class, args);
+		SpringApplication.run(HealthApplication.class, args);
 	}
 
 }

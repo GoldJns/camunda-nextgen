@@ -1,13 +1,13 @@
-package healthrecord;
+package user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HealthrecordApplication {
+public class UserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HealthrecordApplication.class, args);
+		SpringApplication.run(UserApplication.class, args);
 	}
 
 }
