@@ -7,6 +7,6 @@ configMapName: ui-config-map
 
 replicas: 1
 image:
-  registry: ghcr.io/goldjns
+  registry: 
   repository: ui
-  tag: v0.2.2
+  tag: 5.0

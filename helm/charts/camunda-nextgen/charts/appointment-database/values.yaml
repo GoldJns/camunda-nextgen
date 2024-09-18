@@ -4,9 +4,9 @@ mysqlpvc:
   storageSize: 1Gi
 
 image:
-  registry: ghcr.io/goldjns
-  repository: appointment-database
-  tag: v1.11.0-beta
+  registry: 
+  repository: mysql
+  tag: 8.0
   pullPolicy: "Always"
 
 database:
