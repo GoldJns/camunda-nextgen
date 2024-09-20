@@ -30,7 +30,7 @@ connectors:
     tag: 8.5.7
 
 operate:
-  enabled: false
+  enabled: true
   # https://hub.docker.com/r/camunda/operate/tags
   image:
     tag: 8.5.4
@@ -64,12 +64,14 @@ zeebeGateway:
   # https://hub.docker.com/r/camunda/zeebe/tags
   image:
     tag: 8.5.3
+  clusterSize: 1
 
 #
 # Identity
 #
 
 identity:
+  clusterSize: 1
   # https://hub.docker.com/r/camunda/identity/tags
   image:
     tag: 8.5.5
