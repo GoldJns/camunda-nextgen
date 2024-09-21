@@ -7,6 +7,9 @@ const Login: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   const [language, setLanguage] = useState("en");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const toggleLanguage = () => {
     const newLang = language === "en" ? "de" : "en";
@@ -20,6 +23,68 @@ const Login: React.FC = () => {
 
   const handleSignInClick = () => {
     setSignUpActive(false);
+  };
+
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const credentials = { email: email.trim(), password: password.trim() };
+
+    try {
+      const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem("accessToken", data.jwt);
+        // Optionally, fetch user data here
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Fehler:", error);
+    }
+  };
+
+  const handleRegister = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Passwörter stimmen nicht überein!");
+      return;
+    }
+
+    const userData = {
+      email: email.trim(),
+      password: password.trim(),
+      firstname: "test",
+      lastname: "test",
+      role: "doctor",
+      age: 30,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem("accessToken", data.jwt);
+      } else {
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Fehler:", error);
+    }
   };
 
   return (
@@ -36,12 +101,12 @@ const Login: React.FC = () => {
         Toggle langauage
       </button>
       <div className="form-container sign-up-container">
-        <form action="#">
+        <form onSubmit={handleRegister}>
           <h1>{t("register")}</h1>
-          <input type="email" placeholder={t("email")} />
-          <input type="password" placeholder={t("password")} />
-          <input type="password" placeholder={t("confirmPassword")} />
-          <button type="button">{t("createAccount")}</button>
+          <input type="email" placeholder={t("email")} value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" placeholder={t("password")}  value={password} onChange={(e) => setPassword(e.target.value)} required/>
+          <input type="password" placeholder={t("confirmPassword")} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
+          <button type="submit">{t("createAccount")}</button>
           <a
             href="#"
             id="signIn"
@@ -53,11 +118,11 @@ const Login: React.FC = () => {
         </form>
       </div>
       <div className="form-container sign-in-container">
-        <form action="#">
+        <form onSubmit={handleLogin}>
           <h1>{t("welcomeBack")}</h1>
-          <input type="email" placeholder={t("email")} />
-          <input type="password" placeholder={t("password")} />
-          <button type="button">{t("login")}</button>
+          <input type="email" placeholder={t("email")}  value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" placeholder={t("password")} value={password} onChange={(e) => setPassword(e.target.value)} required/>
+          <button type="submit">{t("login")}</button>
           <a href="#">{t("forgotPassword")}</a>
           <a
             href="#"

@@ -63,6 +63,7 @@ public class AuthController {
 
     @PostMapping("login")
     public ResponseEntity<AuthenticationResponseDto> login(@RequestBody AuthenticationRequestDto authenticationDTO) {
+
         return  new ResponseEntity<>(createAuthenticationToken(authenticationDTO), HttpStatus.OK);
 
     }

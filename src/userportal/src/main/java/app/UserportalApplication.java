@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "repository") 
 @EntityScan(basePackages = "model")
 public class UserportalApplication {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(UserportalApplication.class, args);
 	}
