@@ -1,0 +1,12 @@
+{
+  "register": "Registrieren",
+  "email": "E-Mail Adresse",
+  "password": "Passwort",
+  "confirmPassword": "Passwort bestätigen",
+  "createAccount": "Account erstellen",
+  "back": "Zurück",
+  "welcomeBack": "Willkommen zurück",
+  "forgotPassword": "Passwort vergessen?",
+  "noAccount": "Sie haben kein Konto?",
+  "login": "Anmeldung"
+}

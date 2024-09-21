@@ -1,17 +1,21 @@
-# FROM nginx:1.24.0-alpine-slim
+FROM node:18-alpine as builder
 
-# #LABEL org.opencontainers.image.source="https://github.com/GoldJns/rateme-nextgen"
+WORKDIR /app
 
-# WORKDIR /usr/share/nginx/html
+COPY package*.json ./
 
-# COPY src/main/webapp/ .
+RUN npm install
 
-# EXPOSE 80
+COPY . .
 
-# CMD ["nginx", "-g", "daemon off;"]
+RUN npm run build
 
-# Use a minimal base image
-FROM scratch
+FROM nginx:1.24.0-alpine-slim
 
-# Create an empty container
-CMD ["sh"]
+WORKDIR /usr/share/nginx/html
+
+COPY --from=builder /app/dist/ .
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
