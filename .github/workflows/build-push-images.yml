@@ -41,7 +41,7 @@ jobs:
 
       - name: "Build Images"
         run: |
-          docker build -t health-management:$TAG -f src/health-management/Dockerfile
+          docker build -t health-management:$TAG -f src/health-management/Dockerfile src/health-management
 
       - name: "Check Branch Name"
         id: check_branch
