@@ -41,10 +41,7 @@ jobs:
 
       - name: "Build Images"
         run: |
-          docker build -t appointment:$TAG -f src/appointment/Dockerfile src/appointment
-          docker build -t healthrecord:$TAG -f src/healthrecord/Dockerfile src/healthrecord
-          docker build -t userportal:$TAG -f src/userportal/Dockerfile src/userportal
-          docker build -t ui:$TAG -f src/ui/Dockerfile src/ui
+          docker build -t health-management:$TAG -f src/health-management/Dockerfile src/health-management
 
       - name: "Check Branch Name"
         id: check_branch
@@ -68,11 +65,5 @@ jobs:
           fi
           echo "Generated tag: $BETA_TAG"
           BETA_TAG="$BETA_TAG" >> $GITHUB_ENV
-          docker tag appointment:$TAG ghcr.io/${{ secrets.PIDUSER }}/appointment:$BETA_TAG
-          docker push ghcr.io/${{ secrets.PIDUSER }}/appointment:$BETA_TAG
-          docker tag healthrecord:$TAG ghcr.io/${{ secrets.PIDUSER }}/healthrecord:$BETA_TAG
-          docker push ghcr.io/${{ secrets.PIDUSER }}/healthrecord:$BETA_TAG
-          docker tag userportal:$TAG ghcr.io/${{ secrets.PIDUSER }}/userportal:$BETA_TAG
-          docker push ghcr.io/${{ secrets.PIDUSER }}/userportal:$BETA_TAG
-          docker tag ui:$TAG ghcr.io/${{ secrets.PIDUSER }}/ui:$BETA_TAG
-          docker push ghcr.io/${{ secrets.PIDUSER }}/ui:$BETA_TAG
+          docker tag health-management:$TAG ghcr.io/${{ secrets.PIDUSER }}/health-management:$BETA_TAG
+          docker push ghcr.io/${{ secrets.PIDUSER }}/health-management:$BETA_TAG
