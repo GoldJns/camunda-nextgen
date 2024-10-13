@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15.8-alpine3.20
+    restart: always
+    shm_size: 128mb
+    container_name: health-management-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: health-management-db
+    ports:
+      - "5432:5432"
+  app:
+    build:
+      context: ./src/health-management
+      dockerfile: Dockerfile
+    container_name: health-management-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/health-management-db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"

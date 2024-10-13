@@ -4,7 +4,7 @@ COPY src /opt/app/src
 COPY pom.xml /opt/app
 RUN --mount=type=cache,target=/root/.m2 mvn -f /opt/app/pom.xml -DskipTests=true clean package
 
-FROM eclipse-temurin:17-jre-focal as builder
+FROM eclipse-temurin:17-jre-focal AS builder
 WORKDIR application
 COPY --from=maven /opt/app/target/health-management-0.0.1-SNAPSHOT.jar application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
@@ -15,4 +15,4 @@ COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
-ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
