@@ -17,9 +17,9 @@ services:
       dockerfile: Dockerfile
     container_name: health-management-backend
     environment:
-      QUARKUS_DATASOURCE_URL: jdbc:postgresql://db:5432/health-management
-      QUARKUS_DATASOURCE_USERNAME: postgres
-      QUARKUS_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/health-management-db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     depends_on:
       - db
     ports:
