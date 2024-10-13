@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15.8-alpine3.20
+    restart: always
+    shm_size: 128mb
+    container_name: health-management-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: health-management-db
+    ports:
+      - "5432:5432"
