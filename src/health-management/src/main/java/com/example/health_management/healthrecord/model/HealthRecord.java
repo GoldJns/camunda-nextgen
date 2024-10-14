@@ -25,7 +25,13 @@ public class HealthRecord {
     @Column(nullable = false)
     private Long patientId;
 
+    @Column(nullable = false)
+    private Boolean isApproved;
+
     @Column
+    private String doctorNotes;
+
+    @Column(nullable = false)
     private String insuranceDetails;
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -75,5 +81,21 @@ public class HealthRecord {
     public void removeVisit(Visit visit) {
         visits.remove(visit);
         visit.setHealthRecord(null);
+    }
+
+    public String getDoctorNotes() {
+        return doctorNotes;
+    }
+
+    public void setDoctorNotes(String doctorNotes) {
+        this.doctorNotes = doctorNotes;
+    }
+
+    public Boolean getIsApproved() {
+        return isApproved;
+    }
+
+    public void setIsApproved(Boolean isApproved) {
+        this.isApproved = isApproved;
     }
 }

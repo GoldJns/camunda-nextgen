@@ -1,3 +1,6 @@
+
+
+
 CREATE TABLE appuser (
     user_id SERIAL PRIMARY KEY,
     email VARCHAR(50) NOT NULL UNIQUE,
@@ -11,7 +14,9 @@ CREATE TABLE appuser (
 CREATE TABLE health_records (
     id SERIAL PRIMARY KEY,
     patient_id BIGINT NOT NULL,
-    insurance_details VARCHAR(255),
+    is_approved BOOLEAN NOT NULL,
+    insurance_details VARCHAR(255) NOT NULL,
+    doctor_notes TEXT,
     FOREIGN KEY (patient_id) REFERENCES appuser(user_id) ON DELETE CASCADE
 );
 
@@ -19,9 +24,7 @@ CREATE TABLE visits (
     id SERIAL PRIMARY KEY,
     health_record_id BIGINT,
     date_of_visit DATE NOT NULL,
-    diagnosis VARCHAR(255),
+    diagnosis VARCHAR(255) NOT NULL,
     treatment VARCHAR(255),
-    doctor_notes TEXT,
-    is_approved BOOLEAN NOT NULL,
     FOREIGN KEY (health_record_id) REFERENCES health_records(id) ON DELETE CASCADE
 );

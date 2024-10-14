@@ -27,27 +27,20 @@ public class Visit {
     @Column(nullable = false)
     private LocalDate dateOfVisit;
 
-    @Column
+    @Column(nullable = false)
     private String diagnosis;
 
     @Column
     private String treatment;
-
-    @Column
-    private String doctorNotes;
-
-    @Column(nullable = false)
-    private Boolean isApproved;
+ 
 
     public Visit() {
     }
 
-    public Visit(LocalDate dateOfVisit, String diagnosis, String treatment, String doctorNotes, Boolean isApproved) {
+    public Visit(LocalDate dateOfVisit, String diagnosis, String treatment) {
         this.dateOfVisit = dateOfVisit;
         this.diagnosis = diagnosis;
         this.treatment = treatment;
-        this.doctorNotes = doctorNotes;
-        this.isApproved = isApproved;
     }
 
     public Long getId() {
@@ -88,21 +81,5 @@ public class Visit {
 
     public void setTreatment(String treatment) {
         this.treatment = treatment;
-    }
-
-    public String getDoctorNotes() {
-        return doctorNotes;
-    }
-
-    public void setDoctorNotes(String doctorNotes) {
-        this.doctorNotes = doctorNotes;
-    }
-
-    public Boolean getIsApproved() {
-        return isApproved;
-    }
-
-    public void setIsApproved(Boolean isApproved) {
-        this.isApproved = isApproved;
     }
 }

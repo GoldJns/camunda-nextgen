@@ -16,6 +16,7 @@ public class HealthRecordService {
    
     public HealthRecord createHealthRecord(Long patientId, String insuranceDetails) {
         HealthRecord healthRecord = new HealthRecord(patientId,insuranceDetails);
+        healthRecord.setIsApproved(false);
         return healthRecordRepository.save(healthRecord);
     }
     
