@@ -18,7 +18,7 @@ spec:
         tier: mysql
     spec:
       containers:
-        - image: {{ include "database.image" . | quote }}
+        - image: mysql:8.0
           name: mysql
           env:
             - name: MYSQL_DATABASE

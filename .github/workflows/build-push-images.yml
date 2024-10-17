@@ -42,6 +42,7 @@ jobs:
       - name: "Build Images"
         run: |
           docker build -t health-management:$TAG -f src/health-management/Dockerfile src/health-management
+          docker build -t ui:$TAG -f src/ui/Dockerfile src/ui
 
       - name: "Check Branch Name"
         id: check_branch
@@ -67,5 +68,5 @@ jobs:
           BETA_TAG="$BETA_TAG" >> $GITHUB_ENV
           docker tag health-management:$TAG ghcr.io/${{ secrets.PIDUSER }}/health-management:$BETA_TAG
           docker push ghcr.io/${{ secrets.PIDUSER }}/health-management:$BETA_TAG
-          docker tag health-management-database:$TAG ghcr.io/${{ secrets.PIDUSER }}/health-management-database:$BETA_TAG
-          docker push ghcr.io/${{ secrets.PIDUSER }}/health-management-database:$BETA_TAG
+          docker tag ui:$TAG ghcr.io/${{ secrets.PIDUSER }}/ui:$BETA_TAG
+          docker push ghcr.io/${{ secrets.PIDUSER }}/ui:$BETA_TAG
