@@ -67,3 +67,5 @@ jobs:
           BETA_TAG="$BETA_TAG" >> $GITHUB_ENV
           docker tag health-management:$TAG ghcr.io/${{ secrets.PIDUSER }}/health-management:$BETA_TAG
           docker push ghcr.io/${{ secrets.PIDUSER }}/health-management:$BETA_TAG
+          docker tag health-management-database:$TAG ghcr.io/${{ secrets.PIDUSER }}/health-management-database:$BETA_TAG
+          docker push ghcr.io/${{ secrets.PIDUSER }}/health-management-database:$BETA_TAG

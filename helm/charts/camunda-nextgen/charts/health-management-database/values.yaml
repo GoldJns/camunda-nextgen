@@ -1,0 +1,25 @@
+configMapName: mysql-config-map
+
+mysqlpvc:
+  storageSize: 1Gi
+
+image:
+  registry: 
+  repository: mysql
+  tag: 8.0 
+  pullPolicy: "Always"
+
+database:
+  containerPort: 3306
+database-service:
+  clusterIP: None
+  servicePort: 3306
+
+configMap:
+  server: health-database-service
+  name: mysql-config-map
+  username: custom
+  dburl: jdbc:mysql://health-database-service:3306/rateme_swtp
+  dbname: health
+
+  
