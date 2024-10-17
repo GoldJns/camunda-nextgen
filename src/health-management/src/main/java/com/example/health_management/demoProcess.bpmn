@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+    <process id="simpleProcess" isExecutable="true">
+        <startEvent id="startEvent" name="Start"/>
+        <serviceTask id="sayHelloTask" name="Say Hello" zeebe:taskDefinitionType="sayHello"/>
+        <endEvent id="endEvent" name="End"/>
+        
+        <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="sayHelloTask"/>
+        <sequenceFlow id="flow2" sourceRef="sayHelloTask" targetRef="endEvent"/>
+    </process>
+</definitions>
