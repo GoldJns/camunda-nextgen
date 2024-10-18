@@ -1,0 +1,160 @@
+.consection {
+  display: flex;
+  max-height: 95vh;
+
+}
+
+.Gesdiv {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.Gesdiv header {
+  background-color: #edf6ea;
+  padding: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+.Gesdiv main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.Gesdiv section {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+.Gesdiv section h2 {
+background-color: darkred;
+padding: 5px;
+color: #fff;
+}
+.Gesdiv section h3 {
+    padding: 5px;
+    color: rgb(14, 14, 200);
+}
+.Gesdiv ul {
+  list-style: none;
+  padding: 10px;
+
+}
+
+
+
+#krankengeschichte,
+#medikamentenliste,
+#allergien,
+#labortests {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.shbodz {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 95vh;
+}
+
+.ulitems {
+
+display: flex;
+width: 100%;
+justify-content: space-around;
+align-items: center;
+padding: 10px;
+}  
+
+.ulitems li {
+ background-color: lightblue;
+ border-radius: 20px;
+ padding: 5px;
+}  
+
+.ulitemss {
+
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    }  
+    
+    .ulitemss li {
+     background-color: lightcoral;
+     border-radius: 20px;
+     padding: 5px;
+    }  
+
+
+
+ .rezpage  {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}    
+.rezpage h1 {
+  width: 100%;
+  text-align: center;
+  background-color: lightblue;
+  padding: 5px;
+}  
+.rezpage fieldset {
+  width: 100%;
+  padding: 15px;
+}  
+.rezpage ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}  
+.rezpage ul li {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 20px;
+}  
+
+.rezpage ul li label {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  height: 20px;
+}  
+.rezpage button {
+width: 100%;
+padding: 10px;
+background-color: rgb(0, 23, 100);
+color: #fff;
+font-weight: bolder;
+} 
+.status {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.approved {
+  background-color: #d4edda;
+  color: #155724;
+}
+.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}    

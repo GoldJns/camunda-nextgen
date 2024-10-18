@@ -1,0 +1,145 @@
+
+
+.shcontainer {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+.shcontainer .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.shcontainer .header i {
+    font-size: 24px;
+    color: #007bff;
+}
+
+.shcontainer .header div {
+    text-align: center;
+}
+
+.shcontainer .header div span {
+    display: block;
+}
+
+.shcontainer .header div span:first-child {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.shcontainer .header div span:last-child {
+    color: #000;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.shcontainer .schedule {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.shcontainer .schedule div {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.schedule div.time {
+    background-color: #e9f7ff;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.schedule div.past-time {
+    color: #6c757d;
+    text-decoration: line-through;
+}
+
+.schedule div.empty {
+    color: #6c757d;
+}
+
+#currentday {
+    background-color: rgb(34, 69, 146);
+    color: #fff;
+    padding: 10px;
+    width: 150px;
+    border-radius: 50%;
+    }
+
+    #current-date {
+        color: #fff;
+     }
+
+     .final {
+        color: #fff;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+     }
+
+     .final button {
+        color: #fff;
+        background-color: darkblue;
+        padding: 10px;
+        font-weight: bolder;
+     }
+
+   
+
+
+.termin {
+width: 100%;
+padding: 10px;
+}
+
+.termin  h1 {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}
+
+.termin .termindata {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+}
+
+.termin .termindata  label {
+font-weight: bolder;
+}
+
+
+.termin .termindatamed {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+.termin .termindatamed  label {
+font-weight: bolder;
+padding: 5px;
+border: 20px;
+background-color: lightblue;
+}
+
+
+.termin   .datum {
+   color: #fff;
+   background-color: rgb(1, 1, 49);
+}
+
+.schedule div.highlight {
+    background-color: rgb(2, 61, 2);
+    color: white; 
+  }
