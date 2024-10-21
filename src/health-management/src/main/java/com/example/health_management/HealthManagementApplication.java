@@ -2,13 +2,12 @@ package com.example.health_management;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//import io.camunda.zeebe.spring.client.annotation.Deployment;
 
-@SpringBootApplication
-//@Deployment(resources = "classpath:demoProcess.bpmn")
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class HealthManagementApplication {
 
 	public static void main(String[] args) {
