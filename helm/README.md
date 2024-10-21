@@ -16,8 +16,10 @@ Before deploying Camunda using Helm, ensure you have the following:
   helm repo update
 ```
 
+
 Install helm chart
 
 ```bash
-  helm install camunda camunda/camunda-platform
+ helm upgrade --install camunda camunda/camunda-platform --values ./camunda-8.6.yml
 ```
+

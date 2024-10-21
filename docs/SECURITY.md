@@ -8,7 +8,11 @@ Provide secrets before deploying:
  => secret with name `springboot-security` and key `jwt-token` should be available for every namespace.
 
 The relevant secrets are stored securely in the Github Environments.
+```sh
+kubectl create secret generic db-security --from-literal=password=yourpassword -n your-namespace
+kubectl create secret generic springboot-security --from-literal=jwt-token=yourpassword -n your-namespace
 
+```
 ## Docker compose security
 
 Create `.env` file with key `JWT_SECRET`. Assign value stored in Github Environments

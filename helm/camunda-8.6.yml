@@ -136,7 +136,7 @@ global:
   ## @param global.elasticsearch.auth.existingSecret you can provide an existing secret for the external elasticsearch password
   ## @param global.elasticsearch.auth.existingSecretKey you can provide an existing secret key for the external elasticsearch password
   elasticsearch:
-    enabled: true
+    enabled: false
     external: false
     tls:
       enabled: false
@@ -925,7 +925,7 @@ zeebe:
 ## @extra Gateway configuration to define properties related to the standalone gateway
 zeebeGateway:
   ## @param zeebeGateway.replicas defines how many standalone gateways are deployed
-  replicas: 2
+  replicas: 1
   ## @extra zeebeGateway.image configuration to configure the ZeebeGateway image specifics
   image:
     ## @param zeebeGateway.image.registry can be used to set container image registry.
@@ -1236,7 +1236,7 @@ zeebeGateway:
 ## @extra.operate configuration for the Operate sub chart.
 operate:
   ## @param operate.enabled if true, the Operate deployment and its related resources are deployed via a helm release
-  enabled: false
+  enabled: true
 
   ## @extra operate.image configuration to configure the Operate image specifics
   image:
@@ -1502,7 +1502,7 @@ operate:
 # Tasklist configuration for the tasklist sub chart.
 tasklist:
   ## @param tasklist.enabled if true, the tasklist deployment and its related resources are deployed via a helm release
-  enabled: true
+  enabled: false
 
   ## @extra tasklist.image configuration to configure the tasklist image specifics
   image:
@@ -2236,7 +2236,7 @@ identity:
   #         global.identity.auth.enabled=false
   #         optimize.enabled=false
   #         webModeler.enabled=false
-  enabled: true
+  enabled: false
 
   ## @param identity.fullnameOverride can be used to override the full name of the Identity resources
   fullnameOverride: ""
@@ -2561,7 +2561,7 @@ identityPostgresql:
 ## @extra identityKeycloak configuration, for the Keycloak dependency chart which is used by Identity. For more details, check [Bitnami package for Keycloak](https://artifacthub.io/packages/helm/bitnami/keycloak#parameters) documentation.
 identityKeycloak:
   ## @param identityKeycloak.enabled Enable Identity Keycloak Helm chart. It is used incorporate with "global.identity.keycloak" to use your own Keycloak instead of the one comes with Camunda Helm chart
-  enabled: true
+  enabled: false
   ## @extra identityKeycloak.global.compatibility Compatibility adaptations for Kubernetes platforms
   global:
     ## Compatibility adaptations for Kubernetes platforms
@@ -3669,7 +3669,7 @@ connectors:
 ## @extra elasticsearch
 elasticsearch:
   ## @param elasticsearch.enabled
-  enabled: true
+  enabled: false
   ## @extra elasticsearch.global.compatibility Compatibility adaptations for Kubernetes platforms
   global:
     ## Compatibility adaptations for Kubernetes platforms
