@@ -11,7 +11,7 @@ replicaCount: 1
 image:
   registry: ghcr.io/goldjns
   repository: health-management
-  tag: v0.4.10
+  tag: v0.4.12
   pullPolicy: "Always"
 
 containerPort: 8080

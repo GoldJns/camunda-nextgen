@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: helm-{{ .Chart.Name }}
-          image: ghcr.io/goldjns/ui:v0.4.10
+          image: ghcr.io/goldjns/ui:v0.4.12
           imagePullPolicy: Always
           ports:
             - containerPort: {{ .Values.service.targetPort }}
