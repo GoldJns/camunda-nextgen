@@ -11,6 +11,6 @@ deploy_with_helm() {
     local chart_path="$2"
     echo "Deploy $release_name"
     helm upgrade --install "$release_name" "$chart_path" --namespace "$NAMESPACE"
-}
+}            
 
 deploy_with_helm "main-release" "./charts/camunda-nextgen"

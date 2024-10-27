@@ -9,8 +9,8 @@ Provide secrets before deploying:
 
 The relevant secrets are stored securely in the Github Environments.
 ```sh
-kubectl create secret generic db-security --from-literal=password=yourpassword -n your-namespace
-kubectl create secret generic springboot-security --from-literal=jwt-token=yourpassword -n your-namespace
+kubectl create secret generic db-security --from-literal=password=yourpassword 
+kubectl create secret generic springboot-security --from-literal=jwt-token=yourpassword 
 
 ```
 ## Docker compose security
