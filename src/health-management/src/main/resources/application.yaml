@@ -1,0 +1,44 @@
+spring:
+    application:
+        name: health-management
+    datasource:
+        username: postgres
+        password: postgres
+        url: jdbc:postgresql://localhost:5432/health-management-db
+        driver-class-name: org.postgresql.Driver
+
+camunda:
+    client:
+        mode: self-managed
+        auth:  
+            client-id: zeebe
+            client-secret: ${ZEEBE_CLIENT_SECRET}  
+            audience: zeebe-api
+            issuer: http://localhost:18080/auth/realms/camunda-platform/protocol/openid-connect/token  
+        zeebe:
+            grpc-address: http://localhost:26500
+            rest-address: http://localhost:8080
+        
+
+tasklist:
+    client:
+        profile: oidc
+        enabled: true
+        base-url: http://localhost:8082
+        auth-url: http://localhost:18080/auth/realms/camunda-platform/protocol/openid-connect/token
+        client-id: tasklist
+        client-secret: ${TASKLIST_CLIENT_SECRET}
+        audience: tasklist-api
+        defaults:
+            load-truncated-variables: true
+            return-variables: true
+            use-zeebe-user-tasks: true
+
+
+process:
+    health-record:
+        create:
+            definition-id: "2251799813737962"
+            process-id: "createHealthRecord"
+#        edit:
+#            definition-id: ""
