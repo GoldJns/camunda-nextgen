@@ -251,9 +251,9 @@ services:
       KEYCLOAK_INIT_ZEEBE_NAME: zeebe
 # Custom Roles for Health Care Management 
       KEYCLOAK_GROUPS_0_NAME: "Doctor"
-      KEYCLOAK_GROUPS_0_ROLES_0: "Tasklist"
+#      KEYCLOAK_GROUPS_0_ROLES_0: "Tasklist"
       KEYCLOAK_GROUPS_1_NAME: "Patient"
-      KEYCLOAK_GROUPS_1_ROLES_0: "Tasklist"
+#      KEYCLOAK_GROUPS_1_ROLES_0: "Tasklist"
       
       KEYCLOAK_USERS_0_USERNAME: "demo"
       KEYCLOAK_USERS_0_PASSWORD: "demo"
@@ -271,12 +271,14 @@ services:
       KEYCLOAK_USERS_1_FIRST_NAME: "Wickett"
       KEYCLOAK_USERS_1_EMAIL: "wiwa@acme.com"
       KEYCLOAK_USERS_1_GROUPS_0: "Patient"
+ #     KEYCLOAK_USERS_1_ROLES_0: "Tasklist"
 
       KEYCLOAK_USERS_2_USERNAME: "mimo"
       KEYCLOAK_USERS_2_PASSWORD: "mimo"
       KEYCLOAK_USERS_2_FIRST_NAME: "Milo"
       KEYCLOAK_USERS_2_EMAIL: "mimo@acme.com"
       KEYCLOAK_USERS_2_GROUPS_0: "Doctor"
+   #   KEYCLOAK_USERS_2_ROLES_0: "Tasklist"
 
       KEYCLOAK_CLIENTS_0_NAME: zeebe
       KEYCLOAK_CLIENTS_0_ID: ${ZEEBE_CLIENT_ID}

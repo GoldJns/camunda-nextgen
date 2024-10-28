@@ -4,6 +4,7 @@ package com.example.health_management.healthrecord.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,33 +17,31 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "health_records")
-public class HealthRecord {
+public class HealthRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long patientId;
+    @Column(name = "username", nullable = false)
+    private String username;
 
-    @Column(nullable = false)
-    private Boolean isApproved;
+    @Column(name = "allergies")
+    private String allergies;
 
-    @Column
-    private String doctorNotes;
+    @Column(name = "chronic_conditions")
+    private String chronicConditions;
 
-    @Column(nullable = false)
-    private String insuranceDetails;
+    @Column(name = "surgeries")
+    private String surgeries;
+
+    @Column(name = "health_insurance", nullable = false)
+    private String healthInsurance;
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Visit> visits = new ArrayList<>();
 
-    public HealthRecord() {
-    }
-
-    public HealthRecord(Long patientId, String insuranceDetails) {
-        this.patientId = patientId;
-        this.insuranceDetails = insuranceDetails;
+    public HealthRecordEntity() {
     }
 
     public Long getId() {
@@ -53,20 +52,20 @@ public class HealthRecord {
         this.id = id;
     }
 
-    public Long getPatientId() {
-        return patientId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getInsuranceDetails() {
-        return insuranceDetails;
+    public String getHealthInsurance() {
+        return healthInsurance;
     }
 
-    public void setInsuranceDetails(String insuranceDetails) {
-        this.insuranceDetails = insuranceDetails;
+    public void setHealthInsurance(String healthInsurance) {
+        this.healthInsurance = healthInsurance;
     }
 
     public List<Visit> getVisits() {
@@ -83,19 +82,15 @@ public class HealthRecord {
         visit.setHealthRecord(null);
     }
 
-    public String getDoctorNotes() {
-        return doctorNotes;
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
     }
 
-    public void setDoctorNotes(String doctorNotes) {
-        this.doctorNotes = doctorNotes;
+    public void setChronicConditions(String chronicConditions) {
+        this.chronicConditions = chronicConditions;
     }
 
-    public Boolean getIsApproved() {
-        return isApproved;
-    }
-
-    public void setIsApproved(Boolean isApproved) {
-        this.isApproved = isApproved;
+    public void setSurgeries(String surgeries) {
+        this.surgeries = surgeries;
     }
 }

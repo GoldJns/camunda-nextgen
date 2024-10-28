@@ -22,25 +22,32 @@ public class Visit {
 
     @ManyToOne
     @JoinColumn(name = "health_record_id")
-    private HealthRecord healthRecord;
+    private HealthRecordEntity healthRecord;
 
     @Column(nullable = false)
     private LocalDate dateOfVisit;
 
-    @Column(nullable = false)
+    @Column
     private String diagnosis;
 
     @Column
     private String treatment;
- 
+
+    @Column
+    private String doctorNotes;
+
+    @Column(nullable = false)
+    private Boolean isApproved;
 
     public Visit() {
     }
 
-    public Visit(LocalDate dateOfVisit, String diagnosis, String treatment) {
+    public Visit(LocalDate dateOfVisit, String diagnosis, String treatment, String doctorNotes, Boolean isApproved) {
         this.dateOfVisit = dateOfVisit;
         this.diagnosis = diagnosis;
         this.treatment = treatment;
+        this.doctorNotes = doctorNotes;
+        this.isApproved = isApproved;
     }
 
     public Long getId() {
@@ -51,11 +58,11 @@ public class Visit {
         this.id = id;
     }
 
-    public HealthRecord getHealthRecord() {
+    public HealthRecordEntity getHealthRecord() {
         return healthRecord;
     }
 
-    public void setHealthRecord(HealthRecord healthRecord) {
+    public void setHealthRecord(HealthRecordEntity healthRecord) {
         this.healthRecord = healthRecord;
     }
 
@@ -81,5 +88,21 @@ public class Visit {
 
     public void setTreatment(String treatment) {
         this.treatment = treatment;
+    }
+
+    public String getDoctorNotes() {
+        return doctorNotes;
+    }
+
+    public void setDoctorNotes(String doctorNotes) {
+        this.doctorNotes = doctorNotes;
+    }
+
+    public Boolean getIsApproved() {
+        return isApproved;
+    }
+
+    public void setIsApproved(Boolean isApproved) {
+        this.isApproved = isApproved;
     }
 }
