@@ -8,5 +8,8 @@
   "welcomeBack": "Welcome Back",
   "forgotPassword": "Forgot Password?",
   "noAccount": "Don't have an account?",
-  "login": "Login"
+  "login": "Login",
+  "name": "First Name" ,
+  "lastname": "Last Name" ,
+  "age": "Age"
 }
