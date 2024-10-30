@@ -1,0 +1,64 @@
+{
+  "components": [
+    {
+      "label": "Patient Username",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0c3gv57",
+        "columns": 8
+      },
+      "id": "Field_0kz17ej",
+      "key": "username",
+      "readonly": true
+    },
+    {
+      "label": "Allergies",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1ywam7z",
+        "columns": null
+      },
+      "id": "Field_0i44ed9",
+      "key": "allergies"
+    },
+    {
+      "label": "Chronic Conditions",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1sigtdw",
+        "columns": null
+      },
+      "id": "Field_11h8ex8",
+      "key": "chronicConditions"
+    },
+    {
+      "label": "Surgeries",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1ybuut9",
+        "columns": null
+      },
+      "id": "Field_1v66o9n",
+      "key": "surgeries"
+    },
+    {
+      "label": "Health Insurance",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_07hy6xn",
+        "columns": 7
+      },
+      "id": "Field_0kn6377",
+      "key": "healthInsuranceName"
+    }
+  ],
+  "type": "default",
+  "id": "form_create_record",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.28.0"
+  },
+  "schemaVersion": 16
+}
