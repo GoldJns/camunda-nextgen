@@ -4,35 +4,18 @@ updates:
   - package-ecosystem: "npm"
     directory: "/src/ui" # Adjust if package.json is in a different directory
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "deps"
     open-pull-requests-limit: 10
     rebase-strategy: "auto"
   # For Maven dependencies
   - package-ecosystem: "maven"
-    directory: "src/appointment" # Adjust if your pom.xml is in a different directory
+    directory: "src/health-management" # Adjust if your pom.xml is in a different directory
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "deps"
     open-pull-requests-limit: 10
     rebase-strategy: "auto"
 
-  - package-ecosystem: "maven"
-    directory: "src/healthrecord" # Adjust if your pom.xml is in a different directory
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "deps"
-    open-pull-requests-limit: 10
-    rebase-strategy: "auto"
-
-  - package-ecosystem: "maven"
-    directory: "src/userportal" # Adjust if your pom.xml is in a different directory
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "deps"
-    open-pull-requests-limit: 10
-    rebase-strategy: "auto"
