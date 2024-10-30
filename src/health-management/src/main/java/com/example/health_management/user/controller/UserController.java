@@ -1,4 +1,4 @@
-package controller;
+package com.example.health_management.user.controller;
 
 import java.util.List;
 
@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import service.UserService;
-import model.User;
+import com.example.health_management.user.model.User;
+import com.example.health_management.user.service.UserService;
+
+
 
 @RestController
 @RequestMapping("/user")

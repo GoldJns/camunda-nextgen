@@ -1,4 +1,4 @@
-package controller;
+package com.example.health_management.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import repository.UserRepository;
-import config.AppUserDetailsService;
-import config.JwtUtil;
-import dto.AuthenticationRequestDto;
-import dto.AuthenticationResponseDto;
-import dto.UserDto;
-import model.User;
+import com.example.health_management.user.config.AppUserDetailsService;
+import com.example.health_management.user.config.JwtUtil;
+import com.example.health_management.user.dto.AuthenticationRequestDto;
+import com.example.health_management.user.dto.AuthenticationResponseDto;
+import com.example.health_management.user.dto.UserDto;
+import com.example.health_management.user.model.User;
+import com.example.health_management.user.repository.UserRepository;
+
+
 
 
 @RestController

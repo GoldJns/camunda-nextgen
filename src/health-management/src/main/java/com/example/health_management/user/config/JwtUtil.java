@@ -1,4 +1,4 @@
-package config;
+package com.example.health_management.user.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
