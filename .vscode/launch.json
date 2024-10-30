@@ -9,7 +9,8 @@
       "name": "HealthManagementApplication",
       "request": "launch",
       "mainClass": "com.example.health_management.HealthManagementApplication",
-      "projectName": "health-management"
+      "projectName": "health-management",
+      "envFile":"${workspaceFolder}/.env"
     },
     {
       "type": "chrome",

@@ -22,7 +22,7 @@ public class Visit {
 
     @ManyToOne
     @JoinColumn(name = "health_record_id")
-    private HealthRecord healthRecord;
+    private HealthRecordEntity healthRecord;
 
     @Column(nullable = false)
     private LocalDate dateOfVisit;
@@ -58,11 +58,11 @@ public class Visit {
         this.id = id;
     }
 
-    public HealthRecord getHealthRecord() {
+    public HealthRecordEntity getHealthRecord() {
         return healthRecord;
     }
 
-    public void setHealthRecord(HealthRecord healthRecord) {
+    public void setHealthRecord(HealthRecordEntity healthRecord) {
         this.healthRecord = healthRecord;
     }
 
