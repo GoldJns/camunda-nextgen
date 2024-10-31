@@ -17,6 +17,18 @@ services:
     user: root
     command: [ "sysctl", "-w", "vm.max_map_count=262144" ]
 
+  db:
+    image: postgres:15.8-alpine3.20
+    restart: always
+    shm_size: 128mb
+    container_name: health-management-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: health-management-db
+    ports:
+      - "5432:5432"
+
   zeebe: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#zeebe
     image: camunda/zeebe:${CAMUNDA_PLATFORM_VERSION}
     container_name: zeebe
@@ -169,7 +181,7 @@ services:
       - CAMUNDA_IDENTITY_AUDIENCE=operate-api
       - management.endpoints.web.exposure.include=health
       - management.endpoint.health.probes.enabled=true
-    env_file: connector-secrets.txt
+    env_file: connector-secrets.txt 
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health/readiness" ]
       interval: 30s
@@ -234,7 +246,7 @@ services:
       KEYCLOAK_URL: http://keycloak:18080/auth
       IDENTITY_AUTH_PROVIDER_ISSUER_URL: http://${KEYCLOAK_HOST}:18080/auth/realms/camunda-platform
       IDENTITY_AUTH_PROVIDER_BACKEND_URL: http://keycloak:18080/auth/realms/camunda-platform
-      IDENTITY_DATABASE_HOST: postgresq
+      IDENTITY_DATABASE_HOST: postgres
       IDENTITY_DATABASE_PORT: 5432
       IDENTITY_DATABASE_NAME: bitnami_keycloak
       IDENTITY_DATABASE_USERNAME: bn_keycloak
@@ -249,12 +261,6 @@ services:
       KEYCLOAK_INIT_CONNECTORS_SECRET: XALaRPl5qwTEItdwCMiPS62nVpKs7dL7
       KEYCLOAK_INIT_CONNECTORS_ROOT_URL: http://${HOST}:8085
       KEYCLOAK_INIT_ZEEBE_NAME: zeebe
-# Custom Roles for Health Care Management 
-      KEYCLOAK_GROUPS_0_NAME: "Doctor"
-#      KEYCLOAK_GROUPS_0_ROLES_0: "Tasklist"
-      KEYCLOAK_GROUPS_1_NAME: "Patient"
-#      KEYCLOAK_GROUPS_1_ROLES_0: "Tasklist"
-      
       KEYCLOAK_USERS_0_USERNAME: "demo"
       KEYCLOAK_USERS_0_PASSWORD: "demo"
       KEYCLOAK_USERS_0_FIRST_NAME: "demo"
@@ -264,22 +270,6 @@ services:
       KEYCLOAK_USERS_0_ROLES_2: "Operate"
       KEYCLOAK_USERS_0_ROLES_3: "Tasklist"
       KEYCLOAK_USERS_0_ROLES_4: "Web Modeler"
-
-#Test Users
-      KEYCLOAK_USERS_1_USERNAME: "wiwa"
-      KEYCLOAK_USERS_1_PASSWORD: "wiwa"
-      KEYCLOAK_USERS_1_FIRST_NAME: "Wickett"
-      KEYCLOAK_USERS_1_EMAIL: "wiwa@acme.com"
-      KEYCLOAK_USERS_1_GROUPS_0: "Patient"
- #     KEYCLOAK_USERS_1_ROLES_0: "Tasklist"
-
-      KEYCLOAK_USERS_2_USERNAME: "mimo"
-      KEYCLOAK_USERS_2_PASSWORD: "mimo"
-      KEYCLOAK_USERS_2_FIRST_NAME: "Milo"
-      KEYCLOAK_USERS_2_EMAIL: "mimo@acme.com"
-      KEYCLOAK_USERS_2_GROUPS_0: "Doctor"
-   #   KEYCLOAK_USERS_2_ROLES_0: "Tasklist"
-
       KEYCLOAK_CLIENTS_0_NAME: zeebe
       KEYCLOAK_CLIENTS_0_ID: ${ZEEBE_CLIENT_ID}
       KEYCLOAK_CLIENTS_0_SECRET: ${ZEEBE_CLIENT_SECRET}
@@ -314,8 +304,8 @@ services:
       keycloak:
         condition: service_healthy
 
-  postgresq: # https://hub.docker.com/_/postgres
-    container_name: postgresq
+  postgres: # https://hub.docker.com/_/postgres
+    container_name: postgres
     image: postgres:${POSTGRES_VERSION}
     profiles: ["", "opensearch"]
     environment:
@@ -329,7 +319,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - postgresq:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     networks:
       - identity-network
 
@@ -344,7 +334,7 @@ services:
     environment:
       KEYCLOAK_HTTP_PORT: 18080
       KEYCLOAK_HTTP_RELATIVE_PATH: /auth
-      KEYCLOAK_DATABASE_HOST: postgresq
+      KEYCLOAK_DATABASE_HOST: postgres
       KEYCLOAK_DATABASE_PASSWORD: "#3]O?4RGj)DE7Z!9SA5"
       KEYCLOAK_ADMIN_USER: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -359,7 +349,7 @@ services:
       - camunda-platform
       - identity-network
     depends_on:
-      - postgresq
+      - postgres
 
   opensearch:
     image: opensearchproject/opensearch:${OPENSEARCH_VERSION}
@@ -446,7 +436,7 @@ volumes:
   zeebe:
   elastic:
   opensearch-data:
-  postgresq:
+  postgres:
   keycloak-theme:
   kibana:
   operate_tmp:
