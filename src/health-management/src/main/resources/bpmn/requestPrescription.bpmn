@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_medication_request" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0">
+  <bpmn:collaboration id="Collaboration_medication_request">
+    <bpmn:participant id="Participant_patient" processRef="requestMedicationList" />
+  </bpmn:collaboration>
+  <bpmn:process id="requestMedicationList" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_medication_request">
+      <bpmn:lane id="Lane_patient" name="Patient">
+        <bpmn:flowNodeRef>start_request_medication</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>medication_request_form</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>review_medication_request</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>medication_list_sent</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_doctor" name="Doctor">
+        <bpmn:flowNodeRef>approve_medication_request</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="start_request_medication" name="Patient Requests Medication List">
+      <bpmn:outgoing>Flow_start_to_form</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="medication_request_form" name="Fill Out Medication Request Form">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="form_medication_request" />
+        <zeebe:assignmentDefinition assignee="=username" candidateGroups="Patient" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=username" target="username" />
+          <zeebe:output source="=requestedMedication" target="requestedMedication" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_start_to_form</bpmn:incoming>
+      <bpmn:outgoing>Flow_form_to_review</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="review_medication_request" name="Review Medication Request">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="reviewMedicationRequest" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_form_to_review</bpmn:incoming>
+      <bpmn:outgoing>Flow_review_to_approval</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="approve_medication_request" name="Approve Medication Request">
+      <bpmn:extensionElements>
+        <zeebe:assignmentDefinition candidateGroups="Doctor" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_review_to_approval</bpmn:incoming>
+      <bpmn:outgoing>Flow_approval_to_send</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="medication_list_sent" name="Medication List Sent to Patient">
+      <bpmn:incoming>Flow_approval_to_send</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_start_to_form" sourceRef="start_request_medication" targetRef="medication_request_form" />
+    <bpmn:sequenceFlow id="Flow_form_to_review" sourceRef="medication_request_form" targetRef="review_medication_request" />
+    <bpmn:sequenceFlow id="Flow_review_to_approval" sourceRef="review_medication_request" targetRef="approve_medication_request" />
+    <bpmn:sequenceFlow id="Flow_approval_to_send" sourceRef="approve_medication_request" targetRef="medication_list_sent" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_medication_request">
+    <bpmndi:BPMNPlane id="BPMNPlane_medication_request" bpmnElement="Collaboration_medication_request">
+      <bpmndi:BPMNShape id="Participant_patient_di" bpmnElement="Participant_patient" isHorizontal="true" isExpanded="true">
+        <dc:Bounds x="115" y="80" width="1165" height="417" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_patient_di" bpmnElement="Lane_patient" isHorizontal="true">
+        <dc:Bounds x="145" y="80" width="1135" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_doctor_di" bpmnElement="Lane_doctor" isHorizontal="true">
+        <dc:Bounds x="145" y="240" width="1135" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="start_request_medication_di" bpmnElement="start_request_medication">
+        <dc:Bounds x="262" y="289" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="medication_request_form_di" bpmnElement="medication_request_form">
+        <dc:Bounds x="370" y="267" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="review_medication_request_di" bpmnElement="review_medication_request">
+        <dc:Bounds x="500" y="267" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="approve_medication_request_di" bpmnElement="approve_medication_request">
+        <dc:Bounds x="620" y="267" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="medication_list_sent_di" bpmnElement="medication_list_sent">
+        <dc:Bounds x="740" y="267" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_start_to_form_di" bpmnElement="Flow_start_to_form">
+        <di:waypoint x="298" y="307" />
+        <di:waypoint x="370" y="307" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_form_to_review_di" bpmnElement="Flow_form_to_review">
+        <di:waypoint x="470" y="307" />
+        <di:waypoint x="500" y="307" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_review_to_approval_di" bpmnElement="Flow_review_to_approval">
+        <di:waypoint x="600" y="307" />
+        <di:waypoint x="620" y="307" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_approval_to_send_di" bpmnElement="Flow_approval_to_send">
+        <di:waypoint x="720" y="307" />
+        <di:waypoint x="740" y="307" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
