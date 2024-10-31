@@ -1,0 +1,91 @@
+{
+  "components": [
+    {
+      "label": "Patient Username",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1ctitxy",
+        "columns": 8
+      },
+      "id": "Field_0pqjadb",
+      "key": "username",
+      "readonly": true
+    },
+    {
+      "label": "Allergies",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_15svs6x",
+        "columns": null
+      },
+      "id": "Field_13xwrnx",
+      "key": "allergies",
+      "readonly": true
+    },
+    {
+      "label": "Chronic Conditions",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0egq93c",
+        "columns": null
+      },
+      "id": "Field_0pplpar",
+      "key": "chronicConditions",
+      "readonly": true
+    },
+    {
+      "label": "Surgeries",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_16zfepn",
+        "columns": null
+      },
+      "id": "Field_09hpytv",
+      "key": "surgeries",
+      "readonly": true
+    },
+    {
+      "label": "Health Insurance",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1ovayu3",
+        "columns": null
+      },
+      "id": "Field_031vg6u",
+      "key": "healthInsuranceName",
+      "readonly": true
+    },
+    {
+      "height": 200,
+      "label": "Spacer",
+      "type": "spacer",
+      "layout": {
+        "row": "Row_11ua6w1",
+        "columns": null
+      },
+      "id": "Field_12rt2su"
+    },
+    {
+      "label": "Approve Health Record",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1uv8vxs",
+        "columns": null
+      },
+      "id": "Field_1cpnisa",
+      "key": "isApproved",
+      "validate": {
+        "required": false
+      }
+    }
+  ],
+  "type": "default",
+  "id": "form_approve_record",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.28.0"
+  },
+  "schemaVersion": 16
+}

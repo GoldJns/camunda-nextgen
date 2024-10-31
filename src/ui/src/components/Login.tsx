@@ -10,6 +10,10 @@ const Login: React.FC = () => {
   const [language, setLanguage] = useState("en");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [age, setAge] = useState<number | null>(null);
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("Patienten");
 
@@ -30,8 +34,10 @@ const Login: React.FC = () => {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     const credentials = { email: email.trim(), password: password.trim() };
-
-    try {
+                                                                                                      
+    try {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+      // cmanuda task 229 
+      //"http://localhost:8080/engigeßstate/login/start
       const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
@@ -43,6 +49,7 @@ const Login: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         sessionStorage.setItem("accessToken", data.jwt);
+        
         // Optionally, fetch user data here
       } else {
         console.error("Login failed");
@@ -63,10 +70,10 @@ const Login: React.FC = () => {
     const userData = {
       email: email.trim(),
       password: password.trim(),
-      firstname: "test",
-      lastname: "test",
-      role: "doctor",
-      age: 30,
+      firstname: firstname,
+      lastname: lastname,
+      role: userType,
+      age: age,
     };
 
     try {
@@ -107,9 +114,25 @@ const Login: React.FC = () => {
       <div className="form-container sign-up-container">
         <form onSubmit={handleRegister}>
           <h1>{t("register")}</h1>
+          <input type="text" placeholder={t("name")} value={firstname} onChange={(e) => setFirstname(e.target.value)} required/>
+          <input type="text" placeholder={t("lastname")} value={lastname} onChange={(e) => setLastname(e.target.value)} required/>
+          <input type="text" placeholder={t("age")}   onChange={(e) => setAge(parseInt(e.target.value))} required/>
+
           <input type="email" placeholder={t("email")} value={email} onChange={(e) => setEmail(e.target.value)} required/>
           <input type="password" placeholder={t("password")}  value={password} onChange={(e) => setPassword(e.target.value)} required/>
           <input type="password" placeholder={t("confirmPassword")} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
+          <div className="roles">
+          <div>
+  <input type="radio" id="user" name="userType" value="Patienten" checked={userType === "Patienten"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="user">{t("Patienten")}</label>
+  </div>
+  <div>
+  <input type="radio" id="doctor" name="userType" value="Doctor" checked={userType === "Doctor"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="doctor">{t("Doctor")}</label>
+  </div>
+
+</div>
+         
           <button type="submit"  className="btnlog">{t("createAccount")}</button>
        
 
