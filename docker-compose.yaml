@@ -17,6 +17,18 @@ services:
     user: root
     command: [ "sysctl", "-w", "vm.max_map_count=262144" ]
 
+  db:
+    image: postgres:15.8-alpine3.20
+    restart: always
+    shm_size: 128mb
+    container_name: health-management-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: health-management-db
+    ports:
+      - "5432:5432"
+
   zeebe: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#zeebe
     image: camunda/zeebe:${CAMUNDA_PLATFORM_VERSION}
     container_name: zeebe
