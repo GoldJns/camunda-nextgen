@@ -1,7 +1,9 @@
 package com.example.health_management.healthrecord;
 
+import java.util.List;
 import java.util.Map;
 
+import io.camunda.tasklist.dto.Variable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +30,12 @@ public class HealthRecordController {
 
     @PostMapping("/create/user/{username}")
     public ResponseEntity<Long> createHealthRecord(@PathVariable String username) {
-        
+
         Long processInstanceId = healthRecordService.startCreateHealthRecordProcess(username);
         if (processInstanceId == null) {
             return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(null);
+                    .status(HttpStatus.CONFLICT)
+                    .body(null);
         }
 
         return ResponseEntity.ok(processInstanceId);
@@ -42,13 +44,13 @@ public class HealthRecordController {
     /*
      * @PostMapping("/health-records/{id}/edit")
      * public ResponseEntity<Long> editHealthRecord(@PathVariable Long id,
-     * 
+     *
      * @RequestBody HealthRecordDTO healthRecordDTO) {
      * Long processInstanceId = healthRecordService.startEditHealthRecordProcess(id,
      * healthRecordDTO);
      * return ResponseEntity.ok(processInstanceId);
      * }
-     * 
+     *
      * @DeleteMapping("/health-records/{id}")
      * public ResponseEntity<Long> deleteHealthRecord(@PathVariable Long id) {
      * Long processInstanceId =
@@ -57,34 +59,13 @@ public class HealthRecordController {
      * }
      */
     @GetMapping("/form")
-    public ResponseEntity<Form> getCreateHealthRecordForm( @RequestParam(value = "id") String formId) {
+    public ResponseEntity<Form> getForm(
+            @RequestParam(value = "formId") String formId,
+            @RequestParam(value = "processDefinitionId") String definitionId
+    ) {
 
-        Form form = healthRecordService.getForm(formId);
+        Form form = healthRecordService.getForm(formId, definitionId);
         return ResponseEntity.ok(form);
-    }
-
-
-
-    @GetMapping("/tasks")
-    public ResponseEntity<TaskList> getHealthRecordTasks(
-            @RequestParam(value = "assignee") String assignee,
-            @RequestParam(value = "group")  String group) {
-
-        TaskList tasks = healthRecordService.getTasksForHealthRecordProcesses(assignee, group);
-        return ResponseEntity.ok(tasks);
-    }
-
-    @PostMapping("/tasks/{taskId}/complete")
-    public ResponseEntity<String> completeHealthRecordTask(
-            @PathVariable String taskId, @RequestBody Map<String, Object> variables) {
-
-        Boolean completed = healthRecordService.completeTask(taskId, variables);
-
-        if(completed){
-            return ResponseEntity.ok().build();
-        }else{
-            return ResponseEntity.internalServerError().build();
-        }
     }
 
 }
