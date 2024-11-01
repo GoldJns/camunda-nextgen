@@ -1,17 +1,13 @@
 package com.example.health_management.task;
 
 import com.example.health_management.TaskListClient;
-import com.example.health_management.healthrecord.HealthRecordController;
-import com.example.health_management.healthrecord.HealthRecordRepository;
-import io.camunda.tasklist.dto.Form;
 import io.camunda.tasklist.dto.TaskList;
 import io.camunda.tasklist.dto.TaskState;
 import io.camunda.tasklist.dto.Variable;
 import io.camunda.tasklist.exception.TaskListException;
-import io.camunda.zeebe.client.ZeebeClient;
-import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;

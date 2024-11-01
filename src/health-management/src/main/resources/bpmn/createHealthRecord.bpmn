@@ -39,7 +39,7 @@
     </bpmn:endEvent>
     <bpmn:userTask id="health_data_entry" name="Initial Health Data Entry by User">
       <bpmn:extensionElements>
-        <zeebe:formDefinition formId="form_create_record" />
+        <zeebe:formDefinition formId="form_create_record" bindingType="deployment" />
         <zeebe:assignmentDefinition assignee="=username" candidateGroups="Patient" />
         <zeebe:ioMapping>
           <zeebe:input source="=changeRequest_c" target="changeRequest_c" />
@@ -63,7 +63,7 @@
     </bpmn:sequenceFlow>
     <bpmn:userTask id="data_validation" name="Validation of Data">
       <bpmn:extensionElements>
-        <zeebe:formDefinition formId="form_approve_record" />
+        <zeebe:formDefinition formId="form_approve_record" bindingType="deployment" />
         <zeebe:assignmentDefinition candidateGroups="Doctor" />
         <zeebe:ioMapping>
           <zeebe:input source="=username" target="username" />

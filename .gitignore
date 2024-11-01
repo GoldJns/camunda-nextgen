@@ -1,4 +1,3 @@
-/.env
 /camunda-platform/.env
 /camunda-platform/.env.opensearch
 /camunda-platform/.env.elasticsearch

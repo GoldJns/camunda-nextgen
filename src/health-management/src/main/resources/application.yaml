@@ -2,16 +2,22 @@ spring:
     application:
         name: health-management
     datasource:
-        username: postgres
-        password: postgres
-        url: jdbc:postgresql://localhost:5432/health-management-db
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
+        url: jdbc:postgresql://localhost:5432/bitnami_keycloak
         driver-class-name: org.postgresql.Driver
+    flyway:
+        enabled: true
+        baseline-on-migrate: true
+    jpa:
+        hibernate:
+            ddl-auto: update
 
 camunda:
     client:
         mode: self-managed
         auth:  
-            client-id: zeebe
+            client-id: ${ZEEBE_CLIENT_ID}
             client-secret: ${ZEEBE_CLIENT_SECRET}  
             audience: zeebe-api
             issuer: http://localhost:18080/auth/realms/camunda-platform/protocol/openid-connect/token  
@@ -26,7 +32,7 @@ tasklist:
         enabled: true
         base-url: http://localhost:8082
         auth-url: http://localhost:18080/auth/realms/camunda-platform/protocol/openid-connect/token
-        client-id: tasklist
+        client-id: ${TASKLIST_CLIENT_ID}
         client-secret: ${TASKLIST_CLIENT_SECRET}
         audience: tasklist-api
         defaults:

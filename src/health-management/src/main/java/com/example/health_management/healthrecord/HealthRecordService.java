@@ -1,22 +1,16 @@
 package com.example.health_management.healthrecord;
 
-import java.util.List;
-import java.util.Map;
-
+import com.example.health_management.TaskListClient;
+import com.example.health_management.healthrecord.model.HealthRecordEntity;
+import io.camunda.tasklist.dto.Form;
+import io.camunda.tasklist.exception.TaskListException;
+import io.camunda.zeebe.client.ZeebeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.example.health_management.TaskListClient;
-import com.example.health_management.healthrecord.model.HealthRecordEntity;
-
-import io.camunda.tasklist.dto.Form;
-import io.camunda.tasklist.dto.TaskList;
-import io.camunda.tasklist.dto.TaskState;
-import io.camunda.tasklist.dto.Variable;
-import io.camunda.tasklist.exception.TaskListException;
-import io.camunda.zeebe.client.ZeebeClient;
+import java.util.Map;
 
 @Service
 public class HealthRecordService {

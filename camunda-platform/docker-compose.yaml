@@ -234,11 +234,11 @@ services:
       KEYCLOAK_URL: http://keycloak:18080/auth
       IDENTITY_AUTH_PROVIDER_ISSUER_URL: http://${KEYCLOAK_HOST}:18080/auth/realms/camunda-platform
       IDENTITY_AUTH_PROVIDER_BACKEND_URL: http://keycloak:18080/auth/realms/camunda-platform
-      IDENTITY_DATABASE_HOST: postgresq
+      IDENTITY_DATABASE_HOST: postgres
       IDENTITY_DATABASE_PORT: 5432
       IDENTITY_DATABASE_NAME: bitnami_keycloak
-      IDENTITY_DATABASE_USERNAME: bn_keycloak
-      IDENTITY_DATABASE_PASSWORD: "#3]O?4RGj)DE7Z!9SA5"
+      IDENTITY_DATABASE_USERNAME: ${DB_USERNAME}
+      IDENTITY_DATABASE_PASSWORD: ${DB_PASSWORD}
       KEYCLOAK_INIT_OPERATE_SECRET: XALaRPl5qwTEItdwCMiPS62nVpKs7dL7
       KEYCLOAK_INIT_OPERATE_ROOT_URL: http://${HOST}:8081
       KEYCLOAK_INIT_TASKLIST_SECRET: XALaRPl5qwTEItdwCMiPS62nVpKs7dL7
@@ -249,12 +249,12 @@ services:
       KEYCLOAK_INIT_CONNECTORS_SECRET: XALaRPl5qwTEItdwCMiPS62nVpKs7dL7
       KEYCLOAK_INIT_CONNECTORS_ROOT_URL: http://${HOST}:8085
       KEYCLOAK_INIT_ZEEBE_NAME: zeebe
-# Custom Roles for Health Care Management 
+      # Custom Roles for Health Care Management
       KEYCLOAK_GROUPS_0_NAME: "Doctor"
-#      KEYCLOAK_GROUPS_0_ROLES_0: "Tasklist"
+      #      KEYCLOAK_GROUPS_0_ROLES_0: "Tasklist"
       KEYCLOAK_GROUPS_1_NAME: "Patient"
-#      KEYCLOAK_GROUPS_1_ROLES_0: "Tasklist"
-      
+      #      KEYCLOAK_GROUPS_1_ROLES_0: "Tasklist"
+
       KEYCLOAK_USERS_0_USERNAME: "demo"
       KEYCLOAK_USERS_0_PASSWORD: "demo"
       KEYCLOAK_USERS_0_FIRST_NAME: "demo"
@@ -265,20 +265,20 @@ services:
       KEYCLOAK_USERS_0_ROLES_3: "Tasklist"
       KEYCLOAK_USERS_0_ROLES_4: "Web Modeler"
 
-#Test Users
+      #Test Users
       KEYCLOAK_USERS_1_USERNAME: "wiwa"
       KEYCLOAK_USERS_1_PASSWORD: "wiwa"
       KEYCLOAK_USERS_1_FIRST_NAME: "Wickett"
       KEYCLOAK_USERS_1_EMAIL: "wiwa@acme.com"
       KEYCLOAK_USERS_1_GROUPS_0: "Patient"
- #     KEYCLOAK_USERS_1_ROLES_0: "Tasklist"
+      #     KEYCLOAK_USERS_1_ROLES_0: "Tasklist"
 
       KEYCLOAK_USERS_2_USERNAME: "mimo"
       KEYCLOAK_USERS_2_PASSWORD: "mimo"
       KEYCLOAK_USERS_2_FIRST_NAME: "Milo"
       KEYCLOAK_USERS_2_EMAIL: "mimo@acme.com"
       KEYCLOAK_USERS_2_GROUPS_0: "Doctor"
-   #   KEYCLOAK_USERS_2_ROLES_0: "Tasklist"
+      #   KEYCLOAK_USERS_2_ROLES_0: "Tasklist"
 
       KEYCLOAK_CLIENTS_0_NAME: zeebe
       KEYCLOAK_CLIENTS_0_ID: ${ZEEBE_CLIENT_ID}
@@ -296,6 +296,16 @@ services:
       KEYCLOAK_CLIENTS_0_PERMISSIONS_4_DEFINITION: read:*
       KEYCLOAK_CLIENTS_0_PERMISSIONS_5_RESOURCE_SERVER_ID: operate-api
       KEYCLOAK_CLIENTS_0_PERMISSIONS_5_DEFINITION: read:*
+
+      KEYCLOAK_CLIENTS_1_NAME: Tasklist
+      KEYCLOAK_CLIENTS_1_ID: ${TASKLIST_CLIENT_ID}
+      KEYCLOAK_CLIENTS_1_SECRET: ${TASKLIST_CLIENT_SECRET}
+      KEYCLOAK_CLIENTS_1_TYPE: M2M
+      KEYCLOAK_CLIENTS_1_PERMISSIONS_0_RESOURCE_SERVER_ID: tasklist-api
+      KEYCLOAK_CLIENTS_1_PERMISSIONS_0_DEFINITION: read:*
+      KEYCLOAK_CLIENTS_1_PERMISSIONS_1_RESOURCE_SERVER_ID: tasklist-api
+      KEYCLOAK_CLIENTS_1_PERMISSIONS_1_DEFINITION: write:*
+
       MULTITENANCY_ENABLED: ${MULTI_TENANCY_ENABLED}
       RESOURCE_PERMISSIONS_ENABLED: ${RESOURCE_AUTHORIZATIONS_ENABLED}
     healthcheck:
@@ -314,14 +324,16 @@ services:
       keycloak:
         condition: service_healthy
 
-  postgresq: # https://hub.docker.com/_/postgres
-    container_name: postgresq
+  postgres: # https://hub.docker.com/_/postgres
+    container_name: postgres
     image: postgres:${POSTGRES_VERSION}
     profiles: ["", "opensearch"]
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: bitnami_keycloak
-      POSTGRES_USER: bn_keycloak
-      POSTGRES_PASSWORD: "#3]O?4RGj)DE7Z!9SA5"
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: on-failure
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
@@ -329,7 +341,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - postgresq:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresl/data
     networks:
       - identity-network
 
@@ -344,8 +356,8 @@ services:
     environment:
       KEYCLOAK_HTTP_PORT: 18080
       KEYCLOAK_HTTP_RELATIVE_PATH: /auth
-      KEYCLOAK_DATABASE_HOST: postgresq
-      KEYCLOAK_DATABASE_PASSWORD: "#3]O?4RGj)DE7Z!9SA5"
+      KEYCLOAK_DATABASE_HOST: postgres
+      KEYCLOAK_DATABASE_PASSWORD: ${DB_PASSWORD}
       KEYCLOAK_ADMIN_USER: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     restart: on-failure
@@ -359,7 +371,7 @@ services:
       - camunda-platform
       - identity-network
     depends_on:
-      - postgresq
+      - postgres
 
   opensearch:
     image: opensearchproject/opensearch:${OPENSEARCH_VERSION}
@@ -389,7 +401,7 @@ services:
       - "9601:9600"
     restart: always
     healthcheck:
-     # Single node OpenSearch clusters are considered 'yellow', see https://github.com/opensearch-project/opensearch-build/issues/4285
+      # Single node OpenSearch clusters are considered 'yellow', see https://github.com/opensearch-project/opensearch-build/issues/4285
       test: [ "CMD-SHELL", "curl -k -f http://localhost:9200/_cluster/health -u admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD} | grep -q -E 'yellow|green'" ]
       interval: 60s
       timeout: 10s
@@ -446,7 +458,7 @@ volumes:
   zeebe:
   elastic:
   opensearch-data:
-  postgresq:
+  postgres:
   keycloak-theme:
   kibana:
   operate_tmp:

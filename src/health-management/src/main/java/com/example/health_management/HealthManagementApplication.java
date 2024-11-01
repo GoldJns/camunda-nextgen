@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import io.camunda.zeebe.spring.client.annotation.Deployment;
 
 @SpringBootApplication
-@Deployment(resources = "classpath*:/bpmn/**/*.bpmn")
+@Deployment(resources = "classpath*:/bpmn/**/")
+
 public class HealthManagementApplication {
 
 	public static void main(String[] args) {

@@ -1,15 +1,4 @@
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TABLE appuser (
-                         user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                         username VARCHAR(10) NOT NULL UNIQUE,
-                         email VARCHAR(50) NOT NULL UNIQUE,
-                         password VARCHAR(255) NOT NULL,
-                         role VARCHAR(20) NOT NULL,
-                         firstname VARCHAR(50),
-                         lastname VARCHAR(50),
-                         age INT
-);
 
 CREATE TABLE health_records (
                                 id SERIAL PRIMARY KEY,
@@ -18,7 +7,7 @@ CREATE TABLE health_records (
                                 chronic_conditions VARCHAR(255),
                                 surgeries VARCHAR(255),
                                 health_insurance VARCHAR(255),
-                                FOREIGN KEY (username) REFERENCES appuser(username) ON DELETE CASCADE
+                                FOREIGN KEY (username) REFERENCES public.user_entity(username) ON DELETE CASCADE
 );
 
 CREATE TABLE visits (
