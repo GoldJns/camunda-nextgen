@@ -18,7 +18,9 @@ public class HealthRecordService {
     private static final Logger LOG = LoggerFactory.getLogger(HealthRecordController.class);
 
     @Value("${process.health-record.create.process-id}")
-    private String processId;
+    private String createHealthRecordProcessId;
+    @Value("${process.health-record.edit.process-id}")
+    private String editHealthRecordProcessId;
 
     private final TaskListClient tasklistClient;
     private final ZeebeClient zeebeClient;
@@ -30,32 +32,33 @@ public class HealthRecordService {
         this.healthRecordRepository = healthRecordRepository;
     }
 
-    public Long startCreateHealthRecordProcess(String username) { 
-
+    public Long startCreateHealthRecordProcess(String username) {
         if(healthRecordRepository.findByUsername(username).isEmpty()) {
-
         var event = zeebeClient.newCreateInstanceCommand()
-                .bpmnProcessId(processId)
+                .bpmnProcessId(createHealthRecordProcessId)
                 .latestVersion()
                 .variables(Map.of("username", username))
                 .send()
                 .join();
-                
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        
-
         return event.getProcessInstanceKey();
         }else{
             return null;
         }
     }
 
-/*
-    public Long startEditHealthRecordProcess(Long id, HealthRecordDTO healthRecordDTO) {
-       
-        return null;
+    public Long startEditHealthRecordProcess(String username) {
+        var event = zeebeClient.newCreateInstanceCommand()
+                .bpmnProcessId(editHealthRecordProcessId)
+                .latestVersion()
+                .variables(Map.of("username", username))
+                .send()
+                .join();
+        LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
+        return event.getProcessInstanceKey();
     }
 
+/*
     public Long startDeleteHealthRecordProcess(Long id) {
         
         return null;
@@ -64,13 +67,11 @@ public class HealthRecordService {
 
     public void storeRecord(Map<String, Object> variables) {
         HealthRecordEntity healthRecord = new HealthRecordEntity();
-
         healthRecord.setUsername(variables.get("username").toString());
         healthRecord.setAllergies(variables.get("allergies").toString());
         healthRecord.setChronicConditions(variables.get("chronicConditions").toString());
         healthRecord.setSurgeries(variables.get("surgeries").toString());
         healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
-
         healthRecordRepository.save(healthRecord);
     }
 

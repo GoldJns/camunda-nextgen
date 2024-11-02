@@ -16,10 +16,23 @@ public class HealthRecordController {
         this.healthRecordService = healthRecordService;
     }
 
-    @PostMapping("/create/user/{username}")
+    @PostMapping("/create/{username}")
     public ResponseEntity<Long> createHealthRecord(@PathVariable String username) {
 
         Long processInstanceId = healthRecordService.startCreateHealthRecordProcess(username);
+        if (processInstanceId == null) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(null);
+        }
+
+        return ResponseEntity.ok(processInstanceId);
+    }
+
+    @PostMapping("/edit/{username}")
+    public ResponseEntity<Long> editHealthRecord(@PathVariable String username) {
+
+        Long processInstanceId = healthRecordService.startEditHealthRecordProcess(username);
         if (processInstanceId == null) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
