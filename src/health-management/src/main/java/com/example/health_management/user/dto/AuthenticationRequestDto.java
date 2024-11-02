@@ -1,10 +1,10 @@
 package com.example.health_management.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+//import lombok.AllArgsConstructor;
+//import lombok.Data;
 
-@Data
-@AllArgsConstructor
+//@Data
+//@AllArgsConstructor
 public class AuthenticationRequestDto {
     private String email;
     private String password;

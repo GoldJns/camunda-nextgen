@@ -1,23 +1,23 @@
 package com.example.health_management.user.config;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+//import io.jsonwebtoken.Claims;
+//import io.jsonwebtoken.Jwts;
+//import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import io.jsonwebtoken.io.Decoders;
+//import io.jsonwebtoken.io.Decoders;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import io.jsonwebtoken.security.Keys;
+//import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-
+/*
     @Value("${jwt.secret}")
     private String SECRET;
 
@@ -70,5 +70,5 @@ public class JwtUtil {
         byte[] keyBytes= Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
+*/
 }

@@ -1,4 +1,4 @@
-package config;
+package com.example.health_management.user.config;
 
 import java.io.IOException;
 
@@ -17,15 +17,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
-
-    @Autowired
+/*    @Autowired
     private AppUserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
-
+*/
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        /*
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -47,6 +47,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-
+*/
     }
+
+
 }

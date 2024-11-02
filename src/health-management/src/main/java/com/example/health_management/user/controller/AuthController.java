@@ -21,8 +21,6 @@ import com.example.health_management.user.config.JwtUtil;
 import com.example.health_management.user.dto.AuthenticationRequestDto;
 import com.example.health_management.user.dto.AuthenticationResponseDto;
 import com.example.health_management.user.dto.UserDto;
-import com.example.health_management.user.model.User;
-import com.example.health_management.user.repository.UserRepository;
 
 
 
@@ -30,7 +28,7 @@ import com.example.health_management.user.repository.UserRepository;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    
+   /*
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -108,4 +106,6 @@ public class AuthController {
                                 user.getFirstname(), user.getLastname(), user.getAge());
         return userDto;
     }
+
+    */
 }

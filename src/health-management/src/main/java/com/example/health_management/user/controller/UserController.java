@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.health_management.user.model.User;
 import com.example.health_management.user.service.UserService;
 
 
@@ -15,7 +14,7 @@ import com.example.health_management.user.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
+/*
     @Autowired
     private UserService userService;
 
@@ -39,5 +38,5 @@ public class UserController {
 	public List<User> message(){
 		return userService.getUser();
 	}
-    
+*/
 }
