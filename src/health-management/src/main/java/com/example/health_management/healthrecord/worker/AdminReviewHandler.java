@@ -8,11 +8,13 @@ import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.example.health_management.healthrecord.HealthRecordService;
 
+import java.util.Collections;
 import java.util.Map;
 
 @Component
@@ -28,7 +30,7 @@ public class AdminReviewHandler {
         this.healthRecordService = healthRecordService;
     }
 
-    @JobWorker(type = "adminReview", autoComplete = true)
+    @JobWorker(type = "adminReview", autoComplete = false)
     public void handle(JobClient client, ActivatedJob job) {
         LOG.info("Handling admin review for process instance {}", job.getProcessInstanceKey());
         Map<String, Object> variables = job.getVariablesAsMap();
@@ -38,11 +40,17 @@ public class AdminReviewHandler {
         LOG.info("Received healthInsuranceName: {}", healthInsuranceName);
 
 
-        if(!healthInsuranceList.contains(healthInsuranceName)) {
-            LOG.error("Health Insurance validation failed for Patient ID {}", patientID);
-            throw new RuntimeException("Health Insurance validation failed");
+        if (!healthInsuranceList.contains(healthInsuranceName)) {
+            LOG.info("Health Insurance validation failed for Patient ID {}", patientID);
+            client.newCompleteCommand(job.getKey())
+                    .variables(Collections.singletonMap("success", false))
+                    .send()
+                    .join();
         }
-
-       healthRecordService.storeRecord(variables);
+        client.newCompleteCommand(job.getKey())
+                .variables(Collections.singletonMap("success", true))
+                .send()
+                .join();
+        healthRecordService.storeRecord(variables);
     }
 }

@@ -25,7 +25,6 @@ public class HealthRecordController {
                     .status(HttpStatus.CONFLICT)
                     .body(null);
         }
-
         return ResponseEntity.ok(processInstanceId);
     }
 
@@ -33,12 +32,6 @@ public class HealthRecordController {
     public ResponseEntity<Long> editHealthRecord(@PathVariable String username) {
 
         Long processInstanceId = healthRecordService.startEditHealthRecordProcess(username);
-        if (processInstanceId == null) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(null);
-        }
-
         return ResponseEntity.ok(processInstanceId);
     }
 
@@ -64,7 +57,6 @@ public class HealthRecordController {
             @RequestParam(value = "formId") String formId,
             @RequestParam(value = "processDefinitionId") String definitionId
     ) {
-
         Form form = healthRecordService.getForm(formId, definitionId);
         return ResponseEntity.ok(form);
     }

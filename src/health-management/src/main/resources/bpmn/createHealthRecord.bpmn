@@ -7,26 +7,25 @@
     <bpmn:laneSet id="LaneSet_1pvecw7">
       <bpmn:lane id="Lane_1li39a1" name="Patient">
         <bpmn:extensionElements />
-        <bpmn:flowNodeRef>healthrecord_approved_stored</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1pnzqhh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>administrative_review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>start_create_health_record</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1ieuzld</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>health_data_entry</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0qtqom8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1ieuzld</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1ocknz4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>healthrecord_approved_stored</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0c7w1w3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1s41i50</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_14tb178" name="Doctor">
         <bpmn:flowNodeRef>data_validation</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:endEvent id="healthrecord_approved_stored" name="health record stored">
-      <bpmn:incoming>Flow_0a6os8i</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1acut1m" name="yes" sourceRef="Gateway_1pnzqhh" targetRef="administrative_review">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isApproved = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0a6os8i" sourceRef="administrative_review" targetRef="healthrecord_approved_stored" />
+    <bpmn:sequenceFlow id="Flow_0a6os8i" sourceRef="administrative_review" targetRef="Gateway_0c7w1w3" />
     <bpmn:sequenceFlow id="Flow_0jve3tj" sourceRef="Activity_1ieuzld" targetRef="Gateway_0qtqom8" />
     <bpmn:exclusiveGateway id="Gateway_1pnzqhh" name="data correct?">
       <bpmn:incoming>Flow_1c5tel5</bpmn:incoming>
@@ -50,10 +49,6 @@
       <bpmn:extensionElements />
       <bpmn:outgoing>Flow_009dpcs</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Activity_1ieuzld" name="check if health record already exists">
-      <bpmn:incoming>Flow_009dpcs</bpmn:incoming>
-      <bpmn:outgoing>Flow_0jve3tj</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_009dpcs" sourceRef="start_create_health_record" targetRef="Activity_1ieuzld" />
     <bpmn:userTask id="data_validation" name="validate data">
       <bpmn:extensionElements>
@@ -94,34 +89,52 @@
       <bpmn:outgoing>Flow_1s4d01v</bpmn:outgoing>
       <bpmn:outgoing>Flow_0rof634</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1s4d01v" name="yes" sourceRef="Gateway_0qtqom8" targetRef="health_data_entry">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=exists = true</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_1s4d01v" name="no" sourceRef="Gateway_0qtqom8" targetRef="health_data_entry">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=exists = false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0rof634" name="no" sourceRef="Gateway_0qtqom8" targetRef="Event_1ocknz4">
+    <bpmn:sequenceFlow id="Flow_0rof634" name="yes" sourceRef="Gateway_0qtqom8" targetRef="Event_1ocknz4">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=exists = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1ocknz4" name="process stopped">
       <bpmn:incoming>Flow_0rof634</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_1ieuzld" name="check if health record already exists">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="redundantHealthRecordCheck" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_009dpcs</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jve3tj</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="healthrecord_approved_stored" name="health record stored">
+      <bpmn:incoming>Flow_1xwv1a9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_0c7w1w3" name="review failed?">
+      <bpmn:incoming>Flow_0a6os8i</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xwv1a9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ivg7gm</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1xwv1a9" name="no" sourceRef="Gateway_0c7w1w3" targetRef="healthrecord_approved_stored">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=success = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1s41i50" name="creating failed">
+      <bpmn:incoming>Flow_0ivg7gm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0ivg7gm" sourceRef="Gateway_0c7w1w3" targetRef="Event_1s41i50">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=success = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fdkxru">
       <bpmndi:BPMNShape id="Participant_1w7k7v2_di" bpmnElement="Participant_1w7k7v2" isHorizontal="true" isExpanded="true">
-        <dc:Bounds x="115" y="80" width="1165" height="417" />
+        <dc:Bounds x="115" y="80" width="1305" height="417" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_14tb178_di" bpmnElement="Lane_14tb178" isHorizontal="true">
-        <dc:Bounds x="145" y="80" width="1135" height="160" />
+        <dc:Bounds x="145" y="80" width="1275" height="160" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1li39a1_di" bpmnElement="Lane_1li39a1" isHorizontal="true">
-        <dc:Bounds x="145" y="240" width="1135" height="257" />
+        <dc:Bounds x="145" y="240" width="1275" height="257" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1xvmbpg_di" bpmnElement="healthrecord_approved_stored">
-        <dc:Bounds x="1192" y="289" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1179" y="332" width="65" height="27" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1pnzqhh_di" bpmnElement="Gateway_1pnzqhh" isMarkerVisible="true">
         <dc:Bounds x="850" y="282" width="50" height="50" />
@@ -138,10 +151,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="213" y="332" width="76" height="40" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ieuzld_di" bpmnElement="Activity_1ieuzld">
-        <dc:Bounds x="330" y="267" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_17gz9dj_di" bpmnElement="data_validation">
         <dc:Bounds x="710" y="120" width="100" height="80" />
@@ -160,6 +169,27 @@
           <dc:Bounds x="460" y="445" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04nr643_di" bpmnElement="Activity_1ieuzld">
+        <dc:Bounds x="330" y="267" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xvmbpg_di" bpmnElement="healthrecord_approved_stored">
+        <dc:Bounds x="1332" y="289" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1319" y="332" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0c7w1w3_di" bpmnElement="Gateway_0c7w1w3" isMarkerVisible="true">
+        <dc:Bounds x="1175" y="282" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1166" y="258" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1s41i50_di" bpmnElement="Event_1s41i50">
+        <dc:Bounds x="1332" y="402" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1317" y="445" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1acut1m_di" bpmnElement="Flow_1acut1m">
         <di:waypoint x="900" y="307" />
         <di:waypoint x="1010" y="307" />
@@ -169,7 +199,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0a6os8i_di" bpmnElement="Flow_0a6os8i">
         <di:waypoint x="1110" y="307" />
-        <di:waypoint x="1192" y="307" />
+        <di:waypoint x="1175" y="307" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0jve3tj_di" bpmnElement="Flow_0jve3tj">
         <di:waypoint x="430" y="307" />
@@ -202,15 +232,27 @@
         <di:waypoint x="525" y="307" />
         <di:waypoint x="580" y="307" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="544" y="289" width="18" height="14" />
+          <dc:Bounds x="547" y="289" width="13" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0rof634_di" bpmnElement="Flow_0rof634">
         <di:waypoint x="500" y="332" />
         <di:waypoint x="500" y="402" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="509" y="364" width="13" height="14" />
+          <dc:Bounds x="507" y="364" width="18" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xwv1a9_di" bpmnElement="Flow_1xwv1a9">
+        <di:waypoint x="1225" y="307" />
+        <di:waypoint x="1332" y="307" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1272" y="289" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ivg7gm_di" bpmnElement="Flow_0ivg7gm">
+        <di:waypoint x="1200" y="332" />
+        <di:waypoint x="1200" y="420" />
+        <di:waypoint x="1332" y="420" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

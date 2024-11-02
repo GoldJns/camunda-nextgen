@@ -33,7 +33,6 @@ public class HealthRecordService {
     }
 
     public Long startCreateHealthRecordProcess(String username) {
-        if(healthRecordRepository.findByUsername(username).isEmpty()) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(createHealthRecordProcessId)
                 .latestVersion()
@@ -42,9 +41,6 @@ public class HealthRecordService {
                 .join();
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
         return event.getProcessInstanceKey();
-        }else{
-            return null;
-        }
     }
 
     public Long startEditHealthRecordProcess(String username) {
