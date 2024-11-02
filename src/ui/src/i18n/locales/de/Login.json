@@ -8,5 +8,9 @@
   "welcomeBack": "Willkommen zurück",
   "forgotPassword": "Passwort vergessen?",
   "noAccount": "Sie haben kein Konto?",
-  "login": "Anmeldung"
+  "login": "Anmeldung" ,
+  "name": "Vorname" ,
+  "lastname": "Nachname",
+  "age": "Alter"
+
 }

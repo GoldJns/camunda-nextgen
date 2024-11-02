@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import "./login.css";
 import { useTranslation } from "react-i18next";
+
+import "./login.css";
 
 const Login: React.FC = () => {
   const [isSignUpActive, setSignUpActive] = useState(false);
   const { t, i18n } = useTranslation();
 
   const [language, setLanguage] = useState("en");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [age, setAge] = useState<number | null>(null);
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [userType, setUserType] = useState("Patienten");
 
   const toggleLanguage = () => {
     const newLang = language === "en" ? "de" : "en";
@@ -22,7 +31,74 @@ const Login: React.FC = () => {
     setSignUpActive(false);
   };
 
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const credentials = { email: email.trim(), password: password.trim() };
+                                                                                                      
+    try {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+      // cmanuda task 229 
+      //"http://localhost:8080/engigeßstate/login/start
+      const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem("accessToken", data.jwt);
+        
+        // Optionally, fetch user data here
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Fehler:", error);
+    }
+  };
+
+  const handleRegister = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Passwörter stimmen nicht überein!");
+      return;
+    }
+
+    const userData = {
+      email: email.trim(),
+      password: password.trim(),
+      firstname: firstname,
+      lastname: lastname,
+      role: userType,
+      age: age,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem("accessToken", data.jwt);
+      } else {
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Fehler:", error);
+    }
+  };
+
   return (
+    <div className="loginpage">  
+
     <div
       className={`container ${isSignUpActive ? "right-panel-active" : ""}`}
       id="container"
@@ -36,29 +112,64 @@ const Login: React.FC = () => {
         Toggle langauage
       </button>
       <div className="form-container sign-up-container">
-        <form action="#">
+        <form onSubmit={handleRegister}>
           <h1>{t("register")}</h1>
-          <input type="email" placeholder={t("email")} />
-          <input type="password" placeholder={t("password")} />
-          <input type="password" placeholder={t("confirmPassword")} />
-          <button type="button">{t("createAccount")}</button>
+          <input type="text" placeholder={t("name")} value={firstname} onChange={(e) => setFirstname(e.target.value)} required/>
+          <input type="text" placeholder={t("lastname")} value={lastname} onChange={(e) => setLastname(e.target.value)} required/>
+          <input type="text" placeholder={t("age")}   onChange={(e) => setAge(parseInt(e.target.value))} required/>
+
+          <input type="email" placeholder={t("email")} value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" placeholder={t("password")}  value={password} onChange={(e) => setPassword(e.target.value)} required/>
+          <input type="password" placeholder={t("confirmPassword")} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
+          <div className="roles">
+          <div>
+  <input type="radio" id="user" name="userType" value="Patienten" checked={userType === "Patienten"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="user">{t("Patienten")}</label>
+  </div>
+  <div>
+  <input type="radio" id="doctor" name="userType" value="Doctor" checked={userType === "Doctor"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="doctor">{t("Doctor")}</label>
+  </div>
+
+</div>
+         
+          <button type="submit"  className="btnlog">{t("createAccount")}</button>
+       
+
           <a
             href="#"
             id="signIn"
             className="bluetxt"
+
             onClick={handleSignInClick}
           >
             {t("back")}
           </a>
+        
+
         </form>
       </div>
       <div className="form-container sign-in-container">
-        <form action="#">
+        <form onSubmit={handleLogin}>
           <h1>{t("welcomeBack")}</h1>
-          <input type="email" placeholder={t("email")} />
-          <input type="password" placeholder={t("password")} />
-          <button type="button">{t("login")}</button>
+          <input type="email" placeholder={t("email")}  value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" placeholder={t("password")} value={password} onChange={(e) => setPassword(e.target.value)} required/>
+          <div className="roles">
+          <div>
+  <input type="radio" id="user" name="userType" value="Patienten" checked={userType === "Patienten"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="user">{t("Patienten")}</label>
+  </div>
+  <div>
+  <input type="radio" id="doctor" name="userType" value="Doctor" checked={userType === "Doctor"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="doctor">{t("Doctor")}</label>
+  </div>
+
+</div>
+
+          <button type="submit">{t("login")}</button>
+ 
           <a href="#">{t("forgotPassword")}</a>
+
           <a
             href="#"
             id="signUp"
@@ -67,6 +178,8 @@ const Login: React.FC = () => {
           >
             {t("noAccount")}
           </a>
+       
+
         </form>
       </div>
       <div className="overlay-container">
@@ -75,6 +188,7 @@ const Login: React.FC = () => {
           <div className="overlay-panel overlay-right"></div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
