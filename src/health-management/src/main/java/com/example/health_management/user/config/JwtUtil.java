@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.function.Function;
 //import io.jsonwebtoken.security.Keys;
 
-@Component
+//@Component
 public class JwtUtil {
 /*
     @Value("${jwt.secret}")
