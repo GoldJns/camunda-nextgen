@@ -40,6 +40,7 @@ public class AdminReviewHandler {
         LOG.info("Received healthInsuranceName: {}", healthInsuranceName);
 
 
+
         if (!healthInsuranceList.contains(healthInsuranceName)) {
             LOG.info("Health Insurance validation failed for Patient ID {}", patientID);
             client.newCompleteCommand(job.getKey())
@@ -51,6 +52,12 @@ public class AdminReviewHandler {
                 .variables(Collections.singletonMap("success", true))
                 .send()
                 .join();
-        healthRecordService.storeRecord(variables);
+
+        if(job.getBpmnProcessId().equals("createHealthRecord")){
+            healthRecordService.storeRecord(variables);
+        }else{
+            healthRecordService.updateRecord(variables);
+        }
+
     }
 }

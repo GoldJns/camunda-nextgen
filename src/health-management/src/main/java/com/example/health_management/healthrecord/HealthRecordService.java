@@ -64,11 +64,21 @@ public class HealthRecordService {
     public void storeRecord(Map<String, Object> variables) {
         HealthRecordEntity healthRecord = new HealthRecordEntity();
         healthRecord.setUsername(variables.get("username").toString());
+        setVariables(healthRecord, variables);
+        healthRecordRepository.save(healthRecord);
+    }
+
+    public void updateRecord(Map<String, Object> variables) {
+        HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(variables.get("username").toString()).get(0);
+        setVariables(healthRecord, variables);
+        healthRecordRepository.save(healthRecord);
+    }
+
+    private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables){
         healthRecord.setAllergies(variables.get("allergies").toString());
         healthRecord.setChronicConditions(variables.get("chronicConditions").toString());
         healthRecord.setSurgeries(variables.get("surgeries").toString());
         healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
-        healthRecordRepository.save(healthRecord);
     }
 
     public Form getForm(String formId, String definitionId) {

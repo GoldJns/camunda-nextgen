@@ -44,8 +44,6 @@ tasklist:
 process:
     health-record:
         create:
-            definition-id: "2251799813737962"
             process-id: "createHealthRecord"
         edit:
-            definition-id: ""
             process-id: "editHealthRecord"

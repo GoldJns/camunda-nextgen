@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_19arlds" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
   <bpmn:collaboration id="Collaboration_01gnvsk">
-    <bpmn:participant id="Participant_14qvi5a" processRef="Process_1sjnzxi" />
+    <bpmn:participant id="Participant_14qvi5a" processRef="editHealthRecord" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1sjnzxi" isExecutable="true">
+  <bpmn:process id="editHealthRecord" isExecutable="true">
     <bpmn:laneSet id="LaneSet_0xi97ie">
       <bpmn:lane id="Lane_1rpkey8" name="Patient">
         <bpmn:flowNodeRef>Gateway_1wbtzil</bpmn:flowNodeRef>
@@ -21,7 +21,7 @@
       <bpmn:outgoing>Flow_1ji6itf</bpmn:outgoing>
       <bpmn:outgoing>Flow_1ti7smm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="Event_08x9l4u" name="health record approved and stored">
+    <bpmn:endEvent id="Event_08x9l4u" name="health record approved and updated">
       <bpmn:incoming>Flow_0hxst9g</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:serviceTask id="Activity_1y2cf2a" name="administrative review">
@@ -101,7 +101,7 @@
       <bpmndi:BPMNShape id="Event_08x9l4u_di" bpmnElement="Event_08x9l4u">
         <dc:Bounds x="1117" y="347" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1102" y="390" width="68" height="40" />
+          <dc:Bounds x="1103" y="390" width="68" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1y2cf2a_di" bpmnElement="Activity_1y2cf2a">
