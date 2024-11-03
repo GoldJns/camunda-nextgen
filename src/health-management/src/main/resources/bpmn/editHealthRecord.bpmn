@@ -48,7 +48,7 @@
       <bpmn:incoming>Flow_1hlmyz2</bpmn:incoming>
       <bpmn:outgoing>Flow_1ao4u8o</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:startEvent id="StartEvent_1" name="Changes for health record requested">
+    <bpmn:startEvent id="StartEvent_1" name="Changes for health record required">
       <bpmn:outgoing>Flow_1hlmyz2</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_19xd4ci" sourceRef="validate_data" targetRef="Gateway_1wbtzil" />
