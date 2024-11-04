@@ -71,7 +71,7 @@ services:
       - SPRING_PROFILES_ACTIVE=identity-auth
       - CAMUNDA_OPERATE_IDENTITY_BASEURL=http://identity:8084
       - CAMUNDA_OPERATE_IDENTITY_ISSUER_URL=http://${KEYCLOAK_HOST}:18080/auth/realms/camunda-platform
-      - CAMUNDA_OPERATE_IDENTITY_ISSUER_BACKEND_URL=http://keycloak:18080/auth/realms/camunda-platform
+      - CAMUNDA_OPERATE_IDENTITY_ISSUER_BACKEND_URL=http://localhost:18080/auth/realms/camunda-platform
       - CAMUNDA_OPERATE_IDENTITY_CLIENTID=operate
       - CAMUNDA_OPERATE_IDENTITY_CLIENTSECRET=XALaRPl5qwTEItdwCMiPS62nVpKs7dL7
       - CAMUNDA_OPERATE_IDENTITY_AUDIENCE=operate-api
@@ -233,7 +233,7 @@ services:
       IDENTITY_URL: http://${HOST}:8084
       KEYCLOAK_URL: http://keycloak:18080/auth
       IDENTITY_AUTH_PROVIDER_ISSUER_URL: http://${KEYCLOAK_HOST}:18080/auth/realms/camunda-platform
-      IDENTITY_AUTH_PROVIDER_BACKEND_URL: http://keycloak:18080/auth/realms/camunda-platform
+      IDENTITY_AUTH_PROVIDER_BACKEND_URL: http://localhost:18080/auth/realms/camunda-platform
       IDENTITY_DATABASE_HOST: postgres
       IDENTITY_DATABASE_PORT: 5432
       IDENTITY_DATABASE_NAME: bitnami_keycloak
