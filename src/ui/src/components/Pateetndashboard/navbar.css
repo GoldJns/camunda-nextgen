@@ -1,98 +1,52 @@
 .navbar {
-    height: 95dvh;
-    padding: 5px;
+  padding: 5px;
+  color: white;
+  background-color: #121e48;
 }
-.navbar  ul
-{
-margin:0px;
-padding:0px;
-list-style-type:none;
--webkit-backface-visibility: hidden; backface-visibility: hidden;  
+.navbar .icon-container {
+    text-align: center;
+    padding: 20px;
+    width: 100%; 
 }
-.navbar  .var_nav
-{
-position:relative;
-background:#001a5a; 
-width:300px;
-height:70px;
-margin-bottom:5px;
+.navbar .icon-container h2 {
+    text-align: center;
+    padding: 20px;
+    width: 100%; 
+    
 }
-.navbar  .link_bg
-{
- width:70px;
- height:70px;
- position:absolute;
- background:#001a5a;
- color:#000000;
- z-index:2;
+.navbar .icon-container .patient-icon {
+    font-size: 50px; /* Size of the icon */
+    color: #fafafa; /* Color of the icon */
 }
-.navbar  .navbar  .link_bg i
-{
- position:relative;
+.navbar ul {
+    list-style-type: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  padding: 5px;
 }
-.navbar .link_title
-{
-position:absolute;
-width:100%;
-z-index:3;
-color:#fff;
+.navbar ul a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
 }
-.navbar  .link_title:hover .icon
-{
--webkit-transform:rotate(360deg);
--moz-transform:rotate(360deg);
--o-transform:rotate(360deg);
--ms-transform:rotate(360deg);
-transform:rotate(360deg);  
+.navbar ul .var_nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
 }
-.var_nav:hover .link_bg
-{
-width:100%;
-background:#8b0707;
--webkit-transition: all 0.3s ease-in-out;
--moz-transition: all 0.3s ease-in-out;
--o-transition: all 0.3s ease-in-out;
--ms-transition: all 0.3s ease-in-out;
-transition: all 0.3s ease-in-out;  
+.navbar ul .var_nav .link_title {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+    width: 100%;
+    padding-left: 10px;;
+
 }
-.var_nav:hover a
-{
-font-weight:bold;
--webkit-transition:all .5s ease-in-out;
--moz-transition:all .5s ease-in-out; 
--o-transition:all .5s ease-in-out; 
--ms-transition:all .5s ease-in-out;
- transition:all .5s ease-in-out;  
+
+.navbar ul .var_nav .link_title:hover {
+ border-left: 2px solid orangered;
+ background: #2F395E;
 }
-.icon
-{
-position:relative;
-width:70px;
-height:70px;
-text-align:center;
-color:#fff;
--webkit-transition:all .5s ease-in-out;
--moz-transition:all .5s ease-in-out; 
--o-transition:all .5s ease-in-out; 
--ms-transition:all .5s ease-in-out;   
-float:left;
-transition:all .5s ease-in-out;   
-float:left;  
-}
-.icon i{top:22px;position:relative;}
-.navbar a{
-display:block;
-position:absolute;
-float:left;
-font-family:arial;
-color:#fff;
-text-decoration:none;
-width:100%;
-height:70px;
-text-align:center;
-}
-span
-{
-margin-top:25px;
-display:block;
-}
+

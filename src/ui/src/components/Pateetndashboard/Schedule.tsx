@@ -6,7 +6,8 @@ interface Appoiment {
   }
 const Schedule: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentAppoiment, setCurrentAppoiment] = useState<Appoiment | null>(null);
+  const [currentAppointments, setCurrentAppointments] = useState<Appoiment[]>([]); // Changed to an array
+
 /// to get appoiment from backend
   const [appointments, setAppointments] = useState<Appoiment[]>([
     { datum: "2024-09-08", time: "9:00" },
@@ -78,20 +79,19 @@ const Schedule: React.FC = () => {
     }
     return scheduleElements;
   };
-const handlesetAppoiment = () => {
+  const handlesetAppointment = () => {
     if (selectedDate && selectedTime) {
-        const newAppointment: Appoiment = {
-          datum: selectedDate,
-          time: selectedTime,
-        };
-        setCurrentAppoiment(newAppointment);
-        appointments.push(newAppointment);
-        setHighlightedTime(null);
-      } else {
-        alert("Please select a date and time for the appointment.");
-      }
-
-};
+      const newAppointment: Appoiment = {
+        datum: selectedDate,
+        time: selectedTime,
+      };
+      setCurrentAppointments((prev) => [...prev, newAppointment]); // Add new appointment to the array
+      appointments.push(newAppointment);
+      setHighlightedTime(null);
+    } else {
+      alert("Please select a date and time for the appointment.");
+    }
+  };
   // Update the date display when currentDate changes
   useEffect(() => {
     document.getElementById("yesterday-day")!.innerText =
@@ -118,6 +118,11 @@ const handlesetAppoiment = () => {
   }, [currentDate]);
 
   return (
+    <div className="Gesdiv">
+    <div className="Titles">
+      <h1>Terminbuchung</h1>
+    </div>
+  
     <div className="shcontainer">
       <div className="header">
         <i
@@ -147,26 +152,29 @@ const handlesetAppoiment = () => {
       </div>
       <div className="schedule">{generateSchedule()}</div>
       <div className="final">
-        <button onClick={handlesetAppoiment}>Termin Buchen</button>
+        <button onClick={handlesetAppointment}>Termin Buchen</button>
       </div>
 
-      {currentAppoiment ? (
+      {currentAppointments.length > 0 ? (
       <div className="termin">
-        <h1>  Next Appoiment  </h1>
+        <h1> <i className="fas fa-calendar-alt"></i> Nächster Termin </h1>
         <div  className="termindata datum">
           <label>  Datum  </label>
-          <label> Time </label>
+          <label> Zeit </label>
         </div>
-        <div  className="termindata" >
-          <label> {currentAppoiment.datum}</label>
-          <label>{currentAppoiment.time} </label>
-        </div>
+        {currentAppointments.map((appointment, index) => (
+      <div key={index} className="termindata">
+      <label> Datum: {appointment.datum} </label>
+      <label> Zeit: {appointment.time} </label>
+    </div>
+  ))}
       </div>
  ) : (
     <div className="termin">
-    <h1>  No  appointment reseved</h1>
+    <h1>  Kein Termin reserviert</h1>
     </div>
   )}
+    </div>
     </div>
   );
 };

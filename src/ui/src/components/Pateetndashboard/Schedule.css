@@ -1,145 +1,177 @@
-
-
 .shcontainer {
-    width: 100%;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 2fr 3fr 1fr auto;
+  gap: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  height: 100%;
 }
 .shcontainer .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .shcontainer .header i {
-    font-size: 24px;
-    color: #007bff;
+  font-size: 20px;
+  color: #007bff;
+  cursor: pointer;
 }
 
 .shcontainer .header div {
-    text-align: center;
+  text-align: center;
 }
 
 .shcontainer .header div span {
-    display: block;
+  display: block;
 }
 
 .shcontainer .header div span:first-child {
-    font-weight: bold;
-    font-size: 20px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .shcontainer .header div span:last-child {
-    color: #000;
-    font-weight: bold;
-    font-size: 22px;
+  color: #000;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .shcontainer .schedule {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
 }
 
 .shcontainer .schedule div {
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px;
 }
 
 .schedule div.time {
-    background-color: #e9f7ff;
-    color: #007bff;
-    font-weight: bold;
+  background-color: #e9f7ff;
+  color: #007bff;
+  font-weight: bold;
 }
 
 .schedule div.past-time {
-    color: #6c757d;
-    text-decoration: line-through;
+  color: #6c757d;
+  text-decoration: line-through;
 }
 
 .schedule div.empty {
-    color: #6c757d;
+  color: #6c757d;
 }
 
 #currentday {
-    background-color: rgb(34, 69, 146);
-    color: #fff;
-    padding: 10px;
-    width: 150px;
-    border-radius: 50%;
-    }
-
-    #current-date {
-        color: #fff;
-     }
-
-     .final {
-        color: #fff;
-        width: 100%;
-        padding: 10px;
-        text-align: center;
-     }
-
-     .final button {
-        color: #fff;
-        background-color: darkblue;
-        padding: 10px;
-        font-weight: bolder;
-     }
-
-   
-
-
-.termin {
-width: 100%;
-padding: 10px;
+  background-color: rgb(34, 69, 146);
+  color: #fff;
+  padding: 10px;
+  width: 150px;
+  border-radius: 50%;
 }
 
-.termin  h1 {
-    width: 100%;
-    text-align: center;
-    padding: 5px;
+#current-date {
+  color: #fff;
+}
+
+.final {
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  background: #f9faff;
+}
+
+.final button {
+  color: #fff;
+  background-color: darkblue;
+  padding: 10px;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.termin {
+  width: 100%;
+  padding: 10px;
+}
+
+.termin h1 {
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  font-size: 16px;
+  background-color: darkred;
+  color: white;
 }
 
 .termin .termindata {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px;
 }
 
-.termin .termindata  label {
-font-weight: bolder;
+.termin .termindata label {
+  font-weight: bolder;
 }
-
 
 .termin .termindatamed {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
 }
 
-.termin .termindatamed  label {
-font-weight: bolder;
-padding: 5px;
-border: 20px;
-background-color: lightblue;
+.termin .termindatamed label {
+  font-weight: bolder;
+  padding: 5px;
+  border: 20px;
+  background-color: lightblue;
 }
 
-
-.termin   .datum {
-   color: #fff;
-   background-color: rgb(1, 1, 49);
+.termin .datum {
+  color: #fff;
+  background-color: rgb(1, 1, 49);
 }
 
 .schedule div.highlight {
-    background-color: rgb(2, 61, 2);
-    color: white; 
-  }
+  background-color: rgb(2, 61, 2);
+  color: white;
+}
+
+.terminnew {
+  width: 100%;
+}
+
+.terminnew h1 {
+  background-color: darkgreen;
+  color: white;
+  padding: 5px;
+  text-align: left;
+}
+.terminnew h1 i {
+  padding-right: 10px;
+}
+.terminnew .terminnewdata {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Create 3 equal columns */
+  gap: 10px; /* Space between grid items */
+  padding: 20px; /* Padding around the grid */
+}
+.terminnew .terminnewdata label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.rredcol {
+color: darkred;}

@@ -7,15 +7,20 @@ interface Medication {
 
 const Rezeptver: React.FC = () => {
   const [selectedMedications, setSelectedMedications] = useState<string[]>([]);
-  const [CurrentdMedications, setCurrentMedications] = useState<string[] | null>(null);
+  const [CurrentdMedications, setCurrentMedications] = useState<
+    string[] | null
+  >(null);
 
   const [status, setStatus] = useState("");
   const [isApproved, setIsApproved] = useState(false);
 
   const medications: Medication[] = [
-    { value: "med1", label: "Medikament 1" },
-    { value: "med2", label: "Medikament 2" },
-    { value: "med3", label: "Medikament 3" },
+    { value: "aspirin", label: "Aspirin" },
+    { value: "ibuprofen", label: "Ibuprofen" },
+    { value: "acetaminophen", label: "Acetaminophen" },
+    { value: "metformin", label: "Metformin" },
+    { value: "lisinopril", label: "Lisinopril" },
+    { value: "simvastatin", label: "Simvastatin" },
     // Add more medications as needed
   ];
 
@@ -42,48 +47,58 @@ const Rezeptver: React.FC = () => {
   };
 
   return (
-    <div className="rezpage">
-      <h1>Rezeptverwaltung</h1>
-      <form onSubmit={handleFormSubmit}>
-        <fieldset>
-          <legend>Wählen Sie Medikamente:</legend>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            {medications.map((medication) => (
-              <li key={medication.value}>
+    <div className="Gesdiv">
+      <div className="Titles">
+        <h1>Rezeptverwaltung</h1>
+      </div>
+      <div className="rezpage">
+        <form onSubmit={handleFormSubmit}>
+          <fieldset>
+            <legend>Wählen Sie Medikamente:</legend>
+            <ul style={{ listStyleType: "none", padding: 0 }}>
+              {medications.map((medication) => (
+                <li key={medication.value}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={medication.value}
+                      checked={selectedMedications.includes(medication.value)}
+                      onChange={() => handleCheckboxChange(medication.value)}
+                    />
+                    <i className="fas fa-pills medicine-icon medicine"></i>
+
+                    {medication.label}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+          <br />
+          <button type="submit">Rezept anfordern</button>
+        </form>
+
+        {CurrentdMedications && (
+          <div className="terminnew">
+            <h1>
+              <i className="fas fa-medkit"></i>
+              Rezeptver
+            </h1>
+
+            <div className="terminnewdata">
+              {CurrentdMedications.map((med) => (
                 <label>
-                  <input
-                    type="checkbox"
-                    value={medication.value}
-                    checked={selectedMedications.includes(medication.value)}
-                    onChange={() => handleCheckboxChange(medication.value)}
-                  />
-                  {medication.label}
+                  <i className="fas fa-pills medicine-icon medicine rredcol"></i>
+                  {med}
                 </label>
-              </li>
-            ))}
-          </ul>
-        </fieldset>
-        <br />
-        <button type="submit">Rezept anfordern</button>
-      </form>
-      {status && (
-        <div className={`status ${isApproved ? "approved" : "pending"}`}>
-          {status}
-        </div>
-      )}
+              ))}
+            </div>
 
-      {CurrentdMedications && (
-        <div className="termin">
-          <h1>  Rezeptver </h1>
-          <h3>   {status} </h3>
-
-          <div className="termindatamed">
-          {CurrentdMedications.map(med => (
-              <label>{med}</label>
-            ))}
+            <div className={`status ${isApproved ? "approved" : "pending"}`}>
+              {status}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
