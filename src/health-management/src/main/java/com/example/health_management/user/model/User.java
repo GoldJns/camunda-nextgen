@@ -1,4 +1,4 @@
-package model;
+package com.example.health_management.user.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

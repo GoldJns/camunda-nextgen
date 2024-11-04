@@ -1,4 +1,4 @@
-package config;
+package com.example.health_management.user.config;
 
 import java.io.IOException;
 
