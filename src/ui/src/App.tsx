@@ -4,7 +4,14 @@ import Pdashboard from "./components/Pateetndashboard/Pdashboard";
 import Terminbuchung from "./components/Pateetndashboard/terminbuchung";
 import Rezeptanforderungen from "./components/Pateetndashboard/rezeptanforderungen";
 import "./App.css";
-
+import {keycloak} from "./keycloak";
+import PrivateRoute from "./PrivateRoute";
+import SecuredPage from "./components/SecuredPage";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import Nav from "./components/Nav";
+import i18n from "./i18n/i18n";
+import { useState } from "react";
+import { I18nextProvider } from "react-i18next";
 
 
 
@@ -60,9 +67,9 @@ function App() {
               />
             </Routes>
           </Router>
+          </I18nextProvider>
         </ReactKeycloakProvider>
     </>
-  );
-}
+)}  
 
 export default App;
