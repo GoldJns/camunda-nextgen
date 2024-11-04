@@ -1,149 +1,142 @@
 .consection {
-  display: flex;
-  max-height: 95vh;
-
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  height: 100vh;
+  background: #f9faff;
 }
 
 .Gesdiv {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  display: grid;
+  grid-template-rows: 1fr 10fr;
   width: 100%;
+  gap: 10px;
+  padding: 10px;
+  height: 100%;
 }
 
-.Gesdiv header {
-  background-color: #edf6ea;
-  padding: 5px;
-  text-align: center;
+.Gesdiv .Titles {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+}
+.Gesdiv .Titles h1 {
+  font-size: 24px;
 }
 
 .Gesdiv main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Two equal columns */
+  grid-template-rows: 5fr 3fr;
+  height: 100%;
+  gap: 10px;
 }
-
-.Gesdiv section {
-  background-color: #fff;
+.Gesdiv main div {
+  background-color: white;
   padding: 10px;
-  margin-bottom: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.Gesdiv main div h3{
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+.Gesdiv main div h2{
+  padding: 10px;
+  text-align: left;
+  font-size: 20px;
+}
+.Gesdiv main .Laborergebnisse {
+  grid-column: 1 / -1;
+}
+.Gesdiv main .pateinRecord .item {
+ font-size: 14px;
+ font-weight: bold;
+ color: rgb(181, 24, 47);
+}
+.Gesdiv main .pateinRecord .item .description{
+  font-size: 12px;
+padding-top: 3px;
+color: black;
+}
+.Gesdiv main .secondcol {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  height: 100%;
   width: 100%;
+  background: #f9faff;
 }
-.Gesdiv section h2 {
-background-color: darkred;
-padding: 5px;
-color: #fff;
-}
-.Gesdiv section h3 {
-    padding: 5px;
-    color: rgb(14, 14, 200);
-}
-.Gesdiv ul {
-  list-style: none;
+
+.Gesdiv main .secondcol .Medikamentenliste {
   padding: 10px;
-
 }
-
-
-
-#krankengeschichte,
-#medikamentenliste,
-#allergien,
-#labortests {
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.shbodz {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 95vh;
-}
-
-.ulitems {
-
-display: flex;
+.Gesdiv main .secondcol .Medikamentenliste .itemlist {
+display: flex ;
 width: 100%;
-justify-content: space-around;
+justify-content: space-between;
 align-items: center;
-padding: 10px;
-}  
-
-.ulitems li {
- background-color: lightblue;
- border-radius: 20px;
- padding: 5px;
-}  
-
-.ulitemss {
-
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    }  
-    
-    .ulitemss li {
-     background-color: lightcoral;
-     border-radius: 20px;
-     padding: 5px;
-    }  
+margin-bottom: 5px;
+font-weight: bold;
+}
+.allergy {
+  color: rgb(211, 164, 153);
+}
+.medicine {
+  color: blue;
+}
 
 
-
- .rezpage  {
+.rezpage {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   width: 100%;
-}    
+  display: grid;
+  grid-template-rows: 1fr 2fr ;
+  gap: 10px;
+  height: 100%;
+}
 .rezpage h1 {
   width: 100%;
   text-align: center;
   background-color: lightblue;
   padding: 5px;
-}  
+}
 .rezpage fieldset {
   width: 100%;
   padding: 15px;
-}  
+}
 .rezpage ul {
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
   gap: 5px;
-}  
+}
 .rezpage ul li {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
   height: 20px;
-}  
+}
 
 .rezpage ul li label {
   width: 100%;
   display: flex;
   gap: 5px;
   height: 20px;
-}  
+}
 .rezpage button {
-width: 100%;
-padding: 10px;
-background-color: rgb(0, 23, 100);
-color: #fff;
-font-weight: bolder;
-} 
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(0, 23, 100);
+  color: #fff;
+  font-weight: bolder;
+}
 .status {
   margin-top: 20px;
   padding: 10px;
@@ -157,4 +150,4 @@ font-weight: bolder;
 .pending {
   background-color: #fff3cd;
   color: #856404;
-}    
+}
