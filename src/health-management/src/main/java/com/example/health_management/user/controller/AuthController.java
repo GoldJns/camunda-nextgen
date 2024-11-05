@@ -20,7 +20,6 @@ import com.example.health_management.user.config.AppUserDetailsService;
 import com.example.health_management.user.config.JwtUtil;
 import com.example.health_management.user.dto.AuthenticationRequestDto;
 import com.example.health_management.user.dto.AuthenticationResponseDto;
-import com.example.health_management.user.dto.UserDto;
 
 
 

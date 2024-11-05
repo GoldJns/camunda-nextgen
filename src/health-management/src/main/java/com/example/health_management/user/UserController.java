@@ -1,19 +1,29 @@
-package com.example.health_management.user.controller;
-
-import java.util.List;
+package com.example.health_management.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.health_management.user.service.UserService;
-
-
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+	@Autowired
+    private UserService userService;
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
+        return userService.registerUser(userDto);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody UserDto loginDto) {
+        return userService.loginUser(loginDto);
+    }
+
 /*
     @Autowired
     private UserService userService;

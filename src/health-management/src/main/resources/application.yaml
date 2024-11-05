@@ -13,6 +13,7 @@ spring:
         hibernate:
             ddl-auto: update
 
+
 camunda:
     client:
         mode: self-managed
@@ -24,6 +25,7 @@ camunda:
         zeebe:
             grpc-address: http://localhost:26500
             rest-address: http://localhost:8080
+
 
 tasklist:
     client:
@@ -46,5 +48,15 @@ process:
         edit:
             process-id: "editHealthRecord"
             
+
+keycloak:
+  auth-server-url: http://localhost:18080/auth
+  realm: camunda-platform
+  resource: health-management
+  credentials:
+    secret: GZD5tavXxp0XnC0XN8vvGomeWbN8IkLQ
+  public-client: false
+  confidential-port: 0
+  use-resource-role-mappings: true
 
   
