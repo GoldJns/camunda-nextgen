@@ -9,6 +9,8 @@ public class AppointmentDTO {
     
     private Long id;
 
+    private long userID;
+
     private String month;
 
     private String day;
