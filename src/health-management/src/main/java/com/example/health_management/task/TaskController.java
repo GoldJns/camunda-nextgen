@@ -3,6 +3,8 @@ package com.example.health_management.task;
 import io.camunda.tasklist.dto.TaskList;
 import io.camunda.tasklist.dto.Variable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

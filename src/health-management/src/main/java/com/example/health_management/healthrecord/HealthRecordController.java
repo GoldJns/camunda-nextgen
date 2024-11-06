@@ -3,6 +3,7 @@ package com.example.health_management.healthrecord;
 import io.camunda.tasklist.dto.Form;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -35,23 +36,6 @@ public class HealthRecordController {
         return ResponseEntity.ok(processInstanceId);
     }
 
-    /*
-     * @PostMapping("/health-records/{id}/edit")
-     * public ResponseEntity<Long> editHealthRecord(@PathVariable Long id,
-     *
-     * @RequestBody HealthRecordDTO healthRecordDTO) {
-     * Long processInstanceId = healthRecordService.startEditHealthRecordProcess(id,
-     * healthRecordDTO);
-     * return ResponseEntity.ok(processInstanceId);
-     * }
-     *
-     * @DeleteMapping("/health-records/{id}")
-     * public ResponseEntity<Long> deleteHealthRecord(@PathVariable Long id) {
-     * Long processInstanceId =
-     * healthRecordService.startDeleteHealthRecordProcess(id);
-     * return ResponseEntity.ok(processInstanceId);
-     * }
-     */
     @GetMapping("/form")
     public ResponseEntity<Form> getForm(
             @RequestParam(value = "formId") String formId,

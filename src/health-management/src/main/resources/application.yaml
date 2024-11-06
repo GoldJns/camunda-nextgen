@@ -16,7 +16,9 @@ spring:
         oauth2:
             resourceserver:
                 jwt:
-                    issuer-uri: http://localhost:18080/auth/realms/camunda-platform
+                    issuer-uri: http://keycloak:18080/auth/realms/camunda-platform
+
+
 
 camunda:
     client:
@@ -25,7 +27,7 @@ camunda:
             client-id: ${ZEEBE_CLIENT_ID}
             client-secret: ${ZEEBE_CLIENT_SECRET}  
             audience: zeebe-api
-            issuer: http://localhost:18080/auth/realms/camunda-platform/protocol/openid-connect/token  
+            issuer: http://keycloak:18080/auth/realms/camunda-platform/protocol/openid-connect/token
         zeebe:
             grpc-address: http://localhost:26500
             rest-address: http://localhost:8080
@@ -36,7 +38,7 @@ tasklist:
         profile: oidc
         enabled: true
         base-url: http://localhost:8082
-        auth-url: http://localhost:18080/auth/realms/camunda-platform/protocol/openid-connect/token
+        auth-url: http://keycloak:18080/auth/realms/camunda-platform/protocol/openid-connect/token
         client-id: ${TASKLIST_CLIENT_ID}
         client-secret: ${TASKLIST_CLIENT_SECRET}
         audience: tasklist-api
@@ -52,3 +54,8 @@ process:
             process-id: "createHealthRecord"
         edit:
             process-id: "editHealthRecord"
+
+logging:
+    level:
+        org.springframework.web: DEBUG
+        org.springframework: DEBUG
