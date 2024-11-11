@@ -2,7 +2,6 @@
   "name": "camunda-ui-test",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -11,6 +10,7 @@
   },
   "dependencies": {
     "@react-keycloak/web": "^3.4.0",
+    "@types/keycloak-js": "^2.5.4",
     "i18next": "^23.15.2",
     "i18next-browser-languagedetector": "^8.0.0",
     "keycloak-js": "^26.0.5",

@@ -36,14 +36,15 @@ const Nav = () => {
                       Login
                     </button>
                   )}
-
                   {!!keycloak.authenticated && (
                     <button
                       type="button"
                       className="text-blue-800"
                       onClick={() => keycloak.logout()}
                     >
-                      Logout ({keycloak.tokenParsed.preferred_username})
+                      {/* 
+                      // @ts-ignore */}
+                      Logout ({keycloak?.tokenParsed?.preferred_username})
                     </button>
                   )}
                 </div>
