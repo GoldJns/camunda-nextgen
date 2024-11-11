@@ -51,7 +51,7 @@ const Schedule: React.FC = () => {
   const generateSchedule = () => {
     const formattedCurrentDate = formatDate(currentDate); 
 
-    const scheduleElements = [];
+    const scheduleElements: JSX.Element[]  = [];
     for (let hour = 8; hour <= 16; hour++) {
       const appointmentTime = `${hour}:00`;
       const formattedDate = formatDate(currentDate);
