@@ -185,7 +185,8 @@ There are two bridge networks:
 - `camunda-platform`: Used by all the platform services like Zeebe, Operate, Tasklist, etc.
 - `identity-network`: Specifically for identity-related services like Keycloak and Identity.
 
-For more details on each service confi
+
+
 
 
 
@@ -243,6 +244,15 @@ Each backend service is a Spring Boot application. You can run them independentl
 This will start the service on the default port (usually `8080`), and you can test it via the browser or Postman, depending on the service.
 
 If you want to run all services together, it's recommended to use Docker Compose.
+
+
+## Camunda Identity
+
+The custom ui we build includes a user management that is directly linked to the camunda identy management. So therefore camunda identity needs to be configured properly.
+When starting the Identity container the user should register the ui as a custom client application. The given client id can be configured in `keycloak.ts` in the ui project.
+When you click on login the applications redirects you to authenticate, afterwards you are redirected to the application where you can proceed.
+
+
 
 ## Useful Commands
 
@@ -307,7 +317,7 @@ Here are some of the most common commands to manage your project:
   
 - **Service not responding**: Check the logs of the individual services with `docker-compose logs [service-name]`.
 
-- **React UI not showing up**: Verify that the UI server is running on `http://localhost:3000`, and check the browser's console for any errors.
+- **React UI not showing up**: Verify that the UI server is running on `http://localhost:5173`, and check the browser's console for any errors.
 
 ## License
 
