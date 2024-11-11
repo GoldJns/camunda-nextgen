@@ -1,0 +1,26 @@
+service:
+  type: LoadBalancer
+  port: 8080
+  targetPort: 8080
+
+
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  registry: ghcr.io/goldjns
+  repository: health-management
+  tag: v0.4.12
+  pullPolicy: "Always"
+
+containerPort: 8080
+
+configMap:
+  server: helm-database-service
+  name: mysql-config-map
+  username: custom
+  dburl: jdbc:mysql://helm-database-service:3306/rateme_swtp
+  dbname: rateme_swtp
+
+  

@@ -1,0 +1,12 @@
+service:
+  targetPort: 80
+  serviceType: ClusterIP
+  restartPolicy: Always
+
+configMapName: ui-config-map
+
+replicas: 1
+image:
+  registry: 
+  repository: ui
+  tag: 0.4.12
