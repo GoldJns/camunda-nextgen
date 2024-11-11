@@ -74,7 +74,26 @@ npm install
 ```
 ## Starting the Application
 
-### 1. Start Docker Compose Stack
+### 1. Execute run scripts
+
+There are multiple run scripts.
+
+The `run.sh` script is the main entry point for starting the entire project. It orchestrates the execution of the Docker container, the backend services, and the UI. Running `run.sh` will execute the following:
+
+- Start the Docker services using `run-docker.sh`
+- Start the backend services located in the `src` directory using `run-backend.sh`
+- Start the frontend UI using `run-ui.sh`
+
+
+The run script can be executed like this
+
+```sh
+  chmod +x ./run.sh && ./run.sh
+```
+
+If you want to run backend or frontend in different shells you can start the script seperately, it works like the example above.
+
+### 2. Start Docker Compose Stack
 
 To bring up all services, including Camunda 8, use Docker Compose. From the root of your project:
 
@@ -82,6 +101,8 @@ To bring up all services, including Camunda 8, use Docker Compose. From the root
 docker-compose up
 ```
 
+It is important to mention that the `.env` files should be available before starting the containers. Take a look at [SECURITY.md](./)
+ 
 This will pull the necessary Docker images and start all containers (including Camunda and your services). The process may take some time, depending on the size of the images.
 
 ### Services Overview
