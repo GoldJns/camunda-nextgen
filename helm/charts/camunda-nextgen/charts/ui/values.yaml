@@ -9,4 +9,4 @@ replicas: 1
 image:
   registry: 
   repository: ui
-  tag: 0.4.12
+  tag: v0.8.1
