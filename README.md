@@ -29,10 +29,11 @@ The project is structured as follows:
 
 ```
 /project-root
+├── /.github/workflows         # Github workflows, e.g. release workflow or image push
 ├── /src
-│   ├── /health-management     (Spring Boot app)
-│   ├── /userportal            (Spring Boot app)
-│   ├── /ui                    (React + Vite-based UI)
+│   ├── /health-management     # Spring Boot app
+│   ├── /userportal            # Spring Boot app
+│   ├── /ui                    # React + Vite-based UI
 │
 ├── docker-compose.yml         # Docker Compose file to start all services
 ```
@@ -84,6 +85,14 @@ docker-compose up
 This will pull the necessary Docker images and start all containers (including Camunda and your services). The process may take some time, depending on the size of the images.
 
 ### Services Overview
+
+Not all services listed in the Docker Compose definition are required to run Camunda. We suggest starting with the essential services:
+
+```bash
+    docker compose up init db zeebe operate identity postgres keycloak opensearch
+```
+
+but you can also choose the ones that best suit your needs
 
 Here is a brief description of each service:
 
