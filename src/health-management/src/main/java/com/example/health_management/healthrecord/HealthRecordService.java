@@ -21,6 +21,8 @@ public class HealthRecordService {
     private String createHealthRecordProcessId;
     @Value("${process.health-record.edit.process-id}")
     private String editHealthRecordProcessId;
+    @Value("${process.health-record.delete.process-id}")
+    private String deleteHealthRecordProcessId;
 
     private final TaskListClient tasklistClient;
     private final ZeebeClient zeebeClient;
@@ -54,12 +56,16 @@ public class HealthRecordService {
         return event.getProcessInstanceKey();
     }
 
-/*
-    public Long startDeleteHealthRecordProcess(Long id) {
-        
-        return null;
+    public Long startDeleteHealthRecordProcess(String username) {
+        var event = zeebeClient.newCreateInstanceCommand()
+                .bpmnProcessId(deleteHealthRecordProcessId)
+                .latestVersion()
+                .variables(Map.of("username", username))
+                .send()
+                .join();
+        LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
+        return event.getProcessInstanceKey();
     }
-*/
 
     public void storeRecord(Map<String, Object> variables) {
         HealthRecordEntity healthRecord = new HealthRecordEntity();
@@ -72,6 +78,11 @@ public class HealthRecordService {
         HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(variables.get("username").toString()).get(0);
         setVariables(healthRecord, variables);
         healthRecordRepository.save(healthRecord);
+    }
+
+    public void deleteRecord(String patientID) {
+        HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(patientID).get(0);
+        healthRecordRepository.delete(healthRecord);
     }
 
     private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables){

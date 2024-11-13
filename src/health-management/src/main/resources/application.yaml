@@ -47,3 +47,5 @@ process:
             process-id: "createHealthRecord"
         edit:
             process-id: "editHealthRecord"
+        delete:
+            process-id: "deleteHealthRecord"

@@ -25,6 +25,6 @@ public class DeleteHealthRecordHandler {
 
         String patientID = (String) variables.get("patientID");
 
-        // healthRecordService.deleteHealthRecord(patientID);
+        healthRecordService.deleteRecord(patientID);
     }
 }

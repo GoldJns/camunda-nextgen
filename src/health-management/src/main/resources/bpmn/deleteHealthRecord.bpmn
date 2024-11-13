@@ -22,7 +22,7 @@
       <bpmn:incoming>Flow_0vx8vrv</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0vx8vrv" name="no" sourceRef="Gateway_0fc5dzw" targetRef="Event_0smeptj">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasleft = false</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasLeft = false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_1jgo2xm" name="delete health record">
       <bpmn:extensionElements>
@@ -32,7 +32,7 @@
       <bpmn:outgoing>Flow_13nelw1</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0x95cg6" name="yes" sourceRef="Gateway_0fc5dzw" targetRef="Activity_1jgo2xm">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasleft = true</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasLeft = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_16b2a4j" name="health record deleted">
       <bpmn:incoming>Flow_13nelw1</bpmn:incoming>
