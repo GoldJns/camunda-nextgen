@@ -29,18 +29,16 @@ public class PatientLeftPracticeCheckHandler {
         // check in DB if user exists, true or false
         Boolean hasLeft = null;
 
-        if (hasLeft) {
+        if (!hasLeft) {
             LOG.info("Deleting health record failed, patient still in practice, patient ID {}", patientID);
             client.newCompleteCommand(job.getKey())
-                    .variables(Collections.singletonMap("success", false))
+                    .variables(Collections.singletonMap("hasLeft", false))
                     .send()
                     .join();
         }
         client.newCompleteCommand(job.getKey())
-                .variables(Collections.singletonMap("success", true))
+                .variables(Collections.singletonMap("hasLeft", true))
                 .send()
                 .join();
-
-        // healthRecordService.deleteHealthRecord(patientID);
     }
 }
