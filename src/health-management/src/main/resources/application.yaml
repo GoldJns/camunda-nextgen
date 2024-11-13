@@ -12,6 +12,13 @@ spring:
     jpa:
         hibernate:
             ddl-auto: update
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://keycloak:18080/auth/realms/camunda-platform
+
+
 
 camunda:
     client:
@@ -49,3 +56,8 @@ process:
             process-id: "editHealthRecord"
         delete:
             process-id: "deleteHealthRecord"
+
+logging:
+    level:
+        org.springframework.web: DEBUG
+        org.springframework: DEBUG
