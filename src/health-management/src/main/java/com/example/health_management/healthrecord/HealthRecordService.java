@@ -92,6 +92,8 @@ public class HealthRecordService {
         healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
     }
 
+    public Boolean patientHasLeft(String username) { return healthRecordRepository.patientHasLeft(username); }
+
     public Form getForm(String formId, String definitionId) {
         Form form = new Form();
         LOG.info(formId);
@@ -102,4 +104,5 @@ public class HealthRecordService {
         }
         return form;
     }
+
 }

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/camunda-nextgen.iml" filepath="$PROJECT_DIR$/.idea/camunda-nextgen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/health-management/health-management.iml" filepath="$PROJECT_DIR$/src/health-management/health-management.iml" />
     </modules>
   </component>
 </project>

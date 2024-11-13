@@ -6,10 +6,12 @@ import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Map;
 
+@Component
 public class PatientLeftPracticeCheckHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(AdminReviewHandler.class);
@@ -26,8 +28,7 @@ public class PatientLeftPracticeCheckHandler {
 
         String patientID = (String) variables.get("patientID");
 
-        // check in DB if user exists, true or false
-        Boolean hasLeft = null;
+        Boolean hasLeft = healthRecordService.patientHasLeft(patientID);
 
         if (!hasLeft) {
             LOG.info("Deleting health record failed, patient still in practice, patient ID {}", patientID);

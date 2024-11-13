@@ -11,4 +11,5 @@ public interface HealthRecordRepository extends JpaRepository<HealthRecordEntity
 
     public List<HealthRecordEntity> findByUsername(String username);
 
+    public Boolean patientHasLeft(String username);
 }
