@@ -33,7 +33,7 @@ public class RedundantHealthRecordCheckHandler {
                     .send()
                     .join();
         }else {
-            LOG.error("Redundant health record check failed for Patient username {}", username);
+            LOG.error("Creating health record failed. Health record already exists for patient username {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("exists", true))
                     .send()

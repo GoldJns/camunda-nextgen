@@ -39,8 +39,6 @@ public class AdminReviewHandler {
         String healthInsuranceName = (String) variables.get("healthInsuranceName");
         LOG.info("Received healthInsuranceName: {}", healthInsuranceName);
 
-
-
         if (!healthInsuranceList.contains(healthInsuranceName)) {
             LOG.info("Health Insurance validation failed for Patient ID {}", patientID);
             client.newCompleteCommand(job.getKey())
