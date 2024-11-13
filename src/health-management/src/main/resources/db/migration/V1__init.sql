@@ -19,7 +19,7 @@ CREATE TABLE visits (
 
 CREATE TABLE appointment (
                         id SERIAL PRIMARY KEY,
-                        userID INTEGER,
+                        userID varchar(36),
                         month varchar(255),
                         day varchar(255),
                         date DATE,

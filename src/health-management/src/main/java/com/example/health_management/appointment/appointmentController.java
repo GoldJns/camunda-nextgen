@@ -19,10 +19,16 @@ public class appointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @PostMapping
-    public ResponseEntity<?> createAppointment(@RequestBody AppointmentEntity appointment) {
-        AppointmentEntity apponit = appointmentService.saveOrUpdate(appointment);
-        return new ResponseEntity<>(apponit, HttpStatus.CREATED);
+    @PostMapping("/create/{userID}")
+    public ResponseEntity<Long> createHealthRecord(@PathVariable String userID) {
+
+        Long processInstanceId = appointmentService.startCreateAppointmentProcess(userID);
+        if (processInstanceId == null) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(null);
+        }
+        return ResponseEntity.ok(processInstanceId);
     }
 
     @GetMapping("/edit/{userID}")

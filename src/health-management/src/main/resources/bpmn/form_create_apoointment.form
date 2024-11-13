@@ -1,0 +1,59 @@
+{
+  "components": [
+    {
+      "label": "Month",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1cc5xg5",
+        "columns": null
+      },
+      "id": "Field_0fshz2o",
+      "key": "textfield_pl523x"
+    },
+    {
+      "label": "Day",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0mlbcr1",
+        "columns": null
+      },
+      "id": "Field_13v86fw",
+      "key": "textfield_kdgwfs"
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Date",
+      "label": "Date time",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_1mwmqkg",
+        "columns": null
+      },
+      "id": "Field_1lg6zyk",
+      "key": "datetime_odclll"
+    },
+    {
+      "subtype": "time",
+      "label": "Date time",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_03t2kfb",
+        "columns": null
+      },
+      "id": "Field_14owzc9",
+      "key": "datetime_gv1quo",
+      "timeLabel": "Time",
+      "timeSerializingFormat": "utc_offset",
+      "timeInterval": 15
+    }
+  ],
+  "type": "default",
+  "id": "form_create_apoointment",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.28.0"
+  },
+  "schemaVersion": 16
+}

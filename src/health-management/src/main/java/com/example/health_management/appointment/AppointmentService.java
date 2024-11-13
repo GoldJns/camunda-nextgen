@@ -52,22 +52,22 @@ public class AppointmentService {
         appointmentRepository.delete(appointment);
     }
     
-    public Long startCreateAppointmentProcess(String username) {
+    public Long startCreateAppointmentProcess(String userID) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(createAppointmentProcessId)
                 .latestVersion()
-                .variables(Map.of("username", username))
+                .variables(Map.of("userID", userID))
                 .send()
                 .join();
         log.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
         return event.getProcessInstanceKey();
     }
 
-    public Long startEditAppointmentProcess(String username) {
+    public Long startEditAppointmentProcess(String userID) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(editAppointmentProcessId)
                 .latestVersion()
-                .variables(Map.of("username", username))
+                .variables(Map.of("userID", userID))
                 .send()
                 .join();
         log.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
