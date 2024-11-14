@@ -2,6 +2,8 @@ package com.example.health_management.healthrecord;
 
 import com.example.health_management.TaskListClient;
 import com.example.health_management.healthrecord.model.HealthRecordEntity;
+import com.example.health_management.user.UserEntity;
+import com.example.health_management.user.UserService;
 import io.camunda.tasklist.dto.Form;
 import io.camunda.tasklist.exception.TaskListException;
 import io.camunda.zeebe.client.ZeebeClient;
@@ -27,10 +29,12 @@ public class HealthRecordService {
 
     private final ZeebeClient zeebeClient;
     private final HealthRecordRepository healthRecordRepository;
+    private final UserService userService;
 
-    public HealthRecordService(ZeebeClient zeebeClient, HealthRecordRepository healthRecordRepository) {
+    public HealthRecordService(ZeebeClient zeebeClient, HealthRecordRepository healthRecordRepository, UserService userService) {
         this.zeebeClient = zeebeClient;
         this.healthRecordRepository = healthRecordRepository;
+        this.userService = userService;
     }
 
     public Long startCreateHealthRecordProcess(String username) {
@@ -96,9 +100,11 @@ public class HealthRecordService {
     }
 
     private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables){
+        UserEntity user = userService.findUser(healthRecord.getUsername());
         healthRecord.setAllergies(variables.get("allergies").toString());
         healthRecord.setChronicConditions(variables.get("chronicConditions").toString());
         healthRecord.setSurgeries(variables.get("surgeries").toString());
         healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
+        healthRecord.setUserId(user.getId());
     }
 }

@@ -1,14 +1,10 @@
 package com.example.health_management.healthrecord.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +14,9 @@ public class HealthRecordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -31,14 +30,14 @@ public class HealthRecordEntity {
     @Column(name = "surgeries")
     private String surgeries;
 
-    @Column(name = "health_insurance", nullable = false)
+    @Column(name = "health_insurance")
     private String healthInsurance;
 
-    @Column(name = "hasleft", nullable = false)
+    @Column(name = "has_left", nullable = false)
     private boolean hasLeft;
 
-    public HealthRecordEntity() {
-    }
+    public HealthRecordEntity() {}
+
 
     public Long getId() {
         return id;
@@ -46,6 +45,14 @@ public class HealthRecordEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -56,24 +63,36 @@ public class HealthRecordEntity {
         this.username = username;
     }
 
-    public String getHealthInsurance() {
-        return healthInsurance;
-    }
-
-    public void setHealthInsurance(String healthInsurance) {
-        this.healthInsurance = healthInsurance;
+    public String getAllergies() {
+        return allergies;
     }
 
     public void setAllergies(String allergies) {
         this.allergies = allergies;
     }
 
+    public String getChronicConditions() {
+        return chronicConditions;
+    }
+
     public void setChronicConditions(String chronicConditions) {
         this.chronicConditions = chronicConditions;
     }
 
+    public String getSurgeries() {
+        return surgeries;
+    }
+
     public void setSurgeries(String surgeries) {
         this.surgeries = surgeries;
+    }
+
+    public String getHealthInsurance() {
+        return healthInsurance;
+    }
+
+    public void setHealthInsurance(String healthInsurance) {
+        this.healthInsurance = healthInsurance;
     }
 
     public boolean getHasLeft() {
