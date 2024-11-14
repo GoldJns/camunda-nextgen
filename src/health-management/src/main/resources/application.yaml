@@ -57,7 +57,7 @@ process:
         delete:
             process-id: "deleteHealthRecord"
 
-logging:
-    level:
-        org.springframework.web: DEBUG
-        org.springframework: DEBUG
+#logging:
+#    level:
+#        org.springframework.web: DEBUG
+#        org.springframework: DEBUG

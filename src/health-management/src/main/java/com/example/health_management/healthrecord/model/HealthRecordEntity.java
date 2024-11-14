@@ -1,11 +1,7 @@
 package com.example.health_management.healthrecord.model;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,6 +33,9 @@ public class HealthRecordEntity {
 
     @Column(name = "health_insurance", nullable = false)
     private String healthInsurance;
+
+    @Column(name = "hasleft", nullable = false)
+    private boolean hasLeft;
 
     @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Visit> visits = new ArrayList<>();
@@ -92,5 +91,13 @@ public class HealthRecordEntity {
 
     public void setSurgeries(String surgeries) {
         this.surgeries = surgeries;
+    }
+
+    public boolean getHasLeft() {
+        return hasLeft;
+    }
+
+    public void setHasLeft(boolean hasLeft) {
+        this.hasLeft = hasLeft;
     }
 }

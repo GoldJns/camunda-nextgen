@@ -26,12 +26,12 @@ public class PatientLeftPracticeCheckHandler {
         LOG.info("Handling check if patient has left practice for process instance {}", job.getProcessInstanceKey());
         Map<String, Object> variables = job.getVariablesAsMap();
 
-        String patientID = (String) variables.get("patientID");
+        String username = variables.get("username").toString();
 
-        Boolean hasLeft = healthRecordService.patientHasLeft(patientID);
+        Boolean hasLeft = healthRecordService.patientHasLeft(username);
 
         if (!hasLeft) {
-            LOG.info("Deleting health record failed, patient still in practice, patient ID {}", patientID);
+            LOG.info("Deleting health record failed, patient still in practice, patient ID {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("hasLeft", false))
                     .send()

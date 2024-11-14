@@ -35,12 +35,12 @@ public class AdminReviewHandler {
         LOG.info("Handling admin review for process instance {}", job.getProcessInstanceKey());
         Map<String, Object> variables = job.getVariablesAsMap();
 
-        String patientID = (String) variables.get("patientID");
+        String username = (String) variables.get("patientID");
         String healthInsuranceName = (String) variables.get("healthInsuranceName");
         LOG.info("Received healthInsuranceName: {}", healthInsuranceName);
 
         if (!healthInsuranceList.contains(healthInsuranceName)) {
-            LOG.info("Health Insurance validation failed for Patient ID {}", patientID);
+            LOG.info("Health Insurance validation failed for username {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("success", false))
                     .send()

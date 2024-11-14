@@ -80,9 +80,14 @@ public class HealthRecordService {
         healthRecordRepository.save(healthRecord);
     }
 
-    public void deleteRecord(String patientID) {
-        HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(patientID).get(0);
+    public void deleteRecord(String username) {
+        HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(username).get(0);
         healthRecordRepository.delete(healthRecord);
+    }
+
+    public Boolean patientHasLeft(String username) {
+        HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(username).get(0);
+        return healthRecord.getHasLeft();
     }
 
     private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables){
@@ -91,8 +96,6 @@ public class HealthRecordService {
         healthRecord.setSurgeries(variables.get("surgeries").toString());
         healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
     }
-
-    public Boolean patientHasLeft(String username) { return healthRecordRepository.patientHasLeft(username); }
 
     public Form getForm(String formId, String definitionId) {
         Form form = new Form();

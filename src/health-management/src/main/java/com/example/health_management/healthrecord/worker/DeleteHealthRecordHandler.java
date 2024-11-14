@@ -6,9 +6,10 @@ import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
-
+@Component
 public class DeleteHealthRecordHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(AdminReviewHandler.class);
@@ -23,8 +24,8 @@ public class DeleteHealthRecordHandler {
         LOG.info("Handling delete health record for process instance {}", job.getProcessInstanceKey());
         Map<String, Object> variables = job.getVariablesAsMap();
 
-        String patientID = (String) variables.get("patientID");
+        String username = (String) variables.get("username");
 
-        healthRecordService.deleteRecord(patientID);
+        healthRecordService.deleteRecord(username);
     }
 }

@@ -7,7 +7,6 @@ CREATE TABLE health_records (
                                 chronic_conditions VARCHAR(255),
                                 surgeries VARCHAR(255),
                                 health_insurance VARCHAR(255),
-                                hasLeft BOOLEAN DEFAULT FALSE NOT NULL,
                                 FOREIGN KEY (username) REFERENCES public.user_entity(username) ON DELETE CASCADE
 );
 
