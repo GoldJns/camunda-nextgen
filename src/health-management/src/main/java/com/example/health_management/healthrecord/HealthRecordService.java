@@ -2,6 +2,7 @@ package com.example.health_management.healthrecord;
 
 import com.example.health_management.TaskListClient;
 import com.example.health_management.healthrecord.model.HealthRecordEntity;
+import com.example.health_management.healthrecord.model.dto.HealthRecordDTO;
 import com.example.health_management.user.UserEntity;
 import com.example.health_management.user.UserService;
 import io.camunda.tasklist.dto.Form;
@@ -97,6 +98,10 @@ public class HealthRecordService {
         HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(username).get(0);
         healthRecord.setHasLeft(true);
         healthRecordRepository.save(healthRecord);
+    }
+
+    public HealthRecordDTO findHealthRecord(String username) {
+        return healthRecordRepository.findByUsername(username).get(0).toDTO();
     }
 
     private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables){

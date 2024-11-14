@@ -1,5 +1,6 @@
 package com.example.health_management.healthrecord;
 
+import com.example.health_management.healthrecord.model.dto.HealthRecordDTO;
 import io.camunda.tasklist.dto.Form;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,15 +37,21 @@ public class HealthRecordController {
         return ResponseEntity.ok(processInstanceId);
     }
 
-      @DeleteMapping("/delete/{username}")
-      public ResponseEntity<Long> deleteHealthRecord(@PathVariable String username) {
-      Long processInstanceId = healthRecordService.startDeleteHealthRecordProcess(username);
-      return ResponseEntity.ok(processInstanceId);
-      }
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<Long> deleteHealthRecord(@PathVariable String username) {
+        Long processInstanceId = healthRecordService.startDeleteHealthRecordProcess(username);
+        return ResponseEntity.ok(processInstanceId);
+    }
 
     @PostMapping("/leavePractice/{username}")
     public ResponseEntity<String> leavePractice(@PathVariable String username) {
         healthRecordService.leavePractice(username);
         return ResponseEntity.ok("Patient marked successfully as left");
+    }
+
+    @GetMapping("/find/{username}")
+    public ResponseEntity<HealthRecordDTO> findHealthRecord(@PathVariable String username) {
+        HealthRecordDTO healthRecord = healthRecordService.findHealthRecord(username);
+        return ResponseEntity.ok(healthRecord);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.health_management.healthrecord.model;
 
+import com.example.health_management.healthrecord.model.dto.HealthRecordDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -101,5 +102,17 @@ public class HealthRecordEntity {
 
     public void setHasLeft(boolean hasLeft) {
         this.hasLeft = hasLeft;
+    }
+
+    public HealthRecordDTO toDTO() {
+        return new HealthRecordDTO(
+                this.id,
+                this.userId,
+                this.username,
+                this.allergies,
+                this.chronicConditions,
+                this.surgeries,
+                this.healthInsurance
+        );
     }
 }
