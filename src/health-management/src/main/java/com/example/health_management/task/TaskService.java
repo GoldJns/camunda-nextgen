@@ -1,6 +1,7 @@
 package com.example.health_management.task;
 
 import com.example.health_management.TaskListClient;
+import io.camunda.tasklist.dto.Form;
 import io.camunda.tasklist.dto.TaskList;
 import io.camunda.tasklist.dto.TaskState;
 import io.camunda.tasklist.dto.Variable;
@@ -57,6 +58,17 @@ public class TaskService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Form getForm(String formId, String definitionId) {
+        Form form = new Form();
+        LOG.info(formId);
+        try {
+            form = tasklistClient.build().getForm(formId, definitionId);
+        } catch (TaskListException e) {
+            e.printStackTrace();
+        }
+        return form;
     }
 
 }

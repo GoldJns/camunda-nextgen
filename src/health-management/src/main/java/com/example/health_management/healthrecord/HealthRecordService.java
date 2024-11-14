@@ -102,16 +102,4 @@ public class HealthRecordService {
         healthRecord.setSurgeries(variables.get("surgeries").toString());
         healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
     }
-
-    public Form getForm(String formId, String definitionId) {
-        Form form = new Form();
-        LOG.info(formId);
-        try {
-            form = tasklistClient.build().getForm(formId, definitionId);
-        } catch (TaskListException e) {
-            e.printStackTrace();
-        }
-        return form;
-    }
-
 }

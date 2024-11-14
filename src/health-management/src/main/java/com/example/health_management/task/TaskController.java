@@ -1,5 +1,6 @@
 package com.example.health_management.task;
 
+import io.camunda.tasklist.dto.Form;
 import io.camunda.tasklist.dto.TaskList;
 import io.camunda.tasklist.dto.Variable;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +49,14 @@ public class TaskController {
 
         List<Variable> variables = taskService.getTaskVariables(taskId);
         return ResponseEntity.ok(variables);
+    }
+
+    @GetMapping("/form")
+    public ResponseEntity<Form> getForm(
+            @RequestParam(value = "formId") String formId,
+            @RequestParam(value = "processDefinitionId") String definitionId
+    ) {
+        Form form = taskService.getForm(formId, definitionId);
+        return ResponseEntity.ok(form);
     }
 }

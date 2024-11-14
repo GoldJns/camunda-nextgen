@@ -3,6 +3,7 @@ package com.example.health_management.healthrecord;
 import io.camunda.tasklist.dto.Form;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -46,14 +47,4 @@ public class HealthRecordController {
         healthRecordService.leavePratice(username);
         return ResponseEntity.ok("Patient marked successfully as left");
     }
-
-    @GetMapping("/form")
-    public ResponseEntity<Form> getForm(
-            @RequestParam(value = "formId") String formId,
-            @RequestParam(value = "processDefinitionId") String definitionId
-    ) {
-        Form form = healthRecordService.getForm(formId, definitionId);
-        return ResponseEntity.ok(form);
-    }
-
 }
