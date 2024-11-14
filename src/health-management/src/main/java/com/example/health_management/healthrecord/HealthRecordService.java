@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -104,7 +105,14 @@ public class HealthRecordService {
         return healthRecordRepository.findByUsername(username).get(0).toDTO();
     }
 
-    private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables){
+    public List<HealthRecordDTO> findAllHealthRecords() {
+        List<HealthRecordEntity> healthRecords = healthRecordRepository.findAll();
+        return healthRecords.stream()
+                .map(HealthRecordEntity::toDTO)
+                .toList();
+    }
+
+    private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables) {
         UserEntity user = userService.findUser(healthRecord.getUsername());
         healthRecord.setAllergies(variables.get("allergies").toString());
         healthRecord.setChronicConditions(variables.get("chronicConditions").toString());

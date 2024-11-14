@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/health-records")
@@ -53,5 +55,11 @@ public class HealthRecordController {
     public ResponseEntity<HealthRecordDTO> findHealthRecord(@PathVariable String username) {
         HealthRecordDTO healthRecord = healthRecordService.findHealthRecord(username);
         return ResponseEntity.ok(healthRecord);
+    }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<List<HealthRecordDTO>> findHealthRecord() {
+        List<HealthRecordDTO> healthRecords = healthRecordService.findAllHealthRecords();
+        return ResponseEntity.ok(healthRecords);
     }
 }
