@@ -1,6 +1,6 @@
 package com.example.health_management.healthrecord.worker;
 
-import com.example.health_management.healthrecord.HealthRecordService;
+import com.example.health_management.healthrecord.service.HealthRecordService;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;

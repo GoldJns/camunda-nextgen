@@ -1,6 +1,7 @@
 package com.example.health_management.healthrecord.worker;
 
 
+import com.example.health_management.healthrecord.service.HealthInsuranceService;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
@@ -8,26 +9,20 @@ import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import com.example.health_management.healthrecord.HealthRecordService;
-
+import com.example.health_management.healthrecord.service.HealthRecordService;
 import java.util.Collections;
 import java.util.Map;
 
 @Component
 public class AdminReviewHandler {
 
-    // Health Insurance List just temporary. A table in the DB will be added for that
-    ArrayList<String> healthInsuranceList = new ArrayList<>(Arrays.asList("Health Insurance A", "Health Insurance B", "Health Insurance C", "Health Insurance D"));
-
     private static final Logger LOG = LoggerFactory.getLogger(AdminReviewHandler.class);
     private final HealthRecordService healthRecordService;
+    private final HealthInsuranceService healthInsuranceService;
 
-    public AdminReviewHandler(HealthRecordService healthRecordService) {
+    public AdminReviewHandler(HealthRecordService healthRecordService, HealthInsuranceService healthInsuranceService) {
         this.healthRecordService = healthRecordService;
+        this.healthInsuranceService = healthInsuranceService;
     }
 
     @JobWorker(type = "adminReview", autoComplete = false)
@@ -35,27 +30,28 @@ public class AdminReviewHandler {
         LOG.info("Handling admin review for process instance {}", job.getProcessInstanceKey());
         Map<String, Object> variables = job.getVariablesAsMap();
 
-        String username = (String) variables.get("patientID");
+        String username = (String) variables.get("username");
         String healthInsuranceName = (String) variables.get("healthInsuranceName");
         LOG.info("Received healthInsuranceName: {}", healthInsuranceName);
 
-        if (!healthInsuranceList.contains(healthInsuranceName)) {
+        Boolean exists = healthInsuranceService.insuranceExists(healthInsuranceName);
+
+        if (!exists) {
             LOG.info("Health Insurance validation failed for username {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("success", false))
                     .send()
                     .join();
+        }else {
+            client.newCompleteCommand(job.getKey())
+                    .variables(Collections.singletonMap("success", true))
+                    .send()
+                    .join();
         }
-        client.newCompleteCommand(job.getKey())
-                .variables(Collections.singletonMap("success", true))
-                .send()
-                .join();
-
         if(job.getBpmnProcessId().equals("createHealthRecord")){
             healthRecordService.storeRecord(variables);
         }else{
             healthRecordService.updateRecord(variables);
         }
-
     }
 }
