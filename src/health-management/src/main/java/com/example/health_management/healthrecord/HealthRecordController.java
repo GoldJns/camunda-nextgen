@@ -44,7 +44,7 @@ public class HealthRecordController {
 
     @PostMapping("/leavePractice/{username}")
     public ResponseEntity<String> leavePractice(@PathVariable String username) {
-        healthRecordService.leavePratice(username);
+        healthRecordService.leavePractice(username);
         return ResponseEntity.ok("Patient marked successfully as left");
     }
 }

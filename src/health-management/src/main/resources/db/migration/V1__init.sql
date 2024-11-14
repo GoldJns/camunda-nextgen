@@ -1,3 +1,5 @@
+ALTER TABLE public.user_entity
+    ADD CONSTRAINT user_entity_username_unique UNIQUE (username);
 
 
 CREATE TABLE health_records (
@@ -9,13 +11,4 @@ CREATE TABLE health_records (
                                 health_insurance VARCHAR(255),
                                 hasLeft BOOLEAN DEFAULT FALSE NOT NULL,
                                 FOREIGN KEY (username) REFERENCES public.user_entity(username) ON DELETE CASCADE
-);
-
-CREATE TABLE visits (
-                        id SERIAL PRIMARY KEY,
-                        health_record_id BIGINT,
-                        date_of_visit DATE NOT NULL,
-                        diagnosis VARCHAR(255),
-                        treatment VARCHAR(255),
-                        FOREIGN KEY (health_record_id) REFERENCES health_records(id) ON DELETE CASCADE
 );

@@ -37,9 +37,6 @@ public class HealthRecordEntity {
     @Column(name = "hasleft", nullable = false)
     private boolean hasLeft;
 
-    @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Visit> visits = new ArrayList<>();
-
     public HealthRecordEntity() {
     }
 
@@ -65,20 +62,6 @@ public class HealthRecordEntity {
 
     public void setHealthInsurance(String healthInsurance) {
         this.healthInsurance = healthInsurance;
-    }
-
-    public List<Visit> getVisits() {
-        return visits;
-    }
-
-    public void addVisit(Visit visit) {
-        visits.add(visit);
-        visit.setHealthRecord(this);
-    }
-
-    public void removeVisit(Visit visit) {
-        visits.remove(visit);
-        visit.setHealthRecord(null);
     }
 
     public void setAllergies(String allergies) {

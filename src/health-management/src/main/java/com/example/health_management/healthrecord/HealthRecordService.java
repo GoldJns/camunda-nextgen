@@ -24,12 +24,11 @@ public class HealthRecordService {
     @Value("${process.health-record.delete.process-id}")
     private String deleteHealthRecordProcessId;
 
-    private final TaskListClient tasklistClient;
+
     private final ZeebeClient zeebeClient;
     private final HealthRecordRepository healthRecordRepository;
 
-    public HealthRecordService(TaskListClient tasklistClient, ZeebeClient zeebeClient, HealthRecordRepository healthRecordRepository) {
-        this.tasklistClient = tasklistClient;
+    public HealthRecordService(ZeebeClient zeebeClient, HealthRecordRepository healthRecordRepository) {
         this.zeebeClient = zeebeClient;
         this.healthRecordRepository = healthRecordRepository;
     }
@@ -90,7 +89,7 @@ public class HealthRecordService {
         return healthRecord.getHasLeft();
     }
 
-    public void leavePratice(String username) {
+    public void leavePractice(String username) {
         HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(username).get(0);
         healthRecord.setHasLeft(true);
         healthRecordRepository.save(healthRecord);
