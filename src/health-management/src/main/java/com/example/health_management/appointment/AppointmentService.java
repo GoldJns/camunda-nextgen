@@ -2,6 +2,7 @@ package com.example.health_management.appointment;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +41,12 @@ public class AppointmentService {
         return appointmentRepository.save(appointment);
     }
 
-    public AppointmentEntity getAppointmentByID(Long id) {
-        return appointmentRepository.findAppointmentByID(id);
+    public Optional<AppointmentEntity> getAppointmentByID(Long id) {
+        return appointmentRepository.findById(id);
     }
 
     public List<AppointmentEntity> getAppointmentByUserID(Long id) {
-        return appointmentRepository.findAppointmentByUserID(id);
+        return appointmentRepository.findByUserID(id);
     }
 
     public void deleteAppointment(AppointmentEntity appointment) {
