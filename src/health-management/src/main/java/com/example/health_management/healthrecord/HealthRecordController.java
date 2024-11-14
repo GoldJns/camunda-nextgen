@@ -36,13 +36,4 @@ public class HealthRecordController {
         return ResponseEntity.ok(processInstanceId);
     }
 
-    @GetMapping("/form")
-    public ResponseEntity<Form> getForm(
-            @RequestParam(value = "formId") String formId,
-            @RequestParam(value = "processDefinitionId") String definitionId
-    ) {
-        Form form = healthRecordService.getForm(formId, definitionId);
-        return ResponseEntity.ok(form);
-    }
-
 }
