@@ -192,14 +192,13 @@ There are two bridge networks:
 
 ### 2. Start Spring Boot Services
 
-In addition to Docker Compose, you can also run each Spring Boot service locally by navigating to each service folder and running:
+In addition to Docker Compose, you can also run the Spring Boot service locally by navigating to each service folder and running:
 
 ```bash
-cd src/service1
+cd src/health-management
 ./mvnw spring-boot:run
 ```
 
-Repeat this for all services you wish to run locally.
 
 ### 3. Start the UI
 
@@ -235,7 +234,7 @@ The UI is built using React and Vite. Here are the commands you'll need for work
 
 ## Service Development
 
-Each backend service is a Spring Boot application. You can run them independently for development and debugging using the following command inside each service directory:
+You can run the services  for development and debugging using the following command:
 
 ```bash
 ./mvnw spring-boot:run
@@ -243,7 +242,6 @@ Each backend service is a Spring Boot application. You can run them independentl
 
 This will start the service on the default port (usually `8080`), and you can test it via the browser or Postman, depending on the service.
 
-If you want to run all services together, it's recommended to use Docker Compose.
 
 
 ## Camunda Identity
