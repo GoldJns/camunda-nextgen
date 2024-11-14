@@ -90,6 +90,12 @@ public class HealthRecordService {
         return healthRecord.getHasLeft();
     }
 
+    public void leavePratice(String username) {
+        HealthRecordEntity healthRecord = healthRecordRepository.findByUsername(username).get(0);
+        healthRecord.setHasLeft(true);
+        healthRecordRepository.save(healthRecord);
+    }
+
     private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables){
         healthRecord.setAllergies(variables.get("allergies").toString());
         healthRecord.setChronicConditions(variables.get("chronicConditions").toString());
