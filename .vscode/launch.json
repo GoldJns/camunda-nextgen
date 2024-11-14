@@ -10,13 +10,13 @@
       "request": "launch",
       "mainClass": "com.example.health_management.HealthManagementApplication",
       "projectName": "health-management",
-      "envFile":"${workspaceFolder}/.env"
+      "envFile":["${workspaceFolder}/.env","${workspaceFolder}/camunda-platform/.env"]
     },
     {
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome against localhost",
-      "url": "http://localhost:8080",
+      "url": "http://localhost:8080/",
       "webRoot": "${workspaceFolder}"
     }
   ]
