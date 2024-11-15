@@ -13,7 +13,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 95vh;
+  height: 100vh;
 margin: 0;
 }
 
@@ -129,8 +129,7 @@ margin: 0;
 }
 
 .loginpage .overlay {
-  background: #ff416c;
-  background: linear-gradient(to right, #ff4b2b, #ff416c) no-repeat 0 0 / cover;
+  background: #f8f6f7;
   color: #fff;
   position: relative;
   left: -100%;

@@ -359,7 +359,7 @@ services:
     profiles: ["", "opensearch"]
     volumes:
       - keycloak-theme:/opt/bitnami/keycloak/themes/identity
-     # - ./keycloak-config:/opt/bitnami/keycloak/data/import
+      # - ./keycloak-config:/opt/bitnami/keycloak/data/import
     ports:
       - "18080:18080"
     environment:

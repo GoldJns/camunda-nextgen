@@ -1,7 +1,22 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "allowImportingTsExtensions": true,
+    "target": "esnext",                             // Modern JavaScript output (ESNext).
+    "useDefineForClassFields": true,                // Ensures class fields are compiled in line with the "class fields" proposal.
+    "lib": ["dom", "esnext"],                       // Include the DOM types and modern JavaScript features.
+    "allowJs": true,                                // Allow JavaScript files to be compiled by TypeScript.
+    "jsx": "react-jsx",                            // Use the new JSX transform (for React 17+).
+    "module": "esnext",                             // Use ES Modules (modern module system).
+    "moduleResolution": "node",                     // Use Node-style module resolution (standard for modern JS projects).
+    "resolveJsonModule": true,                      // Allow importing JSON files as modules.
+    "isolatedModules": true,                        // Ensures each file is treated as an isolated module (required for fast builds in Vite).
+    "noEmit": true,                                 // Prevent output of compiled files (Vite handles the build process).
+    "strict": true,                                 // Enable strict mode for better type safety (recommended).
+    "esModuleInterop": true,                        // Enables interoperability between ESModules and CommonJS.
+    "skipLibCheck": true,                           // Skip type checking of declaration files for faster builds.
+    "forceConsistentCasingInFileNames": true        // Ensure consistent file naming (case-sensitive).
+  },
+  "include": ["src/**/*"],                          // Include all TypeScript files in the src folder.
+  "exclude": ["node_modules", "dist"]               // Exclude node_modules and build output.
 }
