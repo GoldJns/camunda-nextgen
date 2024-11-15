@@ -18,7 +18,7 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @PostMapping("/create/{userID}")
+    @PostMapping("/create/{username}")
     public ResponseEntity<Long> createHealthRecord(@PathVariable String userID) {
 
         Long processInstanceId = appointmentService.startCreateAppointmentProcess(userID);
