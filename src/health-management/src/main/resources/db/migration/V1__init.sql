@@ -3,24 +3,6 @@ CREATE TABLE health_insurances
     name VARCHAR(255) PRIMARY KEY
 );
 
-CREATE TABLE visits (
-                        id SERIAL PRIMARY KEY,
-                        health_record_id BIGINT,
-                        date_of_visit DATE NOT NULL,
-                        diagnosis VARCHAR(255),
-                        treatment VARCHAR(255),
-                        FOREIGN KEY (health_record_id) REFERENCES health_records(id) ON DELETE CASCADE
-);
-
-CREATE TABLE appointment (
-                            id SERIAL PRIMARY KEY,
-                            userID varchar(36),
-                            month varchar(255),
-                            day varchar(255),
-                            date DATE,
-                            time TIME,
-                            FOREIGN KEY (userID) REFERENCES public.user_entity(id) ON DELETE CASCADE
-);
 CREATE TABLE health_records
 (
     id                 SERIAL PRIMARY KEY,
@@ -40,3 +22,13 @@ VALUES ('Health Insurance A'),
        ('Health Insurance B'),
        ('Health Insurance C'),
        ('Health Insurance D');
+
+CREATE TABLE appointment (
+                            id SERIAL PRIMARY KEY,
+                            userID varchar(36),
+                            month varchar(255),
+                            day varchar(255),
+                            date DATE,
+                            time TIME,
+                            FOREIGN KEY (userID) REFERENCES public.user_entity(id) ON DELETE CASCADE
+);
