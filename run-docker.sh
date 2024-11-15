@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo "Starting docker compose stack..."
+echo "Starting Docker Compose stack..."
 
-docker compose up init db zeebe operate identity postgres keycloak opensearch 
+docker compose up init zeebe operate identity postgres keycloak elasticsearch -d

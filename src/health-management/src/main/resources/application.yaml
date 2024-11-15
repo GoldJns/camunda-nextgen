@@ -57,7 +57,8 @@ process:
         delete:
             process-id: "deleteHealthRecord"
 
-#logging:
-#    level:
-#        org.springframework.web: DEBUG
-#        org.springframework: DEBUG
+logging:
+    level:
+        org.springframework.web: INFO
+        org.springframework: WARN
+        io.camunda.zeebe.client.impl.ZeebeCallCredentials: ERROR
