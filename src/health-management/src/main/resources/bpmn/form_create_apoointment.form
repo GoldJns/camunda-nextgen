@@ -8,7 +8,7 @@
         "columns": null
       },
       "id": "Field_0fshz2o",
-      "key": "textfield_pl523x"
+      "key": "month"
     },
     {
       "label": "Day",
@@ -18,7 +18,7 @@
         "columns": null
       },
       "id": "Field_13v86fw",
-      "key": "textfield_kdgwfs"
+      "key": "day"
     },
     {
       "subtype": "date",
@@ -30,10 +30,11 @@
         "columns": null
       },
       "id": "Field_1lg6zyk",
-      "key": "datetime_odclll"
+      "key": "date"
     },
     {
       "subtype": "time",
+      "dateLabel": "Date",
       "label": "Date time",
       "type": "datetime",
       "layout": {
@@ -41,7 +42,7 @@
         "columns": null
       },
       "id": "Field_14owzc9",
-      "key": "datetime_gv1quo",
+      "key": "time",
       "timeLabel": "Time",
       "timeSerializingFormat": "utc_offset",
       "timeInterval": 15

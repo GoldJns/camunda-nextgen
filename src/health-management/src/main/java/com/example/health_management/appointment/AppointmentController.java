@@ -2,6 +2,8 @@ package com.example.health_management.appointment;
 
 import java.util.List;
 
+import com.example.health_management.appointment.AppointmentEntity;
+import com.example.health_management.appointment.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,9 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     @PostMapping("/create/{username}")
-    public ResponseEntity<Long> createHealthRecord(@PathVariable String userID) {
+    public ResponseEntity<Long> createAppointment(@PathVariable String username) {
 
-        Long processInstanceId = appointmentService.startCreateAppointmentProcess(userID);
+        Long processInstanceId = appointmentService.startCreateAppointmentProcess(username);
         if (processInstanceId == null) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)

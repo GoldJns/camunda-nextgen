@@ -53,11 +53,11 @@ public class AppointmentService {
         appointmentRepository.delete(appointment);
     }
     
-    public Long startCreateAppointmentProcess(String userID) {
+    public Long startCreateAppointmentProcess(String username) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(createAppointmentProcessId)
                 .latestVersion()
-                .variables(Map.of("userID", userID))
+                .variables(Map.of("username", username))
                 .send()
                 .join();
         log.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());

@@ -32,17 +32,18 @@
     <bpmn:userTask id="Activity_0x4h856" name="book appointment">
       <bpmn:extensionElements>
         <zeebe:formDefinition formId="form_create_apoointment" />
+        <zeebe:assignmentDefinition assignee="=username" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1m6vvo7</bpmn:incoming>
       <bpmn:outgoing>Flow_1gk320n</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:task id="Activity_04y74xt" name="update doctor calender">
-      <bpmn:incoming>Flow_1gk320n</bpmn:incoming>
-      <bpmn:outgoing>Flow_0qfrj8u</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:endEvent id="Event_011yu6t">
       <bpmn:incoming>Flow_0qfrj8u</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_04y74xt" name="update doctor calender">
+      <bpmn:incoming>Flow_1gk320n</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qfrj8u</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0e9szr6">
@@ -50,12 +51,12 @@
         <dc:Bounds x="190" y="110" width="650" height="270" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0gklkjv_di" bpmnElement="Lane_0gklkjv" isHorizontal="true">
-        <dc:Bounds x="220" y="110" width="620" height="125" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1addu9q_di" bpmnElement="Lane_1addu9q" isHorizontal="true">
         <dc:Bounds x="220" y="235" width="620" height="145" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0gklkjv_di" bpmnElement="Lane_0gklkjv" isHorizontal="true">
+        <dc:Bounds x="220" y="110" width="620" height="125" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -72,12 +73,11 @@
         <dc:Bounds x="510" y="250" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_04y74xt_di" bpmnElement="Activity_04y74xt">
-        <dc:Bounds x="620" y="130" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_011yu6t_di" bpmnElement="Event_011yu6t">
         <dc:Bounds x="762" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0it06bk_di" bpmnElement="Activity_04y74xt">
+        <dc:Bounds x="620" y="130" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1gk320n_di" bpmnElement="Flow_1gk320n">
         <di:waypoint x="550" y="250" />
@@ -85,8 +85,8 @@
         <di:waypoint x="620" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0qfrj8u_di" bpmnElement="Flow_0qfrj8u">
-        <di:waypoint x="720" y="171" />
-        <di:waypoint x="780" y="173" />
+        <di:waypoint x="720" y="169" />
+        <di:waypoint x="780" y="169" />
         <di:waypoint x="780" y="282" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04tyug0_di" bpmnElement="Flow_04tyug0">
