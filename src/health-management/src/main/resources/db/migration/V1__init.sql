@@ -18,3 +18,13 @@ CREATE TABLE visits (
                         treatment VARCHAR(255),
                         FOREIGN KEY (health_record_id) REFERENCES health_records(id) ON DELETE CASCADE
 );
+
+CREATE TABLE appointment (
+                            id SERIAL PRIMARY KEY,
+                            userID varchar(36),
+                            month varchar(255),
+                            day varchar(255),
+                            date DATE,
+                            time TIME,
+                            FOREIGN KEY (userID) REFERENCES public.user_entity(id) ON DELETE CASCADE
+);
