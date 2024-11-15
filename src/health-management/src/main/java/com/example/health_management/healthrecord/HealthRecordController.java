@@ -1,10 +1,12 @@
 package com.example.health_management.healthrecord;
 
-import io.camunda.tasklist.dto.Form;
+import com.example.health_management.healthrecord.model.dto.HealthRecordDTO;
+import com.example.health_management.healthrecord.service.HealthRecordService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -36,4 +38,27 @@ public class HealthRecordController {
         return ResponseEntity.ok(processInstanceId);
     }
 
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<Long> deleteHealthRecord(@PathVariable String username) {
+        Long processInstanceId = healthRecordService.startDeleteHealthRecordProcess(username);
+        return ResponseEntity.ok(processInstanceId);
+    }
+
+    @PostMapping("/leavePractice/{username}")
+    public ResponseEntity<String> leavePractice(@PathVariable String username) {
+        healthRecordService.leavePractice(username);
+        return ResponseEntity.ok("Patient marked successfully as left");
+    }
+
+    @GetMapping("/find/{username}")
+    public ResponseEntity<HealthRecordDTO> findHealthRecord(@PathVariable String username) {
+        HealthRecordDTO healthRecord = healthRecordService.findHealthRecord(username);
+        return ResponseEntity.ok(healthRecord);
+    }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<List<HealthRecordDTO>> findHealthRecord() {
+        List<HealthRecordDTO> healthRecords = healthRecordService.findAllHealthRecords();
+        return ResponseEntity.ok(healthRecords);
+    }
 }

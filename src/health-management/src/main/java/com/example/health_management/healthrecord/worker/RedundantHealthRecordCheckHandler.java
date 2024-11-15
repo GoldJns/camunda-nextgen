@@ -1,6 +1,6 @@
 package com.example.health_management.healthrecord.worker;
 
-import com.example.health_management.healthrecord.HealthRecordRepository;
+import com.example.health_management.healthrecord.repository.HealthRecordRepository;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
@@ -33,7 +33,7 @@ public class RedundantHealthRecordCheckHandler {
                     .send()
                     .join();
         }else {
-            LOG.error("Redundant health record check failed for Patient username {}", username);
+            LOG.error("Creating health record failed. Health record already exists for patient username {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("exists", true))
                     .send()

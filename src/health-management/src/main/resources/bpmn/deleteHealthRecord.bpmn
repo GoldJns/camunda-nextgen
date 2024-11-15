@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_183bnu3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
-  <bpmn:process id="Process_03fegsv" isExecutable="true">
+  <bpmn:process id="deleteHealthRecord" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Requested deleting health record">
       <bpmn:outgoing>Flow_058hpf5</bpmn:outgoing>
     </bpmn:startEvent>
@@ -22,7 +22,7 @@
       <bpmn:incoming>Flow_0vx8vrv</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0vx8vrv" name="no" sourceRef="Gateway_0fc5dzw" targetRef="Event_0smeptj">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasleft = false</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasLeft = false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_1jgo2xm" name="delete health record">
       <bpmn:extensionElements>
@@ -32,7 +32,7 @@
       <bpmn:outgoing>Flow_13nelw1</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0x95cg6" name="yes" sourceRef="Gateway_0fc5dzw" targetRef="Activity_1jgo2xm">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasleft = true</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=hasLeft = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_16b2a4j" name="health record deleted">
       <bpmn:incoming>Flow_13nelw1</bpmn:incoming>
@@ -40,7 +40,7 @@
     <bpmn:sequenceFlow id="Flow_13nelw1" sourceRef="Activity_1jgo2xm" targetRef="Event_16b2a4j" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_03fegsv">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="deleteHealthRecord">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -57,6 +57,12 @@
           <dc:Bounds x="430" y="122" width="42" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0smeptj_di" bpmnElement="Event_0smeptj">
+        <dc:Bounds x="732" y="302" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="717" y="345" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1jgo2xm_di" bpmnElement="Activity_1jgo2xm">
         <dc:Bounds x="550" y="137" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -65,12 +71,6 @@
         <dc:Bounds x="732" y="159" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="718" y="202" width="65" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0smeptj_di" bpmnElement="Event_0smeptj">
-        <dc:Bounds x="732" y="302" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="717" y="345" width="68" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_058hpf5_di" bpmnElement="Flow_058hpf5">

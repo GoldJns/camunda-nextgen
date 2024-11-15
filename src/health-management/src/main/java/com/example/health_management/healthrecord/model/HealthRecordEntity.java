@@ -1,18 +1,11 @@
 package com.example.health_management.healthrecord.model;
 
-
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import jakarta.persistence.CascadeType;
+import com.example.health_management.healthrecord.model.dto.HealthRecordDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +15,9 @@ public class HealthRecordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -35,14 +31,14 @@ public class HealthRecordEntity {
     @Column(name = "surgeries")
     private String surgeries;
 
-    @Column(name = "health_insurance", nullable = false)
+    @Column(name = "health_insurance")
     private String healthInsurance;
 
-    @OneToMany(mappedBy = "healthRecord", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Visit> visits = new ArrayList<>();
+    @Column(name = "has_left", nullable = false)
+    private boolean hasLeft;
 
-    public HealthRecordEntity() {
-    }
+    public HealthRecordEntity() {}
+
 
     public Long getId() {
         return id;
@@ -50,6 +46,14 @@ public class HealthRecordEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -60,6 +64,30 @@ public class HealthRecordEntity {
         this.username = username;
     }
 
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getChronicConditions() {
+        return chronicConditions;
+    }
+
+    public void setChronicConditions(String chronicConditions) {
+        this.chronicConditions = chronicConditions;
+    }
+
+    public String getSurgeries() {
+        return surgeries;
+    }
+
+    public void setSurgeries(String surgeries) {
+        this.surgeries = surgeries;
+    }
+
     public String getHealthInsurance() {
         return healthInsurance;
     }
@@ -68,29 +96,23 @@ public class HealthRecordEntity {
         this.healthInsurance = healthInsurance;
     }
 
-    public List<Visit> getVisits() {
-        return visits;
+    public boolean getHasLeft() {
+        return hasLeft;
     }
 
-    public void addVisit(Visit visit) {
-        visits.add(visit);
-        visit.setHealthRecord(this);
+    public void setHasLeft(boolean hasLeft) {
+        this.hasLeft = hasLeft;
     }
 
-    public void removeVisit(Visit visit) {
-        visits.remove(visit);
-        visit.setHealthRecord(null);
-    }
-
-    public void setAllergies(String allergies) {
-        this.allergies = allergies;
-    }
-
-    public void setChronicConditions(String chronicConditions) {
-        this.chronicConditions = chronicConditions;
-    }
-
-    public void setSurgeries(String surgeries) {
-        this.surgeries = surgeries;
+    public HealthRecordDTO toDTO() {
+        return new HealthRecordDTO(
+                this.id,
+                this.userId,
+                this.username,
+                this.allergies,
+                this.chronicConditions,
+                this.surgeries,
+                this.healthInsurance
+        );
     }
 }

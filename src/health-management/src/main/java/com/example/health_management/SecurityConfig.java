@@ -65,8 +65,16 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(requests -> {
             requests
-                    .requestMatchers("api/health-records/create/**", "api/health-records/delete/**").hasAuthority("Patient")
-                    .requestMatchers("api/health-records/edit/**", "api/tasks/**").hasAnyAuthority("Patient", "Doctor")
+                    .requestMatchers(
+                            "api/health-records/create/**",
+                            "api/health-records/delete/**",
+                            "api/health-records/leave/**",
+                            "api/health-records/find/**").hasAuthority("Patient")
+                    .requestMatchers(
+                            "api/health-records/findAll").hasAnyAuthority( "Doctor")
+                    .requestMatchers(
+                            "api/health-records/edit/**",
+                            "api/tasks/**").hasAnyAuthority("Patient", "Doctor")
                     .anyRequest().authenticated();
         });
 
