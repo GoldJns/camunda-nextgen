@@ -26,6 +26,7 @@ VALUES ('Health Insurance A'),
 CREATE TABLE appointment (
                             id SERIAL PRIMARY KEY,
                             user_id varchar(36),
+                            doc_name varchar(100),
                             month varchar(255),
                             day varchar(255),
                             date DATE,
@@ -47,3 +48,4 @@ INSERT INTO appointment (id, userID, month, day, date, time) VALUES
 (10, '50d46380-82d1-450e-87bf-456ef040dbd4', 'October', 'Wednesday', '2024-10-23', '09:30'),
 (11, '50d46380-82d1-450e-87bf-456ef040dbd4', 'November', 'Thursday', '2024-11-28', '15:00'),
 (12, '50d46380-82d1-450e-87bf-456ef040dbd4', 'December', 'Friday', '2024-12-22', '19:15');
+
