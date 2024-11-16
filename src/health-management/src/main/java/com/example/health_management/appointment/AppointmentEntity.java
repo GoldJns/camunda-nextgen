@@ -1,5 +1,8 @@
 package com.example.health_management.appointment;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +24,11 @@ public class AppointmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
     private String userID;
+
+    @Column(name = "doc_name")
+    private String docName;
 
     @Column(name = "month")
     private String month;
@@ -30,9 +37,9 @@ public class AppointmentEntity {
     private String day;
 
     @Column(name = "date")
-    private String date;
+    private LocalDate date;
     
     @Column(name = "time")
-    private String time;
+    private LocalTime time;
 
 }

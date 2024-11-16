@@ -3,6 +3,8 @@ package com.example.health_management.appointment;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,11 @@ public class AppointmentService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public AppointmentEntity saveOrUpdate(AppointmentEntity appointment) {
+    public AppointmentEntity saveOrUpdate(Map<String, Object> variables, String userID) {
+
+        AppointmentEntity appointment = new AppointmentEntity();
+        appointment.setUserID(userID);
+        setVariables(appointment, variables);
         return appointmentRepository.save(appointment);
     }
 
@@ -47,6 +53,14 @@ public class AppointmentService {
 
     public List<AppointmentEntity> getByUserID(String id) {
         return appointmentRepository.findByUserID(id);
+    }
+
+    public List<AppointmentEntity> findAll() {
+        return appointmentRepository.findAll();
+    }
+
+    public boolean existsByMonthAndDayAndDateAndTime(String month, String day, LocalDate date, LocalTime time) {
+        return appointmentRepository.findByMonthAndDayAndDateAndTime(month, day, date, time) !=null;
     }
 
     public void delete(AppointmentEntity appointment) {
@@ -75,10 +89,10 @@ public class AppointmentService {
         return event.getProcessInstanceKey();
     }
 
-    // private void setVariables(AppointmentEntity appointment, Map<String, Object> variables){
-    //     appointment.setMonth(variables.get("month").toString());
-    //     appointment.setDay(variables.get("day").toString());
-    //     appointment.setDate(variables.get("date").toString());
-    //     appointment.setTime(variables.get("time").toString());
-    // }
+    private void setVariables(AppointmentEntity appointment, Map<String, Object> variables){
+        appointment.setMonth(variables.get("month").toString());
+        appointment.setDay(variables.get("day").toString());
+        appointment.setDate(LocalDate.parse(variables.get("date").toString()));
+        appointment.setTime(LocalTime.parse(variables.get("time").toString()));
+    }
 }
