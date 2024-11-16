@@ -67,12 +67,14 @@ public class SecurityConfig {
             requests
                     .requestMatchers(
                             "api/apoint/create/**",
+                            "api/user/role/Doctor",
                             "api/health-records/create/**",
                             "api/health-records/delete/**",
                             "api/health-records/leave/**",
                             "api/health-records/find/**").hasAuthority("Patient")
                     .requestMatchers(
-                            "api/health-records/findAll").hasAnyAuthority( "Doctor")
+                            "api/health-records/findAll",
+                            "api/user/role/Patient").hasAnyAuthority( "Doctor")
                     .requestMatchers(
                             "api/health-records/edit/**",
                             "api/tasks/**").hasAnyAuthority("Patient", "Doctor")

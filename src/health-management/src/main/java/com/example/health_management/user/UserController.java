@@ -17,8 +17,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/doc")
-    public List<String> getDoctors() {
-        return userService.findDoc();
+    @GetMapping("/role/{role}")
+    public List<String> getAllUserByRole(@PathVariable String role) {
+        return userService.findDoc(role);
     }
 }
