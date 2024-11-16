@@ -17,7 +17,7 @@ import java.util.Map;
 @Component
 public class BookAppointmentHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(validateAppointmentHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BookAppointmentHandler.class);
     private final UserService userService;
     private final AppointmentService appointmentService;
 
@@ -28,7 +28,7 @@ public class BookAppointmentHandler {
 
     @JobWorker(type = "bookAppointment")
     public void handle(JobClient client, ActivatedJob job) {
-        LOG.info("Handling storeAppointment for process instance {}", job.getProcessInstanceKey());
+        LOG.info("Handling bookAppointment for process instance {}", job.getProcessInstanceKey());
         Map<String, Object> variables = job.getVariablesAsMap();
 
         String username = (String) variables.get("username");

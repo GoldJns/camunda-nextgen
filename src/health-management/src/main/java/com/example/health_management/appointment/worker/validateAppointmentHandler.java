@@ -33,14 +33,16 @@ public class validateAppointmentHandler {
                                                             LocalDate.parse(variables.get("date").toString()), 
                                                             LocalTime.parse(variables.get("time").toString()));
 
-        if(availabilty){
+        if(!availabilty){
+            LOG.info("Appointment Available !!!");
             client.newCompleteCommand(job.getKey())
-            .variables(Collections.singletonMap("success", true))
+            .variables(Collections.singletonMap("exists", true))
                 .send()
                 .join();
         }else{
+            LOG.info("Appointment not Available !!!");
             client.newCompleteCommand(job.getKey())
-                .variables(Collections.singletonMap("success", false))
+                .variables(Collections.singletonMap("exists", false))
                 .send()
                 .join();
         }//else
