@@ -71,10 +71,14 @@ public class SecurityConfig {
                             "api/health-records/leave/**",
                             "api/health-records/find/**").hasAuthority("Patient")
                     .requestMatchers(
-                            "api/health-records/findAll").hasAnyAuthority( "Doctor")
+                            "api/health-records/findAll",
+                            "api/tasks/*/assign/*",
+                            "api/tasks/*/unassign").hasAuthority( "Doctor")
                     .requestMatchers(
                             "api/health-records/edit/**",
-                            "api/tasks/**").hasAnyAuthority("Patient", "Doctor")
+                            "api/tasks/*/complete",
+                            "api/tasks/*/variables",
+                            "api/tasks/*").hasAnyAuthority("Patient", "Doctor")
                     .anyRequest().authenticated();
         });
 

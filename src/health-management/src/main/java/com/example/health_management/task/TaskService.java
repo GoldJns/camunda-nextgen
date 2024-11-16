@@ -1,10 +1,7 @@
 package com.example.health_management.task;
 
 import com.example.health_management.TaskListClient;
-import io.camunda.tasklist.dto.Form;
-import io.camunda.tasklist.dto.TaskList;
-import io.camunda.tasklist.dto.TaskState;
-import io.camunda.tasklist.dto.Variable;
+import io.camunda.tasklist.dto.*;
 import io.camunda.tasklist.exception.TaskListException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +37,27 @@ public class TaskService {
         return tasks;
     }
 
+    public Task assignTask(String taskId, String username) {
+        Task task = new Task();
+        try {
+            tasklistClient.build().getTask(taskId).setTaskState(TaskState.CREATED);
+            task = tasklistClient.build().claim(taskId, username, false);
+        } catch (TaskListException e) {
+            e.printStackTrace();
+        }
+        return task;
+    }
+
+    public Task unassignTask(String taskId) {
+        Task task = new Task();
+        try {
+            task = tasklistClient.build().unclaim(taskId);
+        } catch (TaskListException e) {
+            e.printStackTrace();
+        }
+        return task;
+    }
+
     public Boolean completeTask(String taskId, Map<String, Object> variables) {
         LOG.info("Completing task with variables: " + variables);
         try {
@@ -70,5 +88,4 @@ public class TaskService {
         }
         return form;
     }
-
 }
