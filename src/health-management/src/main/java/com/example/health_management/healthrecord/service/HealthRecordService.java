@@ -4,8 +4,9 @@ import com.example.health_management.healthrecord.HealthRecordController;
 import com.example.health_management.healthrecord.repository.HealthRecordRepository;
 import com.example.health_management.healthrecord.model.HealthRecordEntity;
 import com.example.health_management.healthrecord.model.dto.HealthRecordDTO;
-import com.example.health_management.user.UserEntity;
-import com.example.health_management.user.UserService;
+import com.example.health_management.user.model.UserEntity;
+import com.example.health_management.user.service.UserService;
+
 import io.camunda.zeebe.client.ZeebeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
