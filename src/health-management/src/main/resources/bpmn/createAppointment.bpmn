@@ -28,7 +28,7 @@
     <bpmn:sequenceFlow id="Flow_0qfrj8u" sourceRef="Activity_04y74xt" targetRef="Event_011yu6t" />
     <bpmn:sequenceFlow id="Flow_1gk320n" sourceRef="Activity_0x4h856" targetRef="Activity_04y74xt" />
     <bpmn:sequenceFlow id="Flow_04tyug0" sourceRef="StartEvent_1" targetRef="Activity_0liomdw" />
-    <bpmn:serviceTask id="Activity_04y74xt" name="update doctor calender">
+    <bpmn:serviceTask id="Activity_04y74xt" name="Update Doctor Calender">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="updateCalender" />
       </bpmn:extensionElements>
@@ -38,7 +38,7 @@
     <bpmn:endEvent id="Event_011yu6t" name="Appointment Process Completed">
       <bpmn:incoming>Flow_0qfrj8u</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="Gateway_0fv001s" name="availibilty">
+    <bpmn:exclusiveGateway id="Gateway_0fv001s" name="Availibilty">
       <bpmn:incoming>Flow_1b9ley7</bpmn:incoming>
       <bpmn:outgoing>Flow_1ce23a2</bpmn:outgoing>
       <bpmn:outgoing>Flow_0r8awfk</bpmn:outgoing>
@@ -55,14 +55,14 @@
     <bpmn:startEvent id="StartEvent_1" name="Start Process">
       <bpmn:outgoing>Flow_04tyug0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Activity_0kmwofa" name="validate Appointment Availabilty">
+    <bpmn:serviceTask id="Activity_0kmwofa" name="Validate Appointment Availabilty">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="validateAppointment" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0j3llx6</bpmn:incoming>
       <bpmn:outgoing>Flow_1b9ley7</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0x4h856" name="book appointment">
+    <bpmn:serviceTask id="Activity_0x4h856" name="Book Appointment">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="bookAppointment" />
       </bpmn:extensionElements>
@@ -86,6 +86,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0it06bk_di" bpmnElement="Activity_04y74xt">
         <dc:Bounds x="880" y="98" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_011yu6t_di" bpmnElement="Event_011yu6t">
         <dc:Bounds x="912" y="262" width="36" height="36" />
@@ -111,9 +112,11 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1u18e1m_di" bpmnElement="Activity_0kmwofa">
         <dc:Bounds x="470" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1wn43hz_di" bpmnElement="Activity_0x4h856">
         <dc:Bounds x="750" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0j3llx6_di" bpmnElement="Flow_0j3llx6">
         <di:waypoint x="420" y="258" />
