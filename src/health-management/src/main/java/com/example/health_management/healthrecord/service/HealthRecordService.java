@@ -38,7 +38,7 @@ public class HealthRecordService {
         this.userService = userService;
     }
 
-    public Long startCreateHealthRecordProcess(String username) {
+    public void startCreateHealthRecordProcess(String username) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(createHealthRecordProcessId)
                 .latestVersion()
@@ -46,10 +46,9 @@ public class HealthRecordService {
                 .send()
                 .join();
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
     }
 
-    public Long startEditHealthRecordProcess(String username) {
+    public void startEditHealthRecordProcess(String username) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(editHealthRecordProcessId)
                 .latestVersion()
@@ -57,10 +56,9 @@ public class HealthRecordService {
                 .send()
                 .join();
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
     }
 
-    public Long startDeleteHealthRecordProcess(String username) {
+    public void startDeleteHealthRecordProcess(String username) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(deleteHealthRecordProcessId)
                 .latestVersion()
@@ -68,7 +66,6 @@ public class HealthRecordService {
                 .send()
                 .join();
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
     }
 
     public void storeRecord(Map<String, Object> variables) {
