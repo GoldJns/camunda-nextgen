@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1myken8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <bpmn:process id="deleteAppointment" isExecutable="true">
+    <bpmn:startEvent id="Event_0ck2ju0" name="Start Process">
+      <bpmn:outgoing>Flow_0cm696w</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0cm696w" sourceRef="Event_0ck2ju0" targetRef="Activity_1ntlnml" />
+    <bpmn:endEvent id="Event_07mbzfh" name="Process Completed">
+      <bpmn:incoming>Flow_0vbijje</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0vbijje" sourceRef="Activity_1ntlnml" targetRef="Event_07mbzfh" />
+    <bpmn:serviceTask id="Activity_1ntlnml" name="Delete Appointment">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="deleteAppointment" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0cm696w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vbijje</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="deleteAppointment">
+      <bpmndi:BPMNShape id="Event_0ck2ju0_di" bpmnElement="Event_0ck2ju0">
+        <dc:Bounds x="182" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="167" y="145" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_07mbzfh_di" bpmnElement="Event_07mbzfh">
+        <dc:Bounds x="482" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="474" y="145" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05wsicd_di" bpmnElement="Activity_1ntlnml">
+        <dc:Bounds x="310" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0cm696w_di" bpmnElement="Flow_0cm696w">
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="310" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vbijje_di" bpmnElement="Flow_0vbijje">
+        <di:waypoint x="410" y="120" />
+        <di:waypoint x="482" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

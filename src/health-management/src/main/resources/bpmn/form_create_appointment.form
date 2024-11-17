@@ -1,14 +1,24 @@
 {
   "components": [
     {
-      "label": "Doctor",
+      "label": "id",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_19wysoy",
+        "columns": null
+      },
+      "id": "Field_1tuizz7",
+      "key": "id"
+    },
+    {
+      "label": "Doctor Name",
       "type": "textfield",
       "layout": {
         "row": "Row_1yiyddy",
         "columns": null
       },
       "id": "Field_1ptzxp6",
-      "key": "doc"
+      "key": "docName"
     },
     {
       "label": "Month",
