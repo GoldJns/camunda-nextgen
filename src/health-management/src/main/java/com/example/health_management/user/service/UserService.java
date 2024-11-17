@@ -25,8 +25,12 @@ public class UserService {
 
     private UserGroupMembershipRepository userGroupMembershipRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, 
+                   UserKeycloakGroupRepository userKeycloakGroupRepository, 
+                   UserGroupMembershipRepository userGroupMembershipRepository) {
         this.userRepository = userRepository;
+        this.userKeycloakGroupRepository = userKeycloakGroupRepository;
+        this.userGroupMembershipRepository = userGroupMembershipRepository;
     }
 
     public UserEntity findUser(String username){

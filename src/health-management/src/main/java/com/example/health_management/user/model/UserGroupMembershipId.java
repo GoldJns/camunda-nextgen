@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserGroupMembershipId implements Serializable {
-    private Long userId;
-    private Long groupId;
 
+    private String userId;
+    private String groupId;
 }
