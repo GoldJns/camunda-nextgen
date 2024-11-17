@@ -25,7 +25,7 @@ VALUES ('Health Insurance A'),
 
 CREATE TABLE appointment (
                             id SERIAL PRIMARY KEY,
-                            userID varchar(36),
+                            user_id varchar(36),
                             month varchar(255),
                             day varchar(255),
                             date DATE,

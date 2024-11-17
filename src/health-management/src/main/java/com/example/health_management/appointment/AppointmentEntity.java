@@ -19,7 +19,7 @@ public class AppointmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private long userID;
+    private String userID;
 
     @Column(name = "month")
     private String month;

@@ -41,15 +41,15 @@ public class AppointmentService {
         return appointmentRepository.save(appointment);
     }
 
-    public Optional<AppointmentEntity> getAppointmentByID(Long id) {
+    public Optional<AppointmentEntity> getByID(Long id) {
         return appointmentRepository.findById(id);
     }
 
-    public List<AppointmentEntity> getAppointmentByUserID(Long id) {
+    public List<AppointmentEntity> getByUserID(String id) {
         return appointmentRepository.findByUserID(id);
     }
 
-    public void deleteAppointment(AppointmentEntity appointment) {
+    public void delete(AppointmentEntity appointment) {
         appointmentRepository.delete(appointment);
     }
     

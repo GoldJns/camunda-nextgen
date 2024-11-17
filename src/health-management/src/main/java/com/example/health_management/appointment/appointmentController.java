@@ -31,7 +31,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/edit/{userID}")
-    public List<AppointmentEntity> getAppointmentByUserID(@PathVariable("userID") long userID) {
-        return appointmentService.getAppointmentByUserID(userID);
+    public List<AppointmentEntity> getByUserID(@PathVariable("userID") String userID) {
+        return appointmentService.getByUserID(userID);
     }
 }

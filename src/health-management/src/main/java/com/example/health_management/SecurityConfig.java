@@ -66,6 +66,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> {
             requests
                     .requestMatchers(
+                            "api/apoint/create/**",
                             "api/health-records/create/**",
                             "api/health-records/delete/**",
                             "api/health-records/leave/**",
