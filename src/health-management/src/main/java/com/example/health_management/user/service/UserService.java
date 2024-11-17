@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.health_management.user.model.UserDto;
 import com.example.health_management.user.model.UserEntity;
 import com.example.health_management.user.model.UserGroupMembershipEntity;
 import com.example.health_management.user.model.UserKeycloakGroupEntity;
@@ -41,20 +42,23 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<String> findDoc(String role) {
+    public List<UserDto> findDoc(String role) {
 
         UserKeycloakGroupEntity keycloakGroup = userKeycloakGroupRepository.findByName(role);
 
         List<UserGroupMembershipEntity> allUserswithroleName = userGroupMembershipRepository.findByGroupId(keycloakGroup.getId());
-        List<String> allUsersNames = new ArrayList<>();
+        List<UserDto> allUsersNames = new ArrayList<>();
 
         for(var membership:allUserswithroleName){
             String userId = membership.getUserId();
             Optional<UserEntity> user = userRepository.findById(userId);
             if (user.isPresent()) {
-                // Step 4.3: Add the username to the list
                 UserEntity userEntity = user.get();
-                allUsersNames.add(userEntity.getUsername());
+                UserDto userDto = new UserDto();
+                userDto.setUsername(userEntity.getUsername());
+                userDto.setFirstname(userEntity.getFirstName());
+                userDto.setLastname(userEntity.getLastName());
+                allUsersNames.add(userDto);
             }
         }
 
