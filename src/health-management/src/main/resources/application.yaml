@@ -61,9 +61,11 @@ process:
         create:
             process-id: "createAppointment"
         edit:
-            process-id: "editAppointment"    
+            process-id: "editAppointment"
+        delete:
+            process-id: "deleteAppointment"        
 
-#logging:
-#    level:
-#        org.springframework.web: DEBUG
-#        org.springframework: DEBUG
+# logging:
+#     level:
+#         org.springframework.web: DEBUG
+#         org.springframework: DEBUG
