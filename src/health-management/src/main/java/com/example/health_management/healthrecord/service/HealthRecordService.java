@@ -70,7 +70,6 @@ public class HealthRecordService {
 
     public void storeRecord(Map<String, Object> variables) {
         HealthRecordEntity healthRecord = new HealthRecordEntity();
-        healthRecord.setUsername(variables.get("username").toString());
         setVariables(healthRecord, variables);
         healthRecordRepository.save(healthRecord);
     }
@@ -109,11 +108,17 @@ public class HealthRecordService {
     }
 
     private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables) {
-        UserEntity user = userService.findUser(healthRecord.getUsername());
-        healthRecord.setAllergies(variables.get("allergies").toString());
-        healthRecord.setChronicConditions(variables.get("chronicConditions").toString());
-        healthRecord.setSurgeries(variables.get("surgeries").toString());
-        healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
-        healthRecord.setUserId(user.getId());
+
+            UserEntity user = userService.findUser(variables.get("username").toString());
+
+            System.out.println(user);
+            healthRecord.setUsername(variables.get("username").toString());
+            healthRecord.setAllergies(variables.get("allergies").toString());
+            healthRecord.setMedicalHistory(variables.get("medicalHistory").toString());
+            healthRecord.setDiagnoses(variables.get("diagnoses").toString());
+            healthRecord.setMedicines(variables.get("medicine").toString());
+            healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
+            healthRecord.setUserId(user.getId());
+
     }
 }

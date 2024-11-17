@@ -39,9 +39,10 @@
           <zeebe:input source="=changeRequest_c" target="changeRequest_c" />
           <zeebe:output source="=username" target="username" />
           <zeebe:output source="=allergies" target="allergies" />
-          <zeebe:output source="=chronicConditions" target="chronicConditions" />
+          <zeebe:output source="=medicalHistory" target="medicalHistory" />
           <zeebe:output source="=healthInsuranceName" target="healthInsuranceName" />
-          <zeebe:output source="=surgeries" target="surgeries" />
+          <zeebe:output source="=diagnoses" target="diagnoses" />
+          <zeebe:output source="=medicine" target="medicine" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ji6itf</bpmn:incoming>
@@ -67,9 +68,10 @@
         <zeebe:ioMapping>
           <zeebe:input source="=username" target="username" />
           <zeebe:input source="=allergies" target="allergies" />
-          <zeebe:input source="=chronicConditions" target="chronicConditions" />
+          <zeebe:input source="=medicalHistory" target="medicalHistory" />
           <zeebe:input source="=healthInsuranceName" target="healthInsuranceName" />
-          <zeebe:input source="=surgeries" target="surgeries" />
+          <zeebe:input source="=diagnoses" target="diagnoses" />
+          <zeebe:input source="=medicine" target="medicine" />
           <zeebe:output source="=changeRequest_c" target="changeRequest_c" />
           <zeebe:output source="=isApproved" target="isApproved" />
         </zeebe:ioMapping>
