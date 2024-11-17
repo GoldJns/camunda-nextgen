@@ -29,11 +29,12 @@ public class validateAppointmentHandler {
         Map<String, Object> variables = job.getVariablesAsMap();
 
         boolean availabilty = appointmentService.existsByMonthAndDayAndDateAndTime(variables.get("month").toString(),
-                                                            variables.get("month").toString(), 
+                                                            variables.get("day").toString(), 
                                                             LocalDate.parse(variables.get("date").toString()), 
                                                             LocalTime.parse(variables.get("time").toString()));
-
-        if(!availabilty){
+        LOG.info("availabilty {}", availabilty);
+        
+        if(availabilty){
             LOG.info("Appointment Available !!!");
             client.newCompleteCommand(job.getKey())
             .variables(Collections.singletonMap("exists", true))

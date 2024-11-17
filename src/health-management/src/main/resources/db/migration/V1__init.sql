@@ -31,7 +31,8 @@ CREATE TABLE appointment (
                             day varchar(255),
                             date DATE,
                             time TIME,
-                            FOREIGN KEY (userID) REFERENCES public.user_entity(id) ON DELETE CASCADE
+                            CONSTRAINT unique_user_appointment UNIQUE (user_id, doc_name, date, time),
+                            FOREIGN KEY (user_id) REFERENCES public.user_entity(id) ON DELETE CASCADE
 );
 
 -- fuer Wiwa

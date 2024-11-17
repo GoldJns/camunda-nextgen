@@ -60,7 +60,7 @@ public class AppointmentService {
     }
 
     public boolean existsByMonthAndDayAndDateAndTime(String month, String day, LocalDate date, LocalTime time) {
-        return appointmentRepository.findByMonthAndDayAndDateAndTime(month, day, date, time) !=null;
+        return appointmentRepository.findByMonthAndDayAndDateAndTime(month, day, date, time) == null;
     }
 
     public void delete(AppointmentEntity appointment) {
