@@ -3,13 +3,12 @@ package com.example.health_management.appointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
-import com.example.health_management.appointment.AppointmentEntity;
-import com.example.health_management.appointment.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,28 +24,43 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     @PostMapping("/create/{username}")
-    public ResponseEntity<Long> createAppointment(@PathVariable String username) {
-
-        Long processInstanceId = appointmentService.startCreateAppointmentProcess(username);
-        if (processInstanceId == null) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(null);
-        }
-        return ResponseEntity.ok(processInstanceId);
+    public ResponseEntity<?> createAppointment(@PathVariable String username) {
+        return appointmentService.startCreateAppointmentProcess(username);
     }
 
-    @GetMapping("/edit/{userID}")
-    public List<AppointmentEntity> getByUserID(@PathVariable("userID") String userID) {
+    @PostMapping("/edit/{username}")
+    public ResponseEntity<?> editAppointment(@PathVariable String username) {
+        return appointmentService.startEditAppointmentProcess(username);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delteAppointment(@PathVariable long id) {
+        return appointmentService.startDeleteAppointmentProcess(id);
+    }
+
+    @GetMapping("/byid/{userID}")
+    public Optional<AppointmentEntity> getByID(@PathVariable long userID) {
+        return appointmentService.getByID(userID);
+    }
+
+    @GetMapping("/byuserid/{userID}")
+    public List<AppointmentEntity> getByUserID(@PathVariable String userID) {
         return appointmentService.getByUserID(userID);
     }
 
+    @GetMapping("/findAll")
+    public List<AppointmentEntity> findAll() {
+        return appointmentService.findAll();
+    }
+
+    // @RequestBody Map<String, Object> variables
     @GetMapping("/validate/")
-    public boolean existsByMonthAndDayAndDateAndTime(@RequestParam("month") String month, 
-                                                     @RequestParam("day") String day,
-                                                     @RequestParam("date") LocalDate date, 
-                                                     @RequestParam("time")@DateTimeFormat(pattern = "HH:mm:ss") LocalTime time) {
-        return appointmentService.existsByMonthAndDayAndDateAndTime(month, day, date, time);
+    public boolean existsByMonthAndDayAndDateAndTime(@RequestParam("docName") String docName,
+                                                    @RequestParam("month") String month, 
+                                                    @RequestParam("day") String day,
+                                                    @RequestParam("date") LocalDate date, 
+                                                    @RequestParam("time")@DateTimeFormat(pattern = "HH:mm:ss") LocalTime time) {
+        return appointmentService.existsByDocNameAndMonthAndDayAndDateAndTime(docName, month, day, date, time);
     }
     
 }
