@@ -28,7 +28,8 @@ public class validateAppointmentHandler {
         LOG.info("Handling validateAppointment for process instance {}", job.getProcessInstanceKey());
         Map<String, Object> variables = job.getVariablesAsMap();
 
-        boolean availabilty = appointmentService.existsByMonthAndDayAndDateAndTime(variables.get("month").toString(),
+        boolean availabilty = appointmentService.existsByDocNameAndMonthAndDayAndDateAndTime(variables.get("docName").toString(),
+                                                            variables.get("month").toString(),
                                                             variables.get("day").toString(), 
                                                             LocalDate.parse(variables.get("date").toString()), 
                                                             LocalTime.parse(variables.get("time").toString()));

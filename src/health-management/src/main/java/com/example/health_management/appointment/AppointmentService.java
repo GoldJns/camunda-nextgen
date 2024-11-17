@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.health_management.TaskListClient;
@@ -25,6 +26,8 @@ public class AppointmentService {
     private String createAppointmentProcessId;
     @Value("${process.appointment.edit.process-id}")
     private String editAppointmentProcessId;
+    @Value("${process.appointment.delete.process-id}")
+    private String deleteAppointmentProcessId;
 
     private final TaskListClient tasklistClient;
     
@@ -39,9 +42,16 @@ public class AppointmentService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public AppointmentEntity saveOrUpdate(Map<String, Object> variables, String userID) {
-
+    public AppointmentEntity save(Map<String, Object> variables, String userID) {
         AppointmentEntity appointment = new AppointmentEntity();
+        appointment.setUserID(userID);
+        setVariables(appointment, variables);
+        return appointmentRepository.save(appointment);
+    }
+
+    public AppointmentEntity update(Map<String, Object> variables, String userID, long appointmentID) {
+        AppointmentEntity appointment = new AppointmentEntity();
+        appointment.setId(appointmentID);
         appointment.setUserID(userID);
         setVariables(appointment, variables);
         return appointmentRepository.save(appointment);
@@ -51,45 +61,78 @@ public class AppointmentService {
         return appointmentRepository.findById(id);
     }
 
-    public List<AppointmentEntity> getByUserID(String id) {
-        return appointmentRepository.findByUserID(id);
+    public List<AppointmentEntity> getByUserID(String userID) {
+        return appointmentRepository.findByUserID(userID);
     }
 
     public List<AppointmentEntity> findAll() {
         return appointmentRepository.findAll();
     }
 
-    public boolean existsByMonthAndDayAndDateAndTime(String month, String day, LocalDate date, LocalTime time) {
-        return appointmentRepository.findByMonthAndDayAndDateAndTime(month, day, date, time) == null;
+    public boolean existsByDocNameAndMonthAndDayAndDateAndTime(String docName, String month, String day, LocalDate date, LocalTime time) {
+        return appointmentRepository.findByDocNameAndMonthAndDayAndDateAndTime(docName, month, day, date, time) == null;
     }
 
-    public void delete(AppointmentEntity appointment) {
-        appointmentRepository.delete(appointment);
+    public void deleteById(long id) {
+        appointmentRepository.deleteById(id);
     }
     
-    public Long startCreateAppointmentProcess(String username) {
-        var event = zeebeClient.newCreateInstanceCommand()
+    public ResponseEntity<?> startCreateAppointmentProcess(String username) {
+        try { 
+            var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(createAppointmentProcessId)
                 .latestVersion()
                 .variables(Map.of("username", username))
                 .send()
                 .join();
-        log.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
+
+            log.info("Started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
+            
+            return ResponseEntity.ok("Process started successfully");
+        } catch (Exception e) {
+            log.error("Error starting process", e);
+            return ResponseEntity.status(500).body("Error starting process");
+        }
     }
 
-    public Long startEditAppointmentProcess(String userID) {
-        var event = zeebeClient.newCreateInstanceCommand()
+    public ResponseEntity<?> startEditAppointmentProcess(String username) {
+        try { 
+            var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(editAppointmentProcessId)
                 .latestVersion()
-                .variables(Map.of("userID", userID))
+                .variables(Map.of("username", username))
                 .send()
                 .join();
-        log.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
+
+            log.info("Started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
+            
+            return ResponseEntity.ok("Process started successfully");
+        } catch (Exception e) {
+            log.error("Error starting process", e);
+            return ResponseEntity.status(500).body("Error starting process");
+        }
+    }
+
+    public ResponseEntity<?> startDeleteAppointmentProcess(long id) {
+        try { 
+            var event = zeebeClient.newCreateInstanceCommand()
+                .bpmnProcessId(deleteAppointmentProcessId)
+                .latestVersion()
+                .variables(Map.of("id", id))
+                .send()
+                .join();
+
+            log.info("Started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
+            
+            return ResponseEntity.ok("Process started successfully");
+        } catch (Exception e) {
+            log.error("Error starting process", e);
+            return ResponseEntity.status(500).body("Error starting process");
+        }
     }
 
     private void setVariables(AppointmentEntity appointment, Map<String, Object> variables){
+        appointment.setDocName(variables.get("docName").toString());
         appointment.setMonth(variables.get("month").toString());
         appointment.setDay(variables.get("day").toString());
         appointment.setDate(LocalDate.parse(variables.get("date").toString()));

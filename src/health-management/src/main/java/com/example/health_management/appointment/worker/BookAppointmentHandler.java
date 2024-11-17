@@ -43,7 +43,7 @@ public class BookAppointmentHandler {
                     .send()
                     .join();
         } else {
-            appointmentService.saveOrUpdate(variables, user.getId());
+            appointmentService.save(variables, user.getId());
     
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("success", true))

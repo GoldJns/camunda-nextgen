@@ -17,5 +17,5 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity, 
 
     List<AppointmentEntity> findAll();
 
-    AppointmentEntity findByMonthAndDayAndDateAndTime(String month, String day, LocalDate date, LocalTime time);
+    AppointmentEntity findByDocNameAndMonthAndDayAndDateAndTime(String docName, String month, String day, LocalDate date, LocalTime time);
 }

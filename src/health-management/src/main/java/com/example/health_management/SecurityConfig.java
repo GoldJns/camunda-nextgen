@@ -67,6 +67,8 @@ public class SecurityConfig {
             requests
                     .requestMatchers(
                             "api/appoint/create/**",
+                            "api/appoint/edit/**",
+                            "api/appoint/delete/**",
                             "api/appoint/validate/**",
                             "api/user/role/Doctor",
                             "api/health-records/create/**",
