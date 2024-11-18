@@ -6,24 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.example.health_management.appointment.AppointmentService;
-import com.example.health_management.user.service.UserService;
-
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
+import lombok.NoArgsConstructor;
 
 @Component
+@NoArgsConstructor
 public class UpdateCalenderHandler {
     
     private static final Logger LOG = LoggerFactory.getLogger(UpdateCalenderHandler.class);
-    private final UserService userService;
-    private final AppointmentService appointmentService;
-
-    public UpdateCalenderHandler(AppointmentService appointmentService,  UserService userService) {
-        this.appointmentService = appointmentService;
-        this.userService = userService;
-    }
 
     @JobWorker(type = "updateCalender")
     public void handle(JobClient client, ActivatedJob job) {

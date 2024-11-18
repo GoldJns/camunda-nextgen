@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.health_management.TaskListClient;
-
 import io.camunda.zeebe.client.ZeebeClient;
 
 @Service
@@ -29,15 +27,12 @@ public class AppointmentService {
     @Value("${process.appointment.delete.process-id}")
     private String deleteAppointmentProcessId;
 
-    private final TaskListClient tasklistClient;
-    
     private final ZeebeClient zeebeClient;
     
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    public AppointmentService(TaskListClient tasklistClient, ZeebeClient zeebeClient, AppointmentRepository appointmentRepository) {
-        this.tasklistClient = tasklistClient;
+    public AppointmentService(ZeebeClient zeebeClient, AppointmentRepository appointmentRepository) {
         this.zeebeClient = zeebeClient;
         this.appointmentRepository = appointmentRepository;
     }
