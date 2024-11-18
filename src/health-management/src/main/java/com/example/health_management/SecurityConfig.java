@@ -78,7 +78,7 @@ public class SecurityConfig {
                     .requestMatchers(
                             "api/health-records/findAll",
                             "api/tasks/*/assign/*",
-                            "api/tasks/*/unassign"),
+                            "api/tasks/*/unassign",
                             "api/user/role/Patient").hasAnyAuthority( "Doctor")
                     .requestMatchers(
                             "api/health-records/edit/**",
