@@ -107,6 +107,11 @@ This will pull the necessary Docker images and start all containers (including C
 
 ### Services Overview
 
+To get Camunda up and running, we had to use the official Docker Compose YAML file and configure it for our needs. There is already a pre-configured values.yaml. We also wrote shell scripts that are necessary to start the application. For example, the Spring services need to be built and started, and the Docker containers also need to be launched.
+
+To successfully start the Docker containers, local environment files must be set up. The secrets are not committed to the repository. The UI includes a user management system that is integrated with Keycloak. To set this up properly, the UI application must be registered in the Identity service. Then you can configure the client id in the env file. In order for Keycloak to work correctly, the resolve_keycloak.sh script must also be executed.
+
+
 Not all services listed in the Docker Compose definition are required to run Camunda. We suggest starting with the essential services:
 
 ```bash
