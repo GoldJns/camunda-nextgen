@@ -1,59 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./login.css";
-import { jwtDecode } from 'jwt-decode';
-interface DecodedToken {
-  groups: string[]; 
-  
-name: string;
 
-}
+import "./login.css";
 
 const Login: React.FC = () => {
   const [isSignUpActive, setSignUpActive] = useState(false);
-  const navigate = useNavigate();
-  
-  
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-
-  const getAdminLogin = async (): Promise<string | null> => {
-    const formData = new URLSearchParams();
-    formData.append("grant_type", "client_credentials");
-    formData.append("client_id", "frontend");
-    formData.append("client_secret", "BgjLEDcwNjaeKGFOqXyGhuPg32XqFdGF");
-
-    try {
-      const response = await fetch(
-        "http://keycloak:18080/auth/realms/camunda-platform/protocol/openid-connect/token",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: formData.toString(),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        return data.access_token; // Return the token
-      } else {
-        console.error("Admin login failed");
-        return null;
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      return null;
-    }
-  };
+  const [age, setAge] = useState<number | null>(null);
 
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState("Patienten");
 
   const handleSignUpClick = () => {
     setSignUpActive(true);
@@ -65,51 +24,25 @@ const Login: React.FC = () => {
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    const formData = new URLSearchParams();
-    formData.append("username", username);
-    formData.append("password", password);
-    formData.append("grant_type", "password");
-    formData.append("client_id", "frontend");
-    formData.append("client_secret", "BgjLEDcwNjaeKGFOqXyGhuPg32XqFdGF");
+    const credentials = { email: email.trim(), password: password.trim() };
 
     try {
-      const response = await fetch(
-        "http://keycloak:18080/auth/realms/camunda-platform/protocol/openid-connect/token",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: formData.toString(),
-        }
-      );
+      // cmanuda task 229
+      //"http://localhost:8080/engigeßstate/login/start
+      const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
 
       if (response.ok) {
         const data = await response.json();
-        sessionStorage.setItem("accessToken", data.access_token);
-        console.log(data.access_token);
-        const decod = jwtDecode<DecodedToken>(data.access_token);
-        sessionStorage.setItem("name", decod.name);
+        sessionStorage.setItem("accessToken", data.jwt);
 
-        console.log(decod);
-       if(decod.groups.includes(userType)){
-        sessionStorage.setItem("username", username);
-
-        if(userType== "Patient"){
-          navigate("/gesundheitsdaten");
-        }
-        if(userType== "Doctor"){
-          navigate("/Doctor/Dashboard");
-        }
-
-       } else{
-        alert("Falsche Usertype")
-       }
-       
-      
+        // Optionally, fetch user data here
       } else {
-        alert("Login failed");
         console.error("Login failed");
       }
     } catch (error) {
@@ -125,47 +58,27 @@ const Login: React.FC = () => {
       return;
     }
 
-    const admintoken = await getAdminLogin();
-    console.log(admintoken);
-
     const userData = {
-      username: username,
-      enabled: true,
-      firstName: firstname,
-      lastName: lastname,
-      email: email,
-      credentials: [
-        {
-          type: "password",
-          value: password,
-          temporary: false,
-        },
-      ],
-      groups: [userType],
+      email: email.trim(),
+      password: password.trim(),
+      firstname: firstname,
+      lastname: lastname,
+      role: userType,
+      age: age,
     };
 
-    console.log(userData);
-
     try {
-      const response = await fetch(
-        "http://keycloak:18080/auth/admin/realms/camunda-platform/users",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${admintoken}`,
-          },
-          body: JSON.stringify(userData),
-        }
-      );
+      const response = await fetch("http://localhost:8080/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
 
-      if (response) {
-        if (response.status == 409) {
-          const data = await response.json();
-          alert(data.errorMessage);
-        } else {
-          handleSignInClick();
-        }
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem("accessToken", data.jwt);
       } else {
         console.error("Registration failed");
       }
@@ -198,9 +111,9 @@ const Login: React.FC = () => {
               required
             />
             <input
-              type="username"
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
+              type="text"
+              placeholder="Alter"
+              onChange={(e) => setAge(parseInt(e.target.value))}
               required
             />
 
@@ -231,12 +144,11 @@ const Login: React.FC = () => {
                   type="radio"
                   id="user"
                   name="userType"
-                  value="Patient"
-                  required
-                  checked={userType === "Patient"}
+                  value="Patienten"
+                  checked={userType === "Patienten"}
                   onChange={(e) => setUserType(e.target.value)}
                 />
-                <label htmlFor="user">Patient</label>
+                <label htmlFor="user">Patienten</label>
               </div>
               <div>
                 <input
@@ -247,12 +159,12 @@ const Login: React.FC = () => {
                   checked={userType === "Doctor"}
                   onChange={(e) => setUserType(e.target.value)}
                 />
-                <label htmlFor="doctor">Arzt</label>
+                <label htmlFor="doctor">Doctor</label>
               </div>
             </div>
 
             <button type="submit" className="btnlog">
-              Account erstellen
+            Account erstellen
             </button>
 
             <a
@@ -269,10 +181,10 @@ const Login: React.FC = () => {
           <form onSubmit={handleLogin}>
             <h1>Willkommen zurück</h1>
             <input
-              type="text"
+              type="email"
               placeholder="E-Mail Adresse"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <input
@@ -288,11 +200,11 @@ const Login: React.FC = () => {
                   type="radio"
                   id="user"
                   name="userType"
-                  value="Patient"
-                  checked={userType === "Patient"}
+                  value="Patienten"
+                  checked={userType === "Patienten"}
                   onChange={(e) => setUserType(e.target.value)}
                 />
-                <label htmlFor="user">Patient</label>
+                <label htmlFor="user">Patienten</label>
               </div>
               <div>
                 <input
@@ -300,11 +212,10 @@ const Login: React.FC = () => {
                   id="doctor"
                   name="userType"
                   value="Doctor"
-                  required
                   checked={userType === "Doctor"}
                   onChange={(e) => setUserType(e.target.value)}
                 />
-                <label htmlFor="doctor">Arzt</label>
+                <label htmlFor="doctor">Doctor</label>
               </div>
             </div>
 
@@ -318,7 +229,7 @@ const Login: React.FC = () => {
               className="bluetxt"
               onClick={handleSignUpClick}
             >
-              Sie haben kein Konto?
+             Sie haben kein Konto?
             </a>
           </form>
         </div>
