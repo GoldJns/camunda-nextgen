@@ -21,17 +21,17 @@
       <bpmn:outgoing>Flow_1ji6itf</bpmn:outgoing>
       <bpmn:outgoing>Flow_1ti7smm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:endEvent id="Event_08x9l4u" name="health record approved and updated">
+    <bpmn:endEvent id="Event_08x9l4u" name="Health record approved and updated">
       <bpmn:incoming>Flow_0hxst9g</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_1y2cf2a" name="administrative review">
+    <bpmn:serviceTask id="Activity_1y2cf2a" name="Administrative review">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="adminReview" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ti7smm</bpmn:incoming>
       <bpmn:outgoing>Flow_0hxst9g</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="edit_data" name="edit data">
+    <bpmn:userTask id="edit_data" name="Edit data">
       <bpmn:extensionElements>
         <zeebe:formDefinition formId="form_create_record" />
         <zeebe:assignmentDefinition assignee="=username" candidateGroups="Patient" />
@@ -39,9 +39,10 @@
           <zeebe:input source="=changeRequest_c" target="changeRequest_c" />
           <zeebe:output source="=username" target="username" />
           <zeebe:output source="=allergies" target="allergies" />
-          <zeebe:output source="=chronicConditions" target="chronicConditions" />
+          <zeebe:output source="=medicalHistory" target="medicalHistory" />
           <zeebe:output source="=healthInsuranceName" target="healthInsuranceName" />
-          <zeebe:output source="=surgeries" target="surgeries" />
+          <zeebe:output source="=diagnoses" target="diagnoses" />
+          <zeebe:output source="=medicine" target="medicine" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1ji6itf</bpmn:incoming>
@@ -61,15 +62,16 @@
     <bpmn:sequenceFlow id="Flow_0hxst9g" sourceRef="Activity_1y2cf2a" targetRef="Event_08x9l4u" />
     <bpmn:sequenceFlow id="Flow_1hlmyz2" sourceRef="StartEvent_1" targetRef="edit_data" />
     <bpmn:sequenceFlow id="Flow_1ao4u8o" sourceRef="edit_data" targetRef="validate_data" />
-    <bpmn:userTask id="validate_data" name="validate data">
+    <bpmn:userTask id="validate_data" name="Validate data">
       <bpmn:extensionElements>
         <zeebe:formDefinition formId="form_approve_record" />
         <zeebe:ioMapping>
           <zeebe:input source="=username" target="username" />
           <zeebe:input source="=allergies" target="allergies" />
-          <zeebe:input source="=chronicConditions" target="chronicConditions" />
+          <zeebe:input source="=medicalHistory" target="medicalHistory" />
           <zeebe:input source="=healthInsuranceName" target="healthInsuranceName" />
-          <zeebe:input source="=surgeries" target="surgeries" />
+          <zeebe:input source="=diagnoses" target="diagnoses" />
+          <zeebe:input source="=medicine" target="medicine" />
           <zeebe:output source="=changeRequest_c" target="changeRequest_c" />
           <zeebe:output source="=isApproved" target="isApproved" />
         </zeebe:ioMapping>

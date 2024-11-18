@@ -54,7 +54,6 @@ process:
             process-id: "createHealthRecord"
         edit:
             process-id: "editHealthRecord"
-
         delete:
             process-id: "deleteHealthRecord"
     appointment:
@@ -65,7 +64,8 @@ process:
         delete:
             process-id: "deleteAppointment"        
 
-# logging:
-#     level:
-#         org.springframework.web: DEBUG
-#         org.springframework: DEBUG
+logging:
+    level:
+        org.springframework.web: INFO
+        org.springframework: WARN
+        io.camunda.zeebe.client.impl.ZeebeCallCredentials: ERROR

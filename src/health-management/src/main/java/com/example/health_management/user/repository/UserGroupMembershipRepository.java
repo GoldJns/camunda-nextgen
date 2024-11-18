@@ -6,7 +6,7 @@ import com.example.health_management.user.model.UserGroupMembershipEntity;
 
 import java.util.List;
 
-public interface UserGroupMembershipRepository extends JpaRepository<UserGroupMembershipEntity, String> {
+public interface UserGroupMembershipRepository extends JpaRepository<UserGroupMembershipEntity, UserGroupMembershipId> {
 
     List<UserGroupMembershipEntity> findByGroupId(String groupId);
     
