@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/appoint")
-public class appointmentController {
+public class AppointmentController {
     
     @Autowired
     private AppointmentService appointmentService;
