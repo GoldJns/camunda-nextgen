@@ -5,6 +5,12 @@
   </bpmn:collaboration>
   <bpmn:process id="createAppointment" isExecutable="true">
     <bpmn:laneSet id="LaneSet_09ek5sd">
+      <bpmn:lane id="Lane_1addu9q" name="Patient">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0liomdw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_011yu6t</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0x4h856</bpmn:flowNodeRef>
+      </bpmn:lane>
       <bpmn:lane id="Lane_0gklkjv" name="Doctor">
         <bpmn:flowNodeRef>Activity_04y74xt</bpmn:flowNodeRef>
       </bpmn:lane>
