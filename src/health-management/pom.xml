@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.4</version>
+		<version>3.3.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -135,12 +135,12 @@
 		<dependency>
 			<groupId>io.camunda</groupId>
 			<artifactId>spring-boot-starter-camunda-sdk</artifactId>
-			<version>8.6.3</version>
+			<version>8.6.4</version>
 		</dependency>
 		<dependency>
 			<groupId>io.camunda</groupId>
 			<artifactId>spring-boot-starter-camunda-tasklist</artifactId>
-			<version>8.6.3</version>
+			<version>8.6.6</version>
 		</dependency>
 
 	</dependencies>

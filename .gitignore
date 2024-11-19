@@ -1,8 +1,5 @@
-/camunda-platform/.env
-/camunda-platform/.env.opensearch
-/camunda-platform/.env.elasticsearch
-/camunda-platform/connector-secrets.txt
-.env
-.env.opensearch
-.env.elasticsearch
-connector-secrets.txt
+/.env
+/.env.opensearch
+/.env.elasticsearch
+/connector-secrets.txt
+/node_modules
