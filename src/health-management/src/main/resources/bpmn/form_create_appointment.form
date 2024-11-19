@@ -1,0 +1,80 @@
+{
+  "components": [
+    {
+      "label": "id",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_19wysoy",
+        "columns": null
+      },
+      "id": "Field_1tuizz7",
+      "key": "id"
+    },
+    {
+      "label": "Doctor Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1yiyddy",
+        "columns": null
+      },
+      "id": "Field_1ptzxp6",
+      "key": "docName"
+    },
+    {
+      "label": "Month",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1cc5xg5",
+        "columns": null
+      },
+      "id": "Field_0fshz2o",
+      "key": "month"
+    },
+    {
+      "label": "Day",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0mlbcr1",
+        "columns": null
+      },
+      "id": "Field_13v86fw",
+      "key": "day"
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Date",
+      "label": "Date time",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_1mwmqkg",
+        "columns": null
+      },
+      "id": "Field_1lg6zyk",
+      "key": "date"
+    },
+    {
+      "subtype": "time",
+      "dateLabel": "Date",
+      "label": "Date time",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_03t2kfb",
+        "columns": null
+      },
+      "id": "Field_14owzc9",
+      "key": "time",
+      "timeLabel": "Time",
+      "timeSerializingFormat": "utc_offset",
+      "timeInterval": 15
+    }
+  ],
+  "type": "default",
+  "id": "form_create_appointment",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.28.0"
+  },
+  "schemaVersion": 16
+}

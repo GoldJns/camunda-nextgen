@@ -7,10 +7,6 @@ const Login: React.FC = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [age, setAge] = useState<number | null>(null);
-
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("Patienten");
 
@@ -61,10 +57,10 @@ const Login: React.FC = () => {
     const userData = {
       email: email.trim(),
       password: password.trim(),
-      firstname: firstname,
-      lastname: lastname,
-      role: userType,
-      age: age,
+      firstname: "test",
+      lastname: "test",
+      role: "doctor",
+      age: 30,
     };
 
     try {
