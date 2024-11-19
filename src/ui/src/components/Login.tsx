@@ -1,18 +1,23 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import "./login.css";
 
 const Login: React.FC = () => {
   const [isSignUpActive, setSignUpActive] = useState(false);
+  const { t, i18n } = useTranslation();
 
+  const [language, setLanguage] = useState("en");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [age, setAge] = useState<number | null>(null);
-
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userType, setUserType] = useState("Patienten");
+
+  const toggleLanguage = () => {
+    const newLang = language === "en" ? "de" : "en";
+    setLanguage(newLang);
+    i18n.changeLanguage(newLang);
+  };
 
   const handleSignUpClick = () => {
     setSignUpActive(true);
@@ -27,8 +32,6 @@ const Login: React.FC = () => {
     const credentials = { email: email.trim(), password: password.trim() };
 
     try {
-      // cmanuda task 229
-      //"http://localhost:8080/engigeßstate/login/start
       const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
@@ -40,7 +43,6 @@ const Login: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         sessionStorage.setItem("accessToken", data.jwt);
-
         // Optionally, fetch user data here
       } else {
         console.error("Login failed");
@@ -61,10 +63,10 @@ const Login: React.FC = () => {
     const userData = {
       email: email.trim(),
       password: password.trim(),
-      firstname: firstname,
-      lastname: lastname,
-      role: userType,
-      age: age,
+      firstname: "test",
+      lastname: "test",
+      role: "doctor",
+      age: 30,
     };
 
     try {
@@ -88,158 +90,82 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="loginpage">
-      <div
-        className={`container ${isSignUpActive ? "right-panel-active" : ""}`}
-        id="container"
+    <div className="loginpage">  
+
+    <div
+      className={`container ${isSignUpActive ? "right-panel-active" : ""}`}
+      id="container"
+    >
+      <button
+        style={{ color: "red" }}
+        onClick={() => {
+          toggleLanguage();
+        }}
       >
-        <div className="form-container sign-up-container">
-          <form onSubmit={handleRegister}>
-            <h1>Registrieren</h1>
-            <input
-              type="text"
-              placeholder="Vorname"
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Nachname"
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Alter"
-              onChange={(e) => setAge(parseInt(e.target.value))}
-              required
-            />
+        Toggle langauage
+      </button>
+      <div className="form-container sign-up-container">
+        <form onSubmit={handleRegister}>
+          <h1>{t("register")}</h1>
+          <input type="email" placeholder={t("email")} value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" placeholder={t("password")}  value={password} onChange={(e) => setPassword(e.target.value)} required/>
+          <input type="password" placeholder={t("confirmPassword")} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required/>
+          <button type="submit"  className="btnlog">{t("createAccount")}</button>
+       
 
-            <input
-              type="email"
-              placeholder="E-Mail Adresse"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Passwort"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Passwort bestätigen"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-            <div className="roles">
-              <div>
-                <input
-                  type="radio"
-                  id="user"
-                  name="userType"
-                  value="Patienten"
-                  checked={userType === "Patienten"}
-                  onChange={(e) => setUserType(e.target.value)}
-                />
-                <label htmlFor="user">Patienten</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="doctor"
-                  name="userType"
-                  value="Doctor"
-                  checked={userType === "Doctor"}
-                  onChange={(e) => setUserType(e.target.value)}
-                />
-                <label htmlFor="doctor">Doctor</label>
-              </div>
-            </div>
+          <a
+            href="#"
+            id="signIn"
+            className="bluetxt"
 
-            <button type="submit" className="btnlog">
-            Account erstellen
-            </button>
+            onClick={handleSignInClick}
+          >
+            {t("back")}
+          </a>
+        
 
-            <a
-              href="#"
-              id="signIn"
-              className="bluetxt"
-              onClick={handleSignInClick}
-            >
-              Zurück
-            </a>
-          </form>
-        </div>
-        <div className="form-container sign-in-container">
-          <form onSubmit={handleLogin}>
-            <h1>Willkommen zurück</h1>
-            <input
-              type="email"
-              placeholder="E-Mail Adresse"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Passwort"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <div className="roles">
-              <div>
-                <input
-                  type="radio"
-                  id="user"
-                  name="userType"
-                  value="Patienten"
-                  checked={userType === "Patienten"}
-                  onChange={(e) => setUserType(e.target.value)}
-                />
-                <label htmlFor="user">Patienten</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="doctor"
-                  name="userType"
-                  value="Doctor"
-                  checked={userType === "Doctor"}
-                  onChange={(e) => setUserType(e.target.value)}
-                />
-                <label htmlFor="doctor">Doctor</label>
-              </div>
-            </div>
+        </form>
+      </div>
+      <div className="form-container sign-in-container">
+        <form onSubmit={handleLogin}>
+          <h1>{t("welcomeBack")}</h1>
+          <input type="email" placeholder={t("email")}  value={email} onChange={(e) => setEmail(e.target.value)} required/>
+          <input type="password" placeholder={t("password")} value={password} onChange={(e) => setPassword(e.target.value)} required/>
+          <div className="roles">
+          <div>
+  <input type="radio" id="user" name="userType" value="Patienten" checked={userType === "Patienten"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="user">{t("Patient")}</label>
+  </div>
+  <div>
+  <input type="radio" id="doctor" name="userType" value="Doctor" checked={userType === "Doctor"} onChange={(e) => setUserType(e.target.value)}/>
+  <label htmlFor="doctor">{t("Arzt")}</label>
+  </div>
 
-            <button type="submit">Anmeldung</button>
+</div>
 
-            <a href="#">Passwort vergessen?</a>
+          <button type="submit">{t("login")}</button>
+ 
+          <a href="#">{t("forgotPassword")}</a>
 
-            <a
-              href="#"
-              id="signUp"
-              className="bluetxt"
-              onClick={handleSignUpClick}
-            >
-             Sie haben kein Konto?
-            </a>
-          </form>
-        </div>
-        <div className="overlay-container">
-          <div className="overlay">
-            <div className="overlay-panel overlay-left"></div>
-            <div className="overlay-panel overlay-right"></div>
-          </div>
+          <a
+            href="#"
+            id="signUp"
+            className="bluetxt"
+            onClick={handleSignUpClick}
+          >
+            {t("noAccount")}
+          </a>
+       
+
+        </form>
+      </div>
+      <div className="overlay-container">
+        <div className="overlay">
+          <div className="overlay-panel overlay-left"></div>
+          <div className="overlay-panel overlay-right"></div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
