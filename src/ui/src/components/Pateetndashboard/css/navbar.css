@@ -1,0 +1,52 @@
+.navbar {
+  padding: 5px;
+  color: white;
+  background-color: #121e48;
+}
+.navbar .icon-container {
+    text-align: center;
+    padding: 20px;
+    width: 100%; 
+}
+.navbar .icon-container h2 {
+    text-align: center;
+    padding: 20px;
+    width: 100%; 
+    
+}
+.navbar .icon-container .patient-icon {
+    font-size: 50px; /* Size of the icon */
+    color: #fafafa; /* Color of the icon */
+}
+.navbar ul {
+    list-style-type: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  padding: 5px;
+}
+.navbar ul a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+}
+.navbar ul .var_nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+.navbar ul .var_nav .link_title {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+    width: 100%;
+    padding-left: 10px;;
+
+}
+
+.navbar ul .var_nav .link_title:hover {
+ border-left: 2px solid orangered;
+ background: #2F395E;
+}
+

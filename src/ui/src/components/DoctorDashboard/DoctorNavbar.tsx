@@ -1,22 +1,16 @@
-import React  from "react";
-import "./css/navbar.css";
+import React from "react";
+import "./css/DoctorNavbar.css";
 import { Link } from "react-router-dom";
 
-
-const Navbar: React.FC = () => {
-
-
-const name = sessionStorage.getItem("name")
+const DoctorNavbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="icon-container">
-      <h2>Willkommen {name}</h2>
+        <h2>
+          <i className="fas fa-user-md icon fa-2x"></i>
+        </h2>
 
-      <h2><i className="fas fa-user-injured patient-icon"></i></h2>
-
-        
-        <h2>Patient Dashboard</h2>
-
+        <h2>Doctor Dashboard</h2>
       </div>
       <ul>
         <li className="var_nav">
@@ -24,7 +18,7 @@ const name = sessionStorage.getItem("name")
             <div className="icon">
               <i className="icon-home icon-2x"></i>
             </div>
-            <Link to="/Patienten/MedicalHistory">
+            <Link to="/Doctor/Dashboard">
               <span>Gesundheitsdaten</span>
             </Link>
           </div>
@@ -34,16 +28,15 @@ const name = sessionStorage.getItem("name")
             <div className="icon">
               <i className="icon-calendar icon-2x"></i>
             </div>
-            <Link to="/Patienten/Appointment">
+            <Link to="/Doctor/AppointmentManager">
               <span>Terminbuchung</span>
             </Link>
           </div>
         </li>
-   
-   
+
       </ul>
     </nav>
   );
 };
 
-export default Navbar;
+export default DoctorNavbar;

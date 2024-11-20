@@ -20,6 +20,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 @Configuration
@@ -51,8 +54,21 @@ public class SecurityConfig {
     }
 
     @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Replace with your allowed origin
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "Patch", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    @Bean
     SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http,
                                                           Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationConverter) throws Exception {
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource())); // Integrate CORS
+
         http.oauth2ResourceServer(resourceServer -> {
             resourceServer.jwt(jwtDecoder -> {
                 jwtDecoder.jwtAuthenticationConverter(jwtAuthenticationConverter);
@@ -66,21 +82,21 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> {
             requests
                     .requestMatchers(
-                            "api/appoint/create/**",
-                            "api/appoint/edit/**",
-                            "api/appoint/delete/**",
-                            "api/appoint/validate/**",
-                            "api/user/role/Doctor",
                             "api/health-records/create/**",
                             "api/health-records/delete/**",
                             "api/health-records/leave/**",
                             "api/health-records/find/**").hasAuthority("Patient")
                     .requestMatchers(
                             "api/health-records/findAll",
-                            "api/user/role/Patient").hasAnyAuthority( "Doctor")
+                            "api/tasks/*/assign/*",
+
+                            "api/tasks/*/unassign").hasAuthority( "Doctor")
                     .requestMatchers(
                             "api/health-records/edit/**",
-                            "api/tasks/**").hasAnyAuthority("Patient", "Doctor")
+                            "api/tasks/*/complete",
+                            "api/tasks/*/variables",
+                            "api/tasks",
+                            "api/tasks/*").hasAnyAuthority("Patient", "Doctor")
                     .anyRequest().authenticated();
         });
 

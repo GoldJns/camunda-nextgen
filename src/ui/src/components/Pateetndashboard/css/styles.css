@@ -151,3 +151,60 @@ font-weight: bold;
   background-color: #fff3cd;
   color: #856404;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.Gesdiv .additem{
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.Gesdiv .additem button {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 30px;
+
+}
+
+.Gesdivs {
+  font-family: Arial, sans-serif;
+
+  width: 100%;
+
+  padding: 10px;
+  height: 100%;
+}
+.Gesdivs .Titles {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.Gesdivs .Titles h1 {
+  font-size: 24px;
+}
+.Gesdivs  .heathtable {
+width: 100%;
+height: 100%;
+
+padding: 10px;
+}
+
+

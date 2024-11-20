@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./Schedule.css"; // Import the CSS file for styling
+import "./css/Appointment.css"; 
 interface Appoiment {
     datum: string;
     time: string;
   }
-const Schedule: React.FC = () => {
+const AppointmentContainer: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentAppointments, setCurrentAppointments] = useState<Appoiment[]>([]); // Changed to an array
 
@@ -51,7 +51,7 @@ const Schedule: React.FC = () => {
   const generateSchedule = () => {
     const formattedCurrentDate = formatDate(currentDate); 
 
-    const scheduleElements: JSX.Element[]  = [];
+    const scheduleElements = [];
     for (let hour = 8; hour <= 16; hour++) {
       const appointmentTime = `${hour}:00`;
       const formattedDate = formatDate(currentDate);
@@ -157,21 +157,21 @@ const Schedule: React.FC = () => {
 
       {currentAppointments.length > 0 ? (
       <div className="termin">
-        <h1> <i className="fas fa-calendar-alt"></i> Nächster Termin </h1>
+        <h1> <i className="fas fa-calendar-alt"></i> Nächste Termine</h1>
         <div  className="termindata datum">
           <label>  Datum  </label>
           <label> Zeit </label>
         </div>
         {currentAppointments.map((appointment, index) => (
       <div key={index} className="termindata">
-      <label> Datum: {appointment.datum} </label>
-      <label> Zeit: {appointment.time} </label>
+      <label> {appointment.datum} </label>
+      <label> {appointment.time} </label>
     </div>
   ))}
       </div>
  ) : (
     <div className="termin">
-    <h1>  Kein Termin reserviert</h1>
+    <h1>  keine Termine vorhanden</h1>
     </div>
   )}
     </div>
@@ -179,4 +179,4 @@ const Schedule: React.FC = () => {
   );
 };
 
-export default Schedule;
+export default AppointmentContainer;
