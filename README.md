@@ -41,7 +41,7 @@ To successfully start the Docker containers, local environment files must be set
 
 ## Installation
 
-The [Installation guide]('docs//INSTALLATION.md') outlines all the steps required to set up and run the program locally.
+The [Installation guide]('docs/INSTALLATION.md') outlines all the steps required to set up and run the program locally.
 
 
 ## License
