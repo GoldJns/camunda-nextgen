@@ -56,6 +56,13 @@ process:
             process-id: "editHealthRecord"
         delete:
             process-id: "deleteHealthRecord"
+    appointment:
+        create:
+            process-id: "createAppointment"
+        edit:
+            process-id: "editAppointment"
+        delete:
+            process-id: "deleteAppointment"        
 
 logging:
     level:

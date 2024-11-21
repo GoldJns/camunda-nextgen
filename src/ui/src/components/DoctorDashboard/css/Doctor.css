@@ -1,0 +1,128 @@
+.consection {
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  height: 100vh;
+  background: #f9faff;
+}
+
+.docdiv {
+  font-family: Arial, sans-serif;
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+  width: 100%;
+  gap: 10px;
+  padding: 10px;
+  height: 100%;
+}
+
+.docdiv .Titles {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.docdiv .Titles h1 {
+  font-size: 24px;
+}
+.docdiv .statics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  padding: 20px;
+  gap: 20px;
+  background-color: rgb(238, 238, 238);
+}
+.docdiv .statics .item {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.userpic {
+  color: rgb(192, 150, 95);
+}
+.medicpic {
+  color: rgb(5, 19, 96);
+}
+.rezpic {
+  color: darkgreen;
+}
+.terminpic {
+  color: darkred;
+}
+
+.docdiv .Dtermins {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  padding: 20px;
+  gap: 20px;
+  background-color: rgb(238, 238, 238);
+}
+.docdiv .Dtermins .waitings .docdiv .Dtermins .appoiments {
+background-color: white;
+}
+.docdiv .Dtermins h2 {
+  background-color: white;
+  text-align: center;
+  padding: 5px;
+  }
+.docdiv .Dtermins table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.docdiv .Dtermins th,.docdiv .Dtermins td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.docdiv .Dtermins th {
+  background-color: #13016a;
+  color: white;
+}
+
+.docdiv .statics table {
+  width: 200%; /* Adjusted to 100% for better responsiveness */
+  border-collapse: collapse; /* Remove space between borders */
+  padding: 5px;
+  background-color: #f9faff;
+  text-align: center;
+}
+
+.docdiv .statics table th {
+  background-color: #020763; /* Header background color */
+  color: white; /* Header text color */
+  padding: 10px; /* Padding for header cells */
+  border: 1px solid #ddd; /* Border for header cells */
+}
+
+.docdiv .statics table td {
+  padding: 10px; /* Padding for data cells */
+  border: 1px solid #ddd; /* Border for data cells */
+}
+
+.docdiv .statics table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Zebra striping for even rows */
+}
+
+.docdiv .statics table tr:hover {
+  background-color: #e0e0e0; /* Highlight row on hover */
+}
+
+.docdiv .statics button {
+  padding: 8px 12px; /* Padding for buttons */
+  background-color: #28a745; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.docdiv .statics button:hover {
+  background-color: #218838; /* Darker green on hover */
+}

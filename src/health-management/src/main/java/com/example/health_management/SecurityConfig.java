@@ -78,6 +78,7 @@ public class SecurityConfig {
                             "api/health-records/edit/**",
                             "api/tasks/*/complete",
                             "api/tasks/*/variables",
+                            "api/tasks",
                             "api/tasks/*").hasAnyAuthority("Patient", "Doctor")
                     .anyRequest().authenticated();
         });
