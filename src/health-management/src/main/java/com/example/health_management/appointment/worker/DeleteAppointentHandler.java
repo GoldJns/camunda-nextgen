@@ -1,11 +1,6 @@
 package com.example.health_management.appointment.worker;
 
-import com.example.health_management.appointment.AppointmentEntity;
 import com.example.health_management.appointment.AppointmentService;
-import com.example.health_management.healthrecord.service.HealthRecordService;
-import com.example.health_management.user.model.UserEntity;
-import com.example.health_management.user.service.UserService;
-
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;

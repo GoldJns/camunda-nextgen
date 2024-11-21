@@ -3,6 +3,8 @@ package com.example.health_management.appointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,13 +32,8 @@ public class AppointmentEntity {
     @Column(name = "doc_name")
     private String docName;
 
-    @Column(name = "month")
-    private String month;
-
-    @Column(name = "day")
-    private String day;
-
     @Column(name = "date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     
     @Column(name = "time")

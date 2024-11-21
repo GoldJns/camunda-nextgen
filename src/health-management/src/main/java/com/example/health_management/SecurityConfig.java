@@ -24,6 +24,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 
 @Configuration
 @EnableWebSecurity
@@ -82,24 +86,36 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> {
             requests
                     .requestMatchers(
+                            "api/appoint/create/**",
+                            "api/appoint/edit/**",
+                            "api/appoint/delete/**",
+                            "api/appoint/validate/**",
+                            "api/user/role/Doctor",
                             "api/health-records/create/**",
                             "api/health-records/delete/**",
                             "api/health-records/leave/**",
                             "api/health-records/find/**").hasAuthority("Patient")
                     .requestMatchers(
                             "api/health-records/findAll",
+                            "api/user/role/Patient",
                             "api/tasks/*/assign/*",
-
                             "api/tasks/*/unassign").hasAuthority( "Doctor")
                     .requestMatchers(
                             "api/health-records/edit/**",
                             "api/tasks/*/complete",
                             "api/tasks/*/variables",
                             "api/tasks",
-                            "api/tasks/*").hasAnyAuthority("Patient", "Doctor")
+                            "api/tasks/**").hasAnyAuthority("Patient", "Doctor")
                     .anyRequest().authenticated();
         });
 
         return http.build();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper()
+                .registerModule(new JavaTimeModule()) // Register the Java 8 time module
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Optional: Avoid timestamps
     }
 }
