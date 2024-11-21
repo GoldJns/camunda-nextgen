@@ -4,9 +4,8 @@ import "./login.css";
 import { jwtDecode } from 'jwt-decode';
 interface DecodedToken {
   groups: string[]; 
-  
-name: string;
-
+  name: string;
+  sub: string;
 }
 
 const Login: React.FC = () => {
@@ -90,22 +89,24 @@ const Login: React.FC = () => {
         sessionStorage.setItem("accessToken", data.access_token);
         console.log(data.access_token);
         const decod = jwtDecode<DecodedToken>(data.access_token);
-        sessionStorage.setItem("name", decod.name);
-
         console.log(decod);
-       if(decod.groups.includes(userType)){
-        sessionStorage.setItem("username", username);
 
-        if(userType== "Patient"){
-          navigate("/Patienten/MedicalHistory");
-        }
-        if(userType== "Doctor"){
-          navigate("/Doctor/Dashboard");
-        }
+        sessionStorage.setItem("name", decod.name);
+        sessionStorage.setItem("userId", decod.sub);
 
-       } else{
-        alert("Falsche Usertype")
-       }
+        if(decod.groups.includes(userType)){
+          sessionStorage.setItem("username", username);
+
+          if(userType== "Patient"){
+            navigate("/Patienten/MedicalHistory");
+          }
+          if(userType== "Doctor"){
+            navigate("/Doctor/Dashboard");
+          }
+
+        } else{
+          alert("Falsche Usertype")
+        }
        
       
       } else {
