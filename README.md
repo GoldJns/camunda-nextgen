@@ -14,7 +14,7 @@ Camunda also provides tools for real-time monitoring and reporting, allowing use
 
 By self-hosting Camunda, we aim to leverage its powerful features while maintaining full control over customization, integration, and data privacy.
 
-We want to demonstrate how camunda can be integrated in an application. Therefore we developed a Application that can be used in the healthcare area. E.g. the application allows you to manage patient data, including personal information, prescriptions, and medical history. 
+We want to demonstrate how camunda can be integrated in an application. Therefore we developed a Application that can be used in the healthcare area. E.g. the application allows you to manage a patients health record and appointments with a doctor. 
 
 The system is designed with a frontend application that interacts with a self-hosted Camunda instance to manage and trigger these processes. By integrating Camunda into the system, the aim is to automate complex workflows, reduce manual intervention, and ensure consistent handling of patient-related tasks.
 
@@ -41,7 +41,31 @@ To successfully start the Docker containers, local environment files must be set
 
 ## Installation
 
-The [Installation guide]('docs//INSTALLATION.md') outlines all the steps required to set up and run the program locally.
+The [Installation guide](INSTALLATION.md) outlines all the steps required to set up and run the program locally.
+
+After that, for observing the running business processes you can use Operate `localhost:8081` with the user `demo` and password `demo`. You still have to configure that user with a few clicks to observe all processes.
+
+
+
+https://github.com/user-attachments/assets/27bf7617-8a1d-42cd-ac7f-d16774b3c4ea
+
+
+
+
+Other services like Identity can be accessed at `localhost:8084/`, Keycloak at `localhost:18080/auth`. If you want to have look into the keycloak realm use user `admin` and password `admin`.
+
+### Test Users
+
+| **Username** | **Password** | **First Name** | **Last Name**    | **Roles/Groups**                                    |
+|--------------|--------------|----------------|------------------|-----------------------------------------------------|
+| **demo**     | `demo`       | demo           |                  | Identity, Optimize, Operate, Tasklist (he is admin) |
+| **wiwa**     | `wiwa`       | Wickett        |                  | Patient                                             |
+| **mimo**     | `mimo`       | Milo           |                  | Doctor                                              |
+| **jan**      | `jan`        | Jan            | Wall             | Doctor                                              |
+| **amira**    | `amira`      | Amira          | Zerbani          | Doctor                                              |
+| **zohaib**   | `zohaib`     | Zohaib         | Khalid           | Patient                                             |
+| **jonas**    | `jonas`      | Jonas          | Goldnik          | Patient                                             |
+
 
 
 ## License

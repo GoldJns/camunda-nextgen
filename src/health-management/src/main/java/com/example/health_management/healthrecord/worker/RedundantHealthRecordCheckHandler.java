@@ -27,7 +27,10 @@ public class RedundantHealthRecordCheckHandler {
         Map<String, Object> variables = job.getVariablesAsMap();
 
         String username = (String) variables.get("username");
-        if(healthRecordRepository.findByUsername(username).isEmpty()) {
+        boolean isEmpty = healthRecordRepository.findByUsername(username).isEmpty();
+        System.out.println(isEmpty);
+        if(isEmpty) {
+            LOG.error("Creating health record proceeds. Health record doesnt exists for patient username {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("exists", false))
                     .send()

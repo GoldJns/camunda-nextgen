@@ -39,7 +39,7 @@ public class HealthRecordService {
         this.userService = userService;
     }
 
-    public Long startCreateHealthRecordProcess(String username) {
+    public void startCreateHealthRecordProcess(String username) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(createHealthRecordProcessId)
                 .latestVersion()
@@ -47,10 +47,9 @@ public class HealthRecordService {
                 .send()
                 .join();
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
     }
 
-    public Long startEditHealthRecordProcess(String username) {
+    public void startEditHealthRecordProcess(String username) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(editHealthRecordProcessId)
                 .latestVersion()
@@ -58,10 +57,9 @@ public class HealthRecordService {
                 .send()
                 .join();
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
     }
 
-    public Long startDeleteHealthRecordProcess(String username) {
+    public void startDeleteHealthRecordProcess(String username) {
         var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(deleteHealthRecordProcessId)
                 .latestVersion()
@@ -69,12 +67,10 @@ public class HealthRecordService {
                 .send()
                 .join();
         LOG.info("started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-        return event.getProcessInstanceKey();
     }
 
     public void storeRecord(Map<String, Object> variables) {
         HealthRecordEntity healthRecord = new HealthRecordEntity();
-        healthRecord.setUsername(variables.get("username").toString());
         setVariables(healthRecord, variables);
         healthRecordRepository.save(healthRecord);
     }
@@ -113,11 +109,17 @@ public class HealthRecordService {
     }
 
     private void setVariables(HealthRecordEntity healthRecord, Map<String, Object> variables) {
-        UserEntity user = userService.findUser(healthRecord.getUsername());
-        healthRecord.setAllergies(variables.get("allergies").toString());
-        healthRecord.setChronicConditions(variables.get("chronicConditions").toString());
-        healthRecord.setSurgeries(variables.get("surgeries").toString());
-        healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
-        healthRecord.setUserId(user.getId());
+
+            UserEntity user = userService.findUser(variables.get("username").toString());
+
+            System.out.println(user);
+            healthRecord.setUsername(variables.get("username").toString());
+            healthRecord.setAllergies(variables.get("allergies").toString());
+            healthRecord.setMedicalHistory(variables.get("medicalHistory").toString());
+            healthRecord.setDiagnoses(variables.get("diagnoses").toString());
+            healthRecord.setMedicines(variables.get("medicine").toString());
+            healthRecord.setHealthInsurance(variables.get("healthInsuranceName").toString());
+            healthRecord.setUserId(user.getId());
+
     }
 }

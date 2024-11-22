@@ -36,18 +36,24 @@ public class AdminReviewHandler {
 
         Boolean exists = healthInsuranceService.insuranceExists(healthInsuranceName);
 
-        if (!exists) {
-            LOG.info("Health Insurance validation failed for username {}", username);
-            client.newCompleteCommand(job.getKey())
-                    .variables(Collections.singletonMap("success", false))
-                    .send()
-                    .join();
-        }else {
+        if (exists) {
+            LOG.info("Health Insurance administrative review approved for username {}", username);
+            handleRecord(job, variables);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("success", true))
                     .send()
                     .join();
+        }else {
+            LOG.info("Health Insurance administrative review declined for username {}", username);
+            client.newCompleteCommand(job.getKey())
+                    .variables(Collections.singletonMap("success", false))
+                    .send()
+                    .join();
         }
+
+    }
+
+    private void handleRecord(ActivatedJob job, Map<String, Object> variables) {
         if(job.getBpmnProcessId().equals("createHealthRecord")){
             healthRecordService.storeRecord(variables);
         }else{

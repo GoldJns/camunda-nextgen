@@ -37,7 +37,7 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isApproved = false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1w38ga3" sourceRef="health_data_entry" targetRef="data_validation" />
-    <bpmn:serviceTask id="administrative_review" name="administrative review">
+    <bpmn:serviceTask id="administrative_review" name="Administrative review">
       <bpmn:documentation>checks if insurance is a real insurance</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="adminReview" />
@@ -50,16 +50,17 @@
       <bpmn:outgoing>Flow_009dpcs</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_009dpcs" sourceRef="start_create_health_record" targetRef="Activity_1ieuzld" />
-    <bpmn:userTask id="data_validation" name="validate data">
+    <bpmn:userTask id="data_validation" name="Validate data">
       <bpmn:extensionElements>
         <zeebe:formDefinition formId="form_approve_record" bindingType="deployment" />
         <zeebe:assignmentDefinition candidateGroups="Doctor" />
         <zeebe:ioMapping>
           <zeebe:input source="=username" target="username" />
           <zeebe:input source="=allergies" target="allergies" />
-          <zeebe:input source="=chronicConditions" target="chronicConditions" />
+          <zeebe:input source="=medicalHistory" target="medicalHistory" />
           <zeebe:input source="=healthInsuranceName" target="healthInsuranceName" />
-          <zeebe:input source="=surgeries" target="surgeries" />
+          <zeebe:input source="=diagnoses" target="diagnoses" />
+          <zeebe:input source="=medicine" target="medicine" />
           <zeebe:output source="=changeRequest_c" target="changeRequest_c" />
           <zeebe:output source="=isApproved" target="isApproved" />
         </zeebe:ioMapping>
@@ -67,7 +68,7 @@
       <bpmn:incoming>Flow_1w38ga3</bpmn:incoming>
       <bpmn:outgoing>Flow_1c5tel5</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="health_data_entry" name="initial health data entry">
+    <bpmn:userTask id="health_data_entry" name="Submit health record form">
       <bpmn:extensionElements>
         <zeebe:formDefinition formId="form_create_record" bindingType="deployment" />
         <zeebe:assignmentDefinition assignee="=username" candidateGroups="Patient" />
@@ -75,9 +76,10 @@
           <zeebe:input source="=changeRequest_c" target="changeRequest_c" />
           <zeebe:output source="=username" target="username" />
           <zeebe:output source="=allergies" target="allergies" />
-          <zeebe:output source="=chronicConditions" target="chronicConditions" />
+          <zeebe:output source="=medicalHistory" target="medicalHistory" />
           <zeebe:output source="=healthInsuranceName" target="healthInsuranceName" />
-          <zeebe:output source="=surgeries" target="surgeries" />
+          <zeebe:output source="=diagnoses" target="diagnoses" />
+          <zeebe:output source="=medicine" target="medicine" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0hbef74</bpmn:incoming>
@@ -98,28 +100,28 @@
     <bpmn:endEvent id="Event_1ocknz4" name="process stopped">
       <bpmn:incoming>Flow_0rof634</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_1ieuzld" name="check if health record already exists">
+    <bpmn:serviceTask id="Activity_1ieuzld" name="Check if health record already exists">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="redundantHealthRecordCheck" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_009dpcs</bpmn:incoming>
       <bpmn:outgoing>Flow_0jve3tj</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:endEvent id="healthrecord_approved_stored" name="health record stored">
+    <bpmn:endEvent id="healthrecord_approved_stored" name="Health record stored">
       <bpmn:incoming>Flow_1xwv1a9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="Gateway_0c7w1w3" name="review failed?">
+    <bpmn:exclusiveGateway id="Gateway_0c7w1w3" name="review approved?">
       <bpmn:incoming>Flow_0a6os8i</bpmn:incoming>
       <bpmn:outgoing>Flow_1xwv1a9</bpmn:outgoing>
       <bpmn:outgoing>Flow_0ivg7gm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_1xwv1a9" name="no" sourceRef="Gateway_0c7w1w3" targetRef="healthrecord_approved_stored">
+    <bpmn:sequenceFlow id="Flow_1xwv1a9" name="yes" sourceRef="Gateway_0c7w1w3" targetRef="healthrecord_approved_stored">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=success = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:endEvent id="Event_1s41i50" name="creating failed">
+    <bpmn:endEvent id="Event_1s41i50" name="Creating record failed">
       <bpmn:incoming>Flow_0ivg7gm</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0ivg7gm" sourceRef="Gateway_0c7w1w3" targetRef="Event_1s41i50">
+    <bpmn:sequenceFlow id="Flow_0ivg7gm" name="no" sourceRef="Gateway_0c7w1w3" targetRef="Event_1s41i50">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=success = false</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
   </bpmn:process>
@@ -171,23 +173,24 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_04nr643_di" bpmnElement="Activity_1ieuzld">
         <dc:Bounds x="330" y="267" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1xvmbpg_di" bpmnElement="healthrecord_approved_stored">
         <dc:Bounds x="1332" y="289" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1319" y="332" width="65" height="27" />
+          <dc:Bounds x="1318" y="332" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0c7w1w3_di" bpmnElement="Gateway_0c7w1w3" isMarkerVisible="true">
         <dc:Bounds x="1175" y="282" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1166" y="258" width="68" height="14" />
+          <dc:Bounds x="1157" y="258" width="87" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1s41i50_di" bpmnElement="Event_1s41i50">
         <dc:Bounds x="1332" y="402" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1317" y="445" width="69" height="14" />
+          <dc:Bounds x="1314" y="445" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1acut1m_di" bpmnElement="Flow_1acut1m">
@@ -246,13 +249,16 @@
         <di:waypoint x="1225" y="307" />
         <di:waypoint x="1332" y="307" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1272" y="289" width="13" height="14" />
+          <dc:Bounds x="1270" y="289" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ivg7gm_di" bpmnElement="Flow_0ivg7gm">
         <di:waypoint x="1200" y="332" />
         <di:waypoint x="1200" y="420" />
         <di:waypoint x="1332" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1209" y="373" width="13" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

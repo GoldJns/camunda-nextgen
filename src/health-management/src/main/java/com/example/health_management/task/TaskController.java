@@ -1,6 +1,7 @@
 package com.example.health_management.task;
 
 import io.camunda.tasklist.dto.Form;
+import io.camunda.tasklist.dto.Task;
 import io.camunda.tasklist.dto.TaskList;
 import io.camunda.tasklist.dto.Variable;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,9 @@ public class TaskController {
 
     @PostMapping("/{taskId}/complete")
     public ResponseEntity<String> completeTask(
-            @PathVariable String taskId, @RequestBody Map<String, Object> variables) {
+            @PathVariable String taskId,
+            @RequestBody Map<String, Object> variables
+    ) {
 
         Boolean completed = taskService.completeTask(taskId, variables);
 
@@ -43,9 +46,28 @@ public class TaskController {
         }
     }
 
+    @PatchMapping("/{taskId}/assign/{username}")
+    public ResponseEntity<Task> assignTask(
+            @PathVariable String taskId,
+            @PathVariable String username
+    ) {
+        Task task = taskService.assignTask(taskId, username);
+        return ResponseEntity.ok(task);
+    }
+
+    @PatchMapping("/{taskId}/unassign")
+    public ResponseEntity<Task> unassignTask(
+            @PathVariable String taskId
+    ) {
+        Task task = taskService.unassignTask(taskId);
+        return ResponseEntity.ok(task);
+    }
+
+
     @GetMapping("/{taskId}/variables")
     public ResponseEntity<List<Variable>> getTaskVariables(
-            @PathVariable String taskId) {
+            @PathVariable String taskId
+    ) {
 
         List<Variable> variables = taskService.getTaskVariables(taskId);
         return ResponseEntity.ok(variables);

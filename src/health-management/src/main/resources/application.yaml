@@ -62,8 +62,10 @@ process:
         edit:
             process-id: "editAppointment"
         delete:
-            process-id: "deleteAppointment"        
-
+            process-id: "deleteAppointment"
+springdoc:
+    swagger-ui:
+        path: /swagger-ui.html
 logging:
     level:
         org.springframework.web: INFO

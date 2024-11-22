@@ -3,13 +3,13 @@ package com.example.health_management.healthrecord;
 import com.example.health_management.healthrecord.model.dto.HealthRecordDTO;
 import com.example.health_management.healthrecord.service.HealthRecordService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@ResponseStatus(HttpStatus.OK)
 @RequestMapping("/api/health-records")
 public class HealthRecordController {
 
@@ -20,45 +20,32 @@ public class HealthRecordController {
     }
 
     @PostMapping("/create/{username}")
-    public ResponseEntity<Long> createHealthRecord(@PathVariable String username) {
-
-        Long processInstanceId = healthRecordService.startCreateHealthRecordProcess(username);
-        if (processInstanceId == null) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(null);
-        }
-        return ResponseEntity.ok(processInstanceId);
+    public void createHealthRecord(@PathVariable String username) {
+        healthRecordService.startCreateHealthRecordProcess(username);
     }
 
     @PostMapping("/edit/{username}")
-    public ResponseEntity<Long> editHealthRecord(@PathVariable String username) {
-
-        Long processInstanceId = healthRecordService.startEditHealthRecordProcess(username);
-        return ResponseEntity.ok(processInstanceId);
+    public void editHealthRecord(@PathVariable String username) {
+        healthRecordService.startEditHealthRecordProcess(username);
     }
 
     @DeleteMapping("/delete/{username}")
-    public ResponseEntity<Long> deleteHealthRecord(@PathVariable String username) {
-        Long processInstanceId = healthRecordService.startDeleteHealthRecordProcess(username);
-        return ResponseEntity.ok(processInstanceId);
+    public void deleteHealthRecord(@PathVariable String username) {
+        healthRecordService.startDeleteHealthRecordProcess(username);
     }
 
     @PostMapping("/leavePractice/{username}")
-    public ResponseEntity<String> leavePractice(@PathVariable String username) {
+    public void leavePractice(@PathVariable String username) {
         healthRecordService.leavePractice(username);
-        return ResponseEntity.ok("Patient marked successfully as left");
     }
 
     @GetMapping("/find/{username}")
-    public ResponseEntity<HealthRecordDTO> findHealthRecord(@PathVariable String username) {
-        HealthRecordDTO healthRecord = healthRecordService.findHealthRecord(username);
-        return ResponseEntity.ok(healthRecord);
+    public HealthRecordDTO findHealthRecord(@PathVariable String username) {
+        return healthRecordService.findHealthRecord(username);
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<HealthRecordDTO>> findHealthRecord() {
-        List<HealthRecordDTO> healthRecords = healthRecordService.findAllHealthRecords();
-        return ResponseEntity.ok(healthRecords);
+    public List<HealthRecordDTO> findHealthRecord() {
+        return healthRecordService.findAllHealthRecords();
     }
 }

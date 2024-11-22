@@ -8,6 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Entity
 @Table(name = "health_records")
 public class HealthRecordEntity {
@@ -25,17 +29,21 @@ public class HealthRecordEntity {
     @Column(name = "allergies")
     private String allergies;
 
-    @Column(name = "chronic_conditions")
-    private String chronicConditions;
+    @Column(name = "medical_history")
+    private String medicalHistory;
 
-    @Column(name = "surgeries")
-    private String surgeries;
+    @Column(name = "diagnoses")
+    private String diagnoses;
+
+    @Column(name = "medicines")
+    private String medicines;
 
     @Column(name = "health_insurance")
     private String healthInsurance;
 
     @Column(name = "has_left", nullable = false)
     private boolean hasLeft;
+
 
     public HealthRecordEntity() {}
 
@@ -72,20 +80,28 @@ public class HealthRecordEntity {
         this.allergies = allergies;
     }
 
-    public String getChronicConditions() {
-        return chronicConditions;
+    public String getDiagnoses() {
+        return diagnoses;
     }
 
-    public void setChronicConditions(String chronicConditions) {
-        this.chronicConditions = chronicConditions;
+    public void setDiagnoses(String diagnoses) {
+        this.diagnoses = diagnoses;
     }
 
-    public String getSurgeries() {
-        return surgeries;
+    public String getMedicines() {
+        return medicines;
     }
 
-    public void setSurgeries(String surgeries) {
-        this.surgeries = surgeries;
+    public void setMedicines(String medicines) {
+        this.medicines = medicines;
+    }
+
+    public String getMedicalHistory() {
+        return medicalHistory;
+    }
+
+    public void setMedicalHistory(String medicalHistory) {
+        this.medicalHistory = medicalHistory;
     }
 
     public String getHealthInsurance() {
@@ -104,14 +120,24 @@ public class HealthRecordEntity {
         this.hasLeft = hasLeft;
     }
 
+    private List<String> convertStringToList(String str) {
+        if (str == null || str.isEmpty()) {
+            return List.of();
+        }
+        return Arrays.stream(str.replace("[", "").replace("]", "").split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+    }
+
     public HealthRecordDTO toDTO() {
         return new HealthRecordDTO(
                 this.id,
                 this.userId,
                 this.username,
-                this.allergies,
-                this.chronicConditions,
-                this.surgeries,
+                convertStringToList(this.allergies),
+                convertStringToList(this.medicalHistory),
+                convertStringToList(this.diagnoses),
+                convertStringToList(this.medicines),
                 this.healthInsurance
         );
     }
