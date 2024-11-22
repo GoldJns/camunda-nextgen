@@ -56,11 +56,9 @@ public class AppointmentController {
     // @RequestBody Map<String, Object> variables
     @GetMapping("/validate/")
     public boolean existsByMonthAndDayAndDateAndTime(@RequestParam("docName") String docName,
-                                                    @RequestParam("month") String month, 
-                                                    @RequestParam("day") String day,
                                                     @RequestParam("date") LocalDate date, 
                                                     @RequestParam("time")@DateTimeFormat(pattern = "HH:mm:ss") LocalTime time) {
-        return appointmentService.existsByDocNameAndMonthAndDayAndDateAndTime(docName, month, day, date, time);
+        return appointmentService.existsByDocNameAndDateAndTime(docName, date, time);
     }
     
 }
