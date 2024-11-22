@@ -29,6 +29,9 @@ public class AppointmentEntity {
     @Column(name = "user_id")
     private String userID;
 
+    @Column(name = "pat_name")
+    private String patientName;
+
     @Column(name = "doc_name")
     private String docName;
 
