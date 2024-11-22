@@ -48,6 +48,11 @@ public class AppointmentController {
         return appointmentService.getByUserID(userID);
     }
 
+    @GetMapping("/byusername/{username}")
+    public List<AppointmentEntity> getByUsername(@PathVariable String username) {
+        return appointmentService.getByUsername(username);
+    }
+
     @GetMapping("/findAll")
     public List<AppointmentEntity> findAll() {
         return appointmentService.findAll();
