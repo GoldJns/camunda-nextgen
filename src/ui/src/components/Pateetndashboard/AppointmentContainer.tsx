@@ -389,7 +389,7 @@ const AppointmentContainer: React.FC = () => {
 
   // Update the date display when currentDate changes
   useEffect(() => {
-    fetchDoctorsAndAppointmentsFromBackend();
+    fetchDoctorsAndAppointmentsFromBackend(false);
 
     // Update the date display whenever the currentDate or selectedDoctor changes
     const updateDateDisplay = () => {
