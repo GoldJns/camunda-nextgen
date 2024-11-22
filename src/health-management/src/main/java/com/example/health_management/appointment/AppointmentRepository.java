@@ -15,6 +15,8 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity, 
 
     List<AppointmentEntity> findByUserID(String userID);
 
+    List<AppointmentEntity> findByDocName(String docName);
+
     List<AppointmentEntity> findAll();
 
     AppointmentEntity findByDocNameAndDateAndTime(String docName, LocalDate date, LocalTime time);

@@ -60,6 +60,10 @@ public class AppointmentService {
         return appointmentRepository.findByUserID(userID);
     }
 
+    public List<AppointmentEntity> getByUsername(String username) {
+        return appointmentRepository.findByDocName(username);
+    }
+
     public List<AppointmentEntity> findAll() {
         return appointmentRepository.findAll();
     }
