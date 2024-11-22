@@ -12,6 +12,7 @@ interface appointmentTask {
 
 interface Appointment {
   id: number;
+  patientName: string;
   docName: string;
   date: string;
   time: string;
@@ -254,6 +255,7 @@ const AppointmentContainer: React.FC = () => {
 
   const postCompleteTask = async (taskid: string): Promise<void> => {
     const userAppointment = {
+      "patientName": username,
       "docName": selectedDoctor!.username, 
       "date": selectedDate, 
       "time": selectedTime,
@@ -292,6 +294,7 @@ const AppointmentContainer: React.FC = () => {
     if (selectedDate && selectedTime) {
       const newAppointment: Appointment = {
         id: 0, 
+        patientName: username,
         docName: selectedDoctor!.username,
         date: selectedDate,
         time: selectedTime,
@@ -329,6 +332,7 @@ const AppointmentContainer: React.FC = () => {
   const handleUpdate = async (appointmentId: string): Promise<void> => {
     const updateAppointment = {
       "id": appointmentId,
+      "patientName": username,
       "docName": selectedDoctor, 
       "date": selectedDate, 
       "time": selectedTime,
