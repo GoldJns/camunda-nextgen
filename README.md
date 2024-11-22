@@ -45,7 +45,11 @@ The [Installation guide](INSTALLATION.md) outlines all the steps required to set
 
 After that, for observing the running business processes you can use Operate `localhost:8081` with the user `demo` and password `demo`. You still have to configure that user with a few clicks to observe all processes.
 
-[admin_authorizations.mp4](docs%2Fadmin_authorizations.mp4)
+
+
+https://github.com/user-attachments/assets/27bf7617-8a1d-42cd-ac7f-d16774b3c4ea
+
+
 
 
 Other services like Identity can be accessed at `localhost:8084/`, Keycloak at `localhost:18080/auth`. If you want to have look into the keycloak realm use user `admin` and password `admin`.
