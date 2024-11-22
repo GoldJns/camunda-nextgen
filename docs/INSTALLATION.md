@@ -54,7 +54,7 @@ Ensure you have rights to execute run script e.g with linux
   sudo chown +x run.sh   
 ```
 
-This commmand will run the two docker-compose project
+This commmand will run the docker-compose project
 ```sh
   ./run.sh
 ```
@@ -67,11 +67,6 @@ Just run
 ```
 to rebuild containers after changes.
 
-Alternatively you can start services like db and frontend seperately with docker compose
-```sh
-  docker compose up database frontend --build
-```
-and start springboot manually via terminal or vs code extension.
 
 Make sure to run `./mvnw clean package` from time to time
 
@@ -120,15 +115,4 @@ Adjust the image names, tags, and run configurations based on your specific requ
 ## Swagger
 
 Open Api Definition of our services. Hosted on `http://localhost:8080/swagger-ui/index.html`
-
-## Services 
-
-Following services will start:
-
-- Frontend on port `8082`
-- Spring Boot App on port `8080`
-- Database on port `3306`
-
-![Docker Desktop View](image.png)
-
 

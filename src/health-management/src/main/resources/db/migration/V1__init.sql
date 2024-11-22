@@ -3,6 +3,13 @@ CREATE TABLE health_insurances
     name VARCHAR(255) PRIMARY KEY
 );
 
+INSERT INTO health_insurances (name)
+VALUES ('Health Insurance A'),
+       ('Health Insurance B'),
+       ('Health Insurance C'),
+       ('Health Insurance D');
+
+
 CREATE TABLE health_records
 (
     id                     SERIAL PRIMARY KEY,
@@ -17,10 +24,4 @@ CREATE TABLE health_records
     FOREIGN KEY (user_id) REFERENCES public.user_entity (id) ON DELETE CASCADE,
     FOREIGN KEY (health_insurance) REFERENCES health_insurances (name)
 );
-
-INSERT INTO health_insurances (name)
-VALUES ('Health Insurance A'),
-       ('Health Insurance B'),
-       ('Health Insurance C'),
-       ('Health Insurance D');
 

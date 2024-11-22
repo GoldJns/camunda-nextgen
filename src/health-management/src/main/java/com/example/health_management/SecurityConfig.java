@@ -65,6 +65,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(requests -> {
             requests
+                    .requestMatchers("/swagger-ui/**",
+                            "/v3/api-docs*/**").permitAll()
                     .requestMatchers(
                             "api/health-records/create/**",
                             "api/health-records/delete/**",
