@@ -21,6 +21,10 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 
 @Configuration
 @EnableWebSecurity
@@ -68,12 +72,18 @@ public class SecurityConfig {
                     .requestMatchers("/swagger-ui/**",
                             "/v3/api-docs*/**").permitAll()
                     .requestMatchers(
+                            "api/appoint/create/**",
+                            "api/appoint/edit/**",
+                            "api/appoint/delete/**",
+                            "api/appoint/validate/**",
+                            "api/user/role/Doctor",
                             "api/health-records/create/**",
                             "api/health-records/delete/**",
                             "api/health-records/leave/**",
                             "api/health-records/find/**").hasAuthority("Patient")
                     .requestMatchers(
                             "api/health-records/findAll",
+                            "api/user/role/Patient",
                             "api/tasks/*/assign/*",
                             "api/tasks/*/unassign").hasAuthority( "Doctor")
                     .requestMatchers(
@@ -81,10 +91,17 @@ public class SecurityConfig {
                             "api/tasks/*/complete",
                             "api/tasks/*/variables",
                             "api/tasks",
-                            "api/tasks/*").hasAnyAuthority("Patient", "Doctor")
+                            "api/tasks/**").hasAnyAuthority("Patient", "Doctor")
                     .anyRequest().authenticated();
         });
 
         return http.build();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper()
+                .registerModule(new JavaTimeModule()) // Register the Java 8 time module
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Optional: Avoid timestamps
     }
 }

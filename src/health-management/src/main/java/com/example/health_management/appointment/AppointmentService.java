@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.health_management.TaskListClient;
-
 import io.camunda.zeebe.client.ZeebeClient;
 
 @Service
@@ -29,15 +27,12 @@ public class AppointmentService {
     @Value("${process.appointment.delete.process-id}")
     private String deleteAppointmentProcessId;
 
-    private final TaskListClient tasklistClient;
-    
     private final ZeebeClient zeebeClient;
     
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    public AppointmentService(TaskListClient tasklistClient, ZeebeClient zeebeClient, AppointmentRepository appointmentRepository) {
-        this.tasklistClient = tasklistClient;
+    public AppointmentService(ZeebeClient zeebeClient, AppointmentRepository appointmentRepository) {
         this.zeebeClient = zeebeClient;
         this.appointmentRepository = appointmentRepository;
     }
@@ -69,8 +64,8 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
-    public boolean existsByDocNameAndMonthAndDayAndDateAndTime(String docName, String month, String day, LocalDate date, LocalTime time) {
-        return appointmentRepository.findByDocNameAndMonthAndDayAndDateAndTime(docName, month, day, date, time) == null;
+    public boolean existsByDocNameAndDateAndTime(String docName, LocalDate date, LocalTime time) {
+        return appointmentRepository.findByDocNameAndDateAndTime(docName, date, time) == null;
     }
 
     public void deleteById(long id) {
@@ -133,8 +128,6 @@ public class AppointmentService {
 
     private void setVariables(AppointmentEntity appointment, Map<String, Object> variables){
         appointment.setDocName(variables.get("docName").toString());
-        appointment.setMonth(variables.get("month").toString());
-        appointment.setDay(variables.get("day").toString());
         appointment.setDate(LocalDate.parse(variables.get("date").toString()));
         appointment.setTime(LocalTime.parse(variables.get("time").toString()));
     }
