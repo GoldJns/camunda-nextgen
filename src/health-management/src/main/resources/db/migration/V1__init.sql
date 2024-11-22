@@ -27,6 +27,7 @@ CREATE TABLE health_records
 CREATE TABLE appointment (
                             id SERIAL PRIMARY KEY,
                             user_id varchar(36),
+                            pat_name varchar(100),
                             doc_name varchar(100),
                             date DATE,
                             time TIME,
