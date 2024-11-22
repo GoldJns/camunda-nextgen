@@ -32,13 +32,12 @@ The project is structured as follows:
 ├── /.github/workflows         # Github workflows, e.g. release workflow or image push
 ├── /src
 │   ├── /health-management     # Spring Boot app
-│   ├── /userportal            # Spring Boot app
 │   ├── /ui                    # React + Vite-based UI
 │
 ├── docker-compose.yml         # Docker Compose file to start all services
 ```
 
-- `/src/health-management`, `/src/userportal`: These directories contain the Spring Boot services that make up your backend.
+- `/src/health-management`: This directory contains the Spring Boot services that makes up your backend.
 - `/src/ui`: This folder contains the frontend, built using React and Vite.
 - `docker-compose.yml`: Defines how to run all the services (including Camunda 8 and any other required services) using Docker.
 
@@ -47,7 +46,7 @@ The project is structured as follows:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/camunda-nextgen.git
+git clone https://github.com/GoldJns/camunda-nextgen.git
 cd camunda-nextgen
 ```
 
@@ -55,14 +54,14 @@ cd camunda-nextgen
 
 #### Backend (Spring Boot Services)
 
-In each service folder (e.g., `/src/health-management`), install dependencies using Maven:
+In this folder `/src/health-management`, install dependencies using Maven:
 
 ```bash
 cd src/health-management
 ./mvnw clean package
 ```
 
-Repeat this for all backend services inside the `/src` folder.
+
 
 #### Frontend (React + Vite UI)
 
@@ -78,10 +77,11 @@ npm install
 
 There are multiple run scripts.
 
-The `run.sh` script is the main entry point for starting the entire project. It orchestrates the execution of the Docker container, the backend services, and the UI. Running `run.sh` will execute the following:
+The `run.sh` script is the main entry point for starting the entire project. It orchestrates the execution of the Docker container, the backend, and the UI. Running `run.sh` will execute the following:
 
-- Start the Docker services using `run-docker.sh`
-- Start the backend services located in the `src` directory using `run-backend.sh`
+- Resolve keycloak host on your system `resolve_keycloak.sh`
+- Start the Docker services using `docker compose up -d`
+- Start the backend located in the `src` directory using `run-backend.sh`
 - Start the frontend UI using `run-ui.sh`
 
 
@@ -107,28 +107,17 @@ This will pull the necessary Docker images and start all containers (including C
 
 ### Services Overview
 
-To get Camunda up and running, we had to use the official Docker Compose YAML file and configure it for our needs. There is already a pre-configured values.yaml. We also wrote shell scripts that are necessary to start the application. For example, the Spring services need to be built and started, and the Docker containers also need to be launched.
+To get Camunda up and running, we had to use the official Docker Compose YAML file and configure it for our needs. There is already a pre-configured values.yaml. We also wrote shell scripts that are necessary to start the application. For example Spring need to be built and started, and the Docker containers also need to be launched.
 
 To successfully start the Docker containers, local environment files must be set up. The secrets are not committed to the repository. The UI includes a user management system that is integrated with Keycloak. To set this up properly, the UI application must be registered in the Identity service. Then you can configure the client id in the env file. In order for Keycloak to work correctly, the resolve_keycloak.sh script must also be executed.
 
 
-Not all services listed in the Docker Compose definition are required to run Camunda. We suggest starting with the essential services:
-
-```bash
-    docker compose up init db zeebe operate identity postgres keycloak opensearch
-```
-
-but you can also choose the ones that best suit your needs
 
 Here is a brief description of each service:
 
 #### `init`
 - **Purpose**: Initializes system settings for OpenSearch (sets `vm.max_map_count`).
 - **Usage**: Prepares the system for OpenSearch by adjusting the kernel parameters.
-
-#### `db` (Postgres)
-- **Purpose**: A PostgreSQL database for storing data used by services like Keycloak.
-- **Usage**: Provides storage for user data and authentication sessions.
 
 #### `zeebe`
 - **Purpose**: A distributed workflow engine for BPMN (Business Process Model and Notation).
@@ -154,8 +143,8 @@ Here is a brief description of each service:
 - **Purpose**: Manages user identities and integrates with Keycloak for authentication and authorization.
 - **Usage**: Handles OAuth2 and OpenID Connect-based authentication and authorizes user access to Camunda Platform components.
 
-#### `postgres` (for Keycloak)
-- **Purpose**: A PostgreSQL instance for storing Keycloak user and session data.
+#### `postgres`
+- **Purpose**: A PostgreSQL instance for storing Keycloak user and session data, also data for the health management app is stored in here.
 - **Usage**: Provides a database backend for Keycloak to manage user identities and authentication.
 
 #### `keycloak`
