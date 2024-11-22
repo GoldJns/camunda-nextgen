@@ -20,6 +20,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -55,8 +58,20 @@ public class SecurityConfig {
     }
 
     @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Replace with your allowed origin
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "Patch", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    @Bean
     SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http,
                                                           Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationConverter) throws Exception {
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource())); // Integrate CORS                                                            
         http.oauth2ResourceServer(resourceServer -> {
             resourceServer.jwt(jwtDecoder -> {
                 jwtDecoder.jwtAuthenticationConverter(jwtAuthenticationConverter);
