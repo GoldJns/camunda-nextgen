@@ -175,3 +175,20 @@
 }
 .rredcol {
 color: darkred;}
+
+.Doctor {
+  display: flex;
+  justify-content: space-between; /* Ensures space between the two elements */
+  align-items: center; /* Vertically center the content */
+}
+
+.doctor-label {
+  font-size: 24px;
+  font-weight: bold;
+} 
+
+.doctor-dropdown {
+  font-size: 16px;
+  padding: 5px;
+  margin-left: 10px; /* Adds some space between the label and the dropdown */
+} 

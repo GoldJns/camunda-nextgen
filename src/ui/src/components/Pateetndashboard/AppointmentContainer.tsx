@@ -17,6 +17,12 @@ interface Appointment {
   time: string;
 }
 
+interface Doctor {
+  username: string;
+  firstname: string;
+  lastname: string;
+}
+
 const accessToken = sessionStorage.getItem("accessToken")!;
 const userId = sessionStorage.getItem("userId");
 const username = sessionStorage.getItem("username")!;
@@ -26,24 +32,38 @@ const AppointmentContainer: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentAppointments, setCurrentAppointments] = useState<Appointment[]>([]);
   const [savedAppointments, setSavedAppointments] = useState<Appointment[]>([]);
+  const [doctorAppointments, setDoctorAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
 
-  const fetchAppointmentsFromBackend = async () => {
+  const fetchDoctorsAndAppointmentsFromBackend = async (reload: boolean) => {
     setLoading(true);
-    const fetchedAppointments = await fetchAppointments();
-    fetchedAppointments.sort((a, b) => {
+    const fetchedAppointmentsByUserId = await fetchAppointmentsByUserId();
+    fetchedAppointmentsByUserId.sort((a, b) => {
       const dateA = new Date(a.date + 'T' + a.time);
       const dateB = new Date(b.date + 'T' + b.time);
       return dateA.getTime() - dateB.getTime();
     });
-    setSavedAppointments(fetchedAppointments);
-    setCurrentAppointments(fetchedAppointments);
+    setSavedAppointments(fetchedAppointmentsByUserId);
+    setCurrentAppointments(fetchedAppointmentsByUserId);
+
+    const fetchedDoctors = await fetchDoctors();
+    const doctors = fetchedDoctors.map((doctor: Doctor) => doctor);
+    setDoctors(doctors);
+
+    if(selectedDoctor != null || reload){
+      const fetchedAppointmentsByUsername = await fetchAppointmentsByUsername();
+      fetchedAppointmentsByUsername.sort((a, b) => {
+        const dateA = new Date(a.date + 'T' + a.time);
+        const dateB = new Date(b.date + 'T' + b.time);
+        return dateA.getTime() - dateB.getTime();
+      });
+      setDoctorAppointments(fetchedAppointmentsByUsername);
+    }
+
     setLoading(false);
   };
-
-  useEffect(() => {
-    fetchAppointmentsFromBackend();
-  }, []);
   
   const daysOfWeek = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
   const getMonthName = (month: number): string => {
@@ -74,11 +94,12 @@ const AppointmentContainer: React.FC = () => {
     const scheduleElements = [];
 
     for (let hour = 8; hour <= 16; hour++) {
-      const appointmentTime = `${hour}:00`;
+      const formattedHour = String(hour).padStart(2, '0');
+      const appointmentTime = `${formattedHour}:00:00`;
 
-      const hasAppointment = savedAppointments.some(
+      const hasAppointment = doctorAppointments.some(
         (appointment) =>
-          appointment.time.slice(0, 5) === appointmentTime &&
+          appointment.time === appointmentTime &&
           appointment.date === formattedCurrentDate
       );
 
@@ -94,15 +115,40 @@ const AppointmentContainer: React.FC = () => {
           }}
           style={{ cursor: hasAppointment ? 'not-allowed' : 'pointer' }}
         >
-          {appointmentTime}
+          {appointmentTime.slice(0, 5)}
         </div>
       );
     }
     return scheduleElements;
   }
 
-// ====================== Read Appointment =======================
-  const fetchAppointments = async (): Promise<Appointment[]> => {
+  // ====================== fetch Doctors =======================
+  const fetchDoctors = async (): Promise<Doctor[]> => {
+    try {
+        const response = await fetch("http://localhost:8080/api/user/role/Doctor", {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(" Doctors " + JSON.stringify(data));
+          return data || [];
+        } else {
+          console.error('Failed to fetch Doctors:', response.status);
+          return [];
+        }
+    } catch (error) {
+        console.error('Error fetching Doctors:', error);
+        return [];
+    }
+  };
+
+// ====================== Read Appointment By UserID =======================
+  const fetchAppointmentsByUserId = async (): Promise<Appointment[]> => {
     try {
         const response = await fetch(APPOINTMENT_URL+"/byuserid/"+userId, {
           method: 'GET',
@@ -114,14 +160,37 @@ const AppointmentContainer: React.FC = () => {
 
         if (response.ok) {
           const data = await response.json();
-          // console.log(" Appointments " + JSON.stringify(data));
           return data || [];
         } else {
-          console.error('Failed to fetch appointments:', response.status);
+          console.error('Failed to fetch appointments By UserID:', response.status);
           return [];
         }
     } catch (error) {
-        console.error('Error fetching appointments:', error);
+        console.error('Error fetching appointments By UserID:', error);
+        return [];
+    }
+  };
+
+  // ====================== Read Appointment By Username =======================
+  const fetchAppointmentsByUsername = async (): Promise<Appointment[]> => {
+    try {
+        const response = await fetch(APPOINTMENT_URL+"/byusername/"+selectedDoctor!.username, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          return data || [];
+        } else {
+          console.error('Failed to fetch appointments by username:', response.status);
+          return [];
+        }
+    } catch (error) {
+        console.error('Error fetching appointments by username:', error);
         return [];
     }
   };
@@ -185,9 +254,7 @@ const AppointmentContainer: React.FC = () => {
 
   const postCompleteTask = async (taskid: string): Promise<void> => {
     const userAppointment = {
-      "docName": "jan", 
-      "month": "testMonth", 
-      "day": "testDay", 
+      "docName": selectedDoctor!.username, 
       "date": selectedDate, 
       "time": selectedTime,
     }
@@ -225,7 +292,7 @@ const AppointmentContainer: React.FC = () => {
     if (selectedDate && selectedTime) {
       const newAppointment: Appointment = {
         id: 0, 
-        docName: "jan",
+        docName: selectedDoctor!.username,
         date: selectedDate,
         time: selectedTime,
       };
@@ -255,15 +322,14 @@ const AppointmentContainer: React.FC = () => {
     } else {
       console.error("Kein Task gefunden, der abgeschlossen werden kann.");
     }
+    fetchDoctorsAndAppointmentsFromBackend(true);
   };
   
   // ====================== Update Appointment =======================
   const handleUpdate = async (appointmentId: string): Promise<void> => {
     const updateAppointment = {
       "id": appointmentId,
-      "docName": "jan", 
-      "month": "testMonth", 
-      "day": "testDay", 
+      "docName": selectedDoctor, 
       "date": selectedDate, 
       "time": selectedTime,
     }
@@ -300,7 +366,7 @@ const AppointmentContainer: React.FC = () => {
       });
       if (response.ok) {
         console.error("Appointment Deleted");
-        await fetchAppointmentsFromBackend();
+        await fetchDoctorsAndAppointmentsFromBackend(true);
       } else {
         console.error("Error Deleting Appointment");
       }
@@ -310,47 +376,69 @@ const AppointmentContainer: React.FC = () => {
     }
   };
 
+  // ====================== Helper Methods =======================
+  const handleDoctorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedDoctorName = event.target.value;
+    const doctor = doctors.find((d) => d.username === selectedDoctorName) || null;
+    setSelectedDoctor(doctor);
+  };
+
   const formatDateToGerman = (date: Date) => {
     return date.toLocaleDateString("de-DE");
   };
 
   // Update the date display when currentDate changes
   useEffect(() => {
-    document.getElementById("yesterday-day")!.innerText =
-      daysOfWeek[new Date(currentDate.getTime() - 86400000).getDay()];
-    document.getElementById("yesterday-date")!.innerText = `${new Date(
-      currentDate.getTime() - 86400000
-    ).getDate()} ${getMonthName(
-      new Date(currentDate.getTime() - 86400000).getMonth()
-    )}`;
-    document.getElementById("current-day")!.innerText =
-      daysOfWeek[currentDate.getDay()];
-    document.getElementById(
-      "current-date"
-    )!.innerText = `${currentDate.getDate()} ${getMonthName(
-      currentDate.getMonth()
-    )}`;
-    document.getElementById("tomorrow-day")!.innerText =
-      daysOfWeek[new Date(currentDate.getTime() + 86400000).getDay()];
-    document.getElementById("tomorrow-date")!.innerText = `${new Date(
-      currentDate.getTime() + 86400000
-    ).getDate()} ${getMonthName(
-      new Date(currentDate.getTime() + 86400000).getMonth()
-    )}`;
-  }, [currentDate]);
+    fetchDoctorsAndAppointmentsFromBackend();
+
+    // Update the date display whenever the currentDate or selectedDoctor changes
+    const updateDateDisplay = () => {
+      document.getElementById("yesterday-day")!.innerText =
+        daysOfWeek[new Date(currentDate.getTime() - 86400000).getDay()];
+      document.getElementById("yesterday-date")!.innerText = `${new Date(
+        currentDate.getTime() - 86400000
+      ).getDate()} ${getMonthName(
+        new Date(currentDate.getTime() - 86400000).getMonth()
+      )}`;
+      document.getElementById("current-day")!.innerText =
+        daysOfWeek[currentDate.getDay()];
+      document.getElementById(
+        "current-date"
+      )!.innerText = `${currentDate.getDate()} ${getMonthName(
+        currentDate.getMonth()
+      )}`;
+      document.getElementById("tomorrow-day")!.innerText =
+        daysOfWeek[new Date(currentDate.getTime() + 86400000).getDay()];
+      document.getElementById("tomorrow-date")!.innerText = `${new Date(
+        currentDate.getTime() + 86400000
+      ).getDate()} ${getMonthName(
+        new Date(currentDate.getTime() + 86400000).getMonth()
+      )}`;
+    };
+
+    updateDateDisplay();
+    generateSchedule();
+  }, [currentDate, selectedDoctor]);
 
   return (
     <div className="Gesdiv">
     <div className="Titles">
       <h1>Terminbuchung</h1>
     </div>
-  
-    {/* <div className="Doctor">
-      <h1>Arzt </h1>
-      <span><p>Doctor Jan</p></span>
-    </div> */}
 
     <div className="shcontainer">
+      <div className="Doctor">
+        <h1>
+          <span className="doctor-label">Arzt</span>
+          <select className="doctor-dropdown" onChange={handleDoctorChange}>
+          <option value="">Select a doctor</option>
+            {doctors.map((doctor) => (
+              <option key={doctor.username} value={doctor.username}>{doctor.username}</option>
+            ))}
+          </select>
+        </h1>
+      </div>
+
       <div className="header">
         <i
           className="fas fa-chevron-left"
@@ -388,12 +476,14 @@ const AppointmentContainer: React.FC = () => {
         <div  className="termindata datum">
           <label>  Datum  </label>
           <label> Zeit </label>
+          <label> Arzt </label>
           <label> Action </label>
         </div>
         {currentAppointments.map((appointment, index) => (
       <div key={index} className="termindata">
       <label> {formatDateToGerman(new Date(appointment.date))} </label>
       <label> {appointment.time.slice(0, 5)} </label>
+      <label> Doc. {appointment.docName} </label>
       <label> 
         {/* <button 
           className="update-btn"
@@ -418,7 +508,7 @@ const AppointmentContainer: React.FC = () => {
       </div>
  ) : (
     <div className="termin">
-    <h1>  keine Termine vorhanden</h1>
+      <h1>  keine Termine vorhanden</h1>
     </div>
   )}
     </div>
