@@ -1,4 +1,4 @@
-export const REFRESH_INTERVAL = 55 * 60 * 1000; // 55 minutes in milliseconds
+export const REFRESH_INTERVAL = 28 * 60 * 1000; // 55 minutes in milliseconds
 
 export const refreshAccessToken  = async (): Promise<void> => {
     const accessTokenExpiry = parseInt(sessionStorage.getItem("accessTokenExpiry") || "0", 10);
