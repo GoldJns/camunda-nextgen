@@ -35,12 +35,10 @@ const AppointmentContainer: React.FC = () => {
   const [currentAppointments, setCurrentAppointments] = useState<Appointment[]>([]);
   const [savedAppointments, setSavedAppointments] = useState<Appointment[]>([]);
   const [doctorAppointments, setDoctorAppointments] = useState<Appointment[]>([]);
-  const [loading, setLoading] = useState(true);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
 
   const fetchDoctorsAndAppointmentsFromBackend = async (reload: boolean) => {
-    setLoading(true);
     const fetchedAppointmentsByUserId = await fetchAppointmentsByUserId();
     fetchedAppointmentsByUserId.sort((a, b) => {
       const dateA = new Date(a.date + 'T' + a.time);
@@ -64,7 +62,6 @@ const AppointmentContainer: React.FC = () => {
       setDoctorAppointments(fetchedAppointmentsByUsername);
     }
 
-    setLoading(false);
   };
   
   const daysOfWeek = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
@@ -88,9 +85,6 @@ const AppointmentContainer: React.FC = () => {
   };
 
   const generateSchedule = () => {
-    if (loading) {
-      return <div>Loading...</div>;
-    }
 
     const formattedCurrentDate = formatDate(currentDate); 
     const scheduleElements = [];
