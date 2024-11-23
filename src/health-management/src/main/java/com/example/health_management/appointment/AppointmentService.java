@@ -60,6 +60,10 @@ public class AppointmentService {
         return appointmentRepository.findByUserID(userID);
     }
 
+    public List<AppointmentEntity> getByUsername(String username) {
+        return appointmentRepository.findByDocName(username);
+    }
+
     public List<AppointmentEntity> findAll() {
         return appointmentRepository.findAll();
     }
@@ -127,6 +131,7 @@ public class AppointmentService {
     }
 
     private void setVariables(AppointmentEntity appointment, Map<String, Object> variables){
+        appointment.setPatientName(variables.get("patientName").toString());
         appointment.setDocName(variables.get("docName").toString());
         appointment.setDate(LocalDate.parse(variables.get("date").toString()));
         appointment.setTime(LocalTime.parse(variables.get("time").toString()));
