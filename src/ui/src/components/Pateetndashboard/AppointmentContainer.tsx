@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./css/Appointment.css"; 
 import delIcon from '../../assets/del_icon.jpg';
+import { apiCall } from "../TokenUtil";
 
 interface appointmentTask {
   id: string;
@@ -126,7 +127,7 @@ const AppointmentContainer: React.FC = () => {
   // ====================== fetch Doctors =======================
   const fetchDoctors = async (): Promise<Doctor[]> => {
     try {
-        const response = await fetch("http://localhost:8080/api/user/role/Doctor", {
+        const response = await apiCall("http://localhost:8080/api/user/role/Doctor", {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',
@@ -151,7 +152,7 @@ const AppointmentContainer: React.FC = () => {
 // ====================== Read Appointment By UserID =======================
   const fetchAppointmentsByUserId = async (): Promise<Appointment[]> => {
     try {
-        const response = await fetch(APPOINTMENT_URL+"/byuserid/"+userId, {
+        const response = await apiCall(APPOINTMENT_URL+"/byuserid/"+userId, {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',
@@ -175,7 +176,7 @@ const AppointmentContainer: React.FC = () => {
   // ====================== Read Appointment By Username =======================
   const fetchAppointmentsByUsername = async (): Promise<Appointment[]> => {
     try {
-        const response = await fetch(APPOINTMENT_URL+"/byusername/"+selectedDoctor!.username, {
+        const response = await apiCall(APPOINTMENT_URL+"/byusername/"+selectedDoctor!.username, {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',
@@ -199,7 +200,7 @@ const AppointmentContainer: React.FC = () => {
   // ====================== Create Appointment =======================
   const createAppointment = async (): Promise<void> => {
     try {
-      const response = await fetch(APPOINTMENT_URL+"/create/"+username,{
+      const response = await apiCall(APPOINTMENT_URL+"/create/"+username,{
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -220,7 +221,7 @@ const AppointmentContainer: React.FC = () => {
 
   const getTaskId = async (): Promise<string | null> => {
     try {
-      const response = await fetch(
+      const response = await apiCall(
         "http://localhost:8080/api/tasks?assignee=" +
           username +
           "&group",
@@ -261,7 +262,7 @@ const AppointmentContainer: React.FC = () => {
       "time": selectedTime,
     }
     try {
-      const response = await fetch(
+      const response = await apiCall(
         `http://localhost:8080/api/tasks/${taskid}/complete`,
         {
           method: "POST",
@@ -338,7 +339,7 @@ const AppointmentContainer: React.FC = () => {
       "time": selectedTime,
     }
     try {
-      const response = await fetch(APPOINTMENT_URL+"/edit/"+username,{
+      const response = await apiCall(APPOINTMENT_URL+"/edit/"+username,{
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -361,7 +362,7 @@ const AppointmentContainer: React.FC = () => {
   const handleDelete = async (appointmentId: number): Promise<void> => {
     console.log(" ======================= " + appointmentId)
     try {
-      const response = await fetch(APPOINTMENT_URL+"/delete/"+appointmentId,{
+      const response = await apiCall(APPOINTMENT_URL+"/delete/"+appointmentId,{
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
