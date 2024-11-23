@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { jwtDecode } from 'jwt-decode';
+import { refreshAccessToken, REFRESH_INTERVAL } from './TokenUtil';
+
 interface DecodedToken {
   groups: string[]; 
   name: string;
@@ -12,8 +14,6 @@ const Login: React.FC = () => {
   const [isSignUpActive, setSignUpActive] = useState(false);
   const navigate = useNavigate();
   
-  
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -87,7 +87,10 @@ const Login: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         sessionStorage.setItem("accessToken", data.access_token);
+        sessionStorage.setItem("accessTokenExpiry", String(Math.floor(Date.now() / 1000) + data.expires_in));// time in seconds
+        sessionStorage.setItem("refreshToken", data.refresh_token);
         console.log(data.access_token);
+        
         const decod = jwtDecode<DecodedToken>(data.access_token);
         console.log(decod);
 
@@ -107,8 +110,8 @@ const Login: React.FC = () => {
         } else{
           alert("Falsche Usertype")
         }
-       
-      
+        const intervalId = setInterval(refreshAccessToken, REFRESH_INTERVAL);
+        sessionStorage.setItem("refreshTokenInterval", String(intervalId));
       } else {
         alert("Login failed");
         console.error("Login failed");
