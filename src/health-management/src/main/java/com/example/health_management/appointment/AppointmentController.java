@@ -42,15 +42,13 @@ public class AppointmentController {
     public Optional<AppointmentEntity> getByID(@PathVariable long userID) {
         return appointmentService.getByID(userID);
     }
-
-    @GetMapping("/byuserid/{userID}")
-    public List<AppointmentEntity> getByUserID(@PathVariable String userID) {
-        return appointmentService.getByUserID(userID);
-    }
-
     @GetMapping("/byusername/{username}")
     public List<AppointmentEntity> getByUsername(@PathVariable String username) {
         return appointmentService.getByUsername(username);
+    }
+    @GetMapping("/byuserid/{userID}")
+    public List<AppointmentEntity> getByUserID(@PathVariable String userID) {
+        return appointmentService.getByUserID(userID);
     }
 
     @GetMapping("/findAll")

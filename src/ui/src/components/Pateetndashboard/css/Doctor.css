@@ -25,7 +25,7 @@
 .docdiv .Titles h1 {
   font-size: 24px;
 }
-.docdiv .staticss {
+.docdiv .statics {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
@@ -33,19 +33,14 @@
   gap: 20px;
   background-color: rgb(238, 238, 238);
 }
-.docdiv .staticss .item {
+.docdiv .statics .item {
   display: flex;
   padding: 10px;
   flex-direction: column;
+  gap: 5px;
   align-items: center;
-  gap: 20px;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.docdiv .staticss .item h4 {
-  font-size: 30px;
-  font-weight: bold;
 }
 .userpic {
   color: rgb(192, 150, 95);
@@ -68,19 +63,18 @@
   background-color: rgb(238, 238, 238);
 }
 .docdiv .Dtermins .waitings .docdiv .Dtermins .appoiments {
-  background-color: white;
+background-color: white;
 }
 .docdiv .Dtermins h2 {
   background-color: white;
   text-align: center;
   padding: 5px;
-}
+  }
 .docdiv .Dtermins table {
   width: 100%;
   border-collapse: collapse;
 }
-.docdiv .Dtermins th,
-.docdiv .Dtermins td {
+.docdiv .Dtermins th,.docdiv .Dtermins td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
@@ -132,8 +126,7 @@
 .docdiv .statics button:hover {
   background-color: #218838; /* Darker green on hover */
 }
-
-.Gesdivs .heathtable {
+.Gesdivs .heathtable  {
   box-sizing: border-box;
   background: linear-gradient(to bottom right, #f0f4f8, #f8e1f4);
   font-family: "Arial", sans-serif;
@@ -143,7 +136,6 @@
   display: grid;
   grid-template-rows: 8fr 1fr;
 }
-
 .Gesdivs .heathtable .patien-card {
   background: white;
   border-radius: 15px;
@@ -156,141 +148,96 @@
   flex-direction: column;
   gap: 5px;
 }
+.Gesdivs .heathtable  .patien-card h1 {
+  font-size: 18px;
+  text-align: left;
+  color: rgb(55, 20, 181);
 
-
-
-.Gesdivs .heathtable .patien-card h5 {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  width: 100%; 
-  color: black;
-  font-size: 20px;
 }
-
-.Gesdivs .heathtable .patien-card .left {
-  background-color: rgba(59, 64, 192, 0.3); 
-  padding: 0 5px; 
-}
-
-.Gesdivs .heathtable .patien-card .right {
-
-  padding: 0 5px; 
-}
-
-
-.Gesdivs .heathtable .patien-card h2 {
+.Gesdivs .heathtable  .patien-card h2 {
   font-size: 24px;
   text-align: left;
-}
 
-.Gesdivs .heathtable .patien-card h4 {
+}
+.Gesdivs .heathtable  .patien-card h4 {
   font-size: 16px;
   color: rgb(176, 5, 5);
-  text-align: left;
 }
-
-.Gesdivs .heathtable .patien-card h6 {
+.Gesdivs .heathtable  .patien-card h6 {
   font-size: 16px;
   text-align: left;
 }
-
-.Gesdivs .heathtable .patien-card .details {
+.Gesdivs .heathtable  .patien-card .detaiels {
   padding: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.Gesdivs .heathtable .patien-card .details .d ul {
-  list-style-type: disc;
-  padding-left: 20px;
-  margin: 0;
-  text-align: left;
-  font-weight: normal;
-  width: 100%;
+.Gesdivs .heathtable  .patien-card .detaiels .d {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.Gesdivs .heathtable  .patien-card .detaiels .d  label{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgb(6, 6, 101);
 }
 
-.Gesdivs .heathtable .patien-card .details .d ul li {
-  text-align: left;
-  margin-bottom: 5px;
-  font-size: 14px;
-}
 
-.Gesdivs .heathtable .patien-card .txtreject {
+.Gesdivs .heathtable  .patien-card .detaiels .d label {
+  font-weight: bold;
+}
+.Gesdivs .heathtable  .patien-card .txtreject {
   width: 100%;
   padding: 5px;
 }
-.Gesdivs .heathtable .patien-card .txtreject input {
+.Gesdivs .heathtable  .patien-card .txtreject input {
   width: 50%;
   border-radius: 20px;
   padding: 5px;
   margin: 10px 0;
 }
-.Gesdivs .heathtable .patien-card .buttons {
+.Gesdivs .heathtable  .patien-card .buttons {
   display: flex;
   justify-content: space-around;
 }
-.Gesdivs .heathtable .patien-card .buttons button {
+.Gesdivs .heathtable  .patien-card .buttons button {
   border: none;
   border-radius: 20px;
   padding: 10px 20px;
   font-size: 14px;
   cursor: pointer;
 }
-.Gesdivs .heathtable .patien-card .buttons .reject-btn {
+.Gesdivs .heathtable  .patien-card .buttons .reject-btn {
   background: #5e1e03;
   color: white;
 }
-.Gesdivs .heathtable .patien-card .buttons .accept-btn {
+.Gesdivs .heathtable  .patien-card .buttons .accept-btn {
   background: #1c5703;
   color: white;
 }
-.Gesdivs .heathtable .task-selection {
+.Gesdivs .heathtable  .task-selection {
+ 
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
 }
-.Gesdivs .heathtable .task-selection ul {
+.Gesdivs .heathtable  .task-selection ul  {
+ 
   display: flex;
   justify-content: space-between;
   align-items: center;
   list-style: none;
   gap: 5px;
 }
-.Gesdivs .heathtable .task-selection ul li {
-  padding: 5px;
-  cursor: pointer;
-  background-color: darkgrey;
-  font-weight: bold;
-}
-.Gesdivs .heathtable .task-selection button {
-  padding: 5px 10px; 
-  font-size: 16px;
-  color: white;
-  background-color: #0f2743; 
-  border: none; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  transition: background-color 0.3s ease;
-} 
-.Gesdivs .heathtable .task-selection span {
-  padding: 5px 10px;
-
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  color: black;
-  font-weight: bold;
-} 
-.Gesdivs .heathtable .task-selection button:hover {
-  background-color: #0056b3; 
-} 
-.Gesdivs .heathtable .no-tasks {
-  color: firebrick;
-  display: flex;
-  font-size: small;
-  justify-content: center;
-  align-items: center;
+.Gesdivs .heathtable  .task-selection ul  li {
+padding: 5px;
+cursor: pointer;
+background-color: darkgrey;
+font-weight: bold;
 }

@@ -48,9 +48,7 @@
   text-align: left;
   font-size: 20px;
 }
-.Gesdiv main .Laborergebnisse {
-  grid-column: 1 / -1;
-}
+
 .Gesdiv main .pateinRecord .item {
  font-size: 14px;
  font-weight: bold;
@@ -206,5 +204,80 @@ height: 100%;
 
 padding: 10px;
 }
+
+
+
+
+.Gesdivs .medicalinpputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  padding: 10px;
+
+}
+
+.Gesdivs .medicalinpputs div {
+  background-color: white;
+  padding: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Gesdivs .medicalinpputs div h3,
+.Gesdivs .medicalinpputs div h2 {
+  padding: 5px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.Gesdivs .medicalinpputs .item {
+  font-size: 12px;
+  font-weight: bold;
+  color: rgb(181, 24, 47);
+}
+
+.Gesdivs .medicalinpputs .description {
+  font-size: 12px;
+  padding-top: 3px;
+  color: black;
+}
+
+.Gesdivs .medicalinpputs .additem,
+.Gesdivs .medicalinpputs .itemlist {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.Gesdivs  .Laborergebnisse {
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+
+}
+.Gesdivs   .Laborergebnisse h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.Gesdivs   .Laborergebnisse input {
+  padding: 5px;
+  text-align: center;
+
+
+}
+.Gesdivs .medbtns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Gesdivs .medbtns button {
+  background-color: green;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+
 
 

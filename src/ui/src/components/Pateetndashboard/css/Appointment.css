@@ -178,7 +178,7 @@ color: darkred;}
 
 .Doctor {
   display: flex;
-  justify-content: space-between; /* Ensures space between the two elements */
+  justify-content:center; /* Ensures space between the two elements */
   align-items: center; /* Vertically center the content */
 }
 

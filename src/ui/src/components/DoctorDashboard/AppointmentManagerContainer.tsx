@@ -10,12 +10,12 @@ interface Appointment {
   time: string;
 }
 
-const accessToken = sessionStorage.getItem("accessToken")!;
-const username = sessionStorage.getItem("username")!;
-const APPOINTMENT_URL = "http://localhost:8080/api/appoint";
+
 
 const AppointmentManagerContainer: React.FC = () => {
-
+  const accessToken = sessionStorage.getItem("accessToken")!;
+  const username = sessionStorage.getItem("username")!;
+  const APPOINTMENT_URL = "http://localhost:8080/api/appoint";
   const [doctorAppointments, setDoctorAppointments] = useState<Appointment[]>([]);
 
   // ====================== Read Appointment By Username =======================

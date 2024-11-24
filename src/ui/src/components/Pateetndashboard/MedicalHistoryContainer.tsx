@@ -1,38 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./css/styles.css";
-interface Task {
-  id: string;
-  processDefinitionKey: string;
-  creationDate: string;
-  formKey: string;
-  isFirst: boolean;
-}
-interface Record {
-  username: string | null;
-  allergies: string[];
-  medicalHealthHistory: string[];
-  diagnoses: string[];
-  medicines: string[];
-  healthInsurance: string;
-}
-const MedicalHistoryContainer: React.FC = () => {
-  const [taskId, setTaskId] = useState<string >("");
+import {
+  getTaskIDs,
+  createHealthRecord,
+  Record,
+  completeTask,
+  GetHealthRecord,
+  DOcHeathRecord,
+  leavePractice,
+  DeleteHealthRecord,
+  editHealthRecord,
+} from "../API";
 
-  const [userTasks, setUserTasks] = useState<Task[]>([]);
+const MedicalHistoryContainer: React.FC = () => {
+  const [PatHelthRecord, setPatHelthRecord] = useState<DOcHeathRecord | null>();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isleave, setIsleave] = useState<boolean>(false);
+  const [isready, setIsready] = useState<boolean>(false);
+
+
   const [newRecord, setNewRecord] = useState<Record>({
     username: sessionStorage.getItem("username"),
     allergies: [],
-    medicalHealthHistory: [],
+    medicalHistory: [],
     diagnoses: [],
-    medicines: [],
-    healthInsurance: "",
+    medicine: [],
+    healthInsuranceName: "",
   });
+
   const [newAllergy, setNewAllergy] = useState<string>("");
   const [newMedicalHistory, setNewMedicalHistory] = useState<string>("");
   const [newDiagnosis, setNewDiagnosis] = useState<string>("");
   const [newMedicine, setNewMedicine] = useState<string>("");
 
   const accessToken = sessionStorage.getItem("accessToken");
+  const username = sessionStorage.getItem("username");
 
   const handleAllergyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewAllergy(e.target.value);
@@ -52,7 +54,7 @@ const MedicalHistoryContainer: React.FC = () => {
     setNewMedicine(e.target.value);
   };
 
-
+  
   const addAllergy = () => {
     if (newAllergy.trim() !== "") {
       setNewRecord((prevRecord) => ({
@@ -67,8 +69,8 @@ const MedicalHistoryContainer: React.FC = () => {
     if (newMedicalHistory.trim() !== "") {
       setNewRecord((prevRecord) => ({
         ...prevRecord,
-        medicalHealthHistory: [
-          ...prevRecord.medicalHealthHistory,
+        medicalHistory: [
+          ...prevRecord.medicalHistory,
           newMedicalHistory.trim(),
         ],
       }));
@@ -90,7 +92,7 @@ const MedicalHistoryContainer: React.FC = () => {
     if (newMedicine.trim() !== "") {
       setNewRecord((prevRecord) => ({
         ...prevRecord,
-        medicines: [...prevRecord.medicines, newMedicine.trim()],
+        medicine: [...prevRecord.medicine, newMedicine.trim()],
       }));
       setNewMedicine(""); // Clear the input field
     }
@@ -105,7 +107,9 @@ const MedicalHistoryContainer: React.FC = () => {
   const removeMedicalHistory = (history: string) => {
     setNewRecord((prevRecord) => ({
       ...prevRecord,
-      medicalHealthHistory: prevRecord.medicalHealthHistory.filter((item) => item !== history),
+      medicalHistory: prevRecord.medicalHistory.filter(
+        (item) => item !== history
+      ),
     }));
   };
 
@@ -116,240 +120,252 @@ const MedicalHistoryContainer: React.FC = () => {
     }));
   };
 
-  const removeMedicine = (medicine: string) => {
+  const removeMedicine = (meditem: string) => {
     setNewRecord((prevRecord) => ({
       ...prevRecord,
-      medicines: prevRecord.medicines.filter((item) => item !== medicine),
+      medicine: prevRecord.medicine.filter((item) => item !== meditem),
     }));
   };
+
   const handleSubmit = async () => {
-    await createHeathrecord();
-    const fetchedTaskId = await getTaskIDS(); // Wait for the task ID
+    if (isEditing) {
+      await editHealthRecord(username, accessToken);
+      alert("Health Record wurde erfolgreich geändert");
+    } else {
+      await createHealthRecord(username, accessToken);
+      alert("Health Record wurde erfolgreich erstellt");
+    }
+    setIsready(true);
+  };
+
+  const handleComplete = async () => {
+    const fetchedTaskId =  await getTaskIDs(username, accessToken);
     if (fetchedTaskId) {
-        await PostCompleteTask(fetchedTaskId); // Use the fetched task ID
+      console.log(fetchedTaskId)
+      await completeTask(fetchedTaskId, newRecord, accessToken);
+      alert("Health Record wurde erfolgreich gesendet");
+
     } else {
       console.error("No task ID found.");
+      alert("Health Record wurde erfolgreich gesendet");
     }
-   
+    setIsready(false);
+
   };
 
-  /// step 1  post heathRecord with username
-  const createHeathrecord = async (): Promise<void> => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/health-records/create/" +
-          sessionStorage.getItem("username"),
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (response.ok) {
+  const handleDelete = async () => {
+    if (PatHelthRecord) {
+      if (isleave) {
+        await DeleteHealthRecord(username, accessToken);
+        setPatHelthRecord(null); // Reset the state after deletion
+        alert("Health Record wurde erfolgreich gelöscht");
       } else {
-        console.error(" login failed");
+        await leavePractice(username, accessToken);
+        setIsleave(true);
       }
-    } catch (error) {
-      console.error("Error:", error);
-      
+    }
+  };
+  const handleisedited = () => {
+    if (PatHelthRecord) {
+      setNewRecord({
+        username: PatHelthRecord.username,
+        allergies: [...PatHelthRecord.allergies],
+        medicalHistory: [...PatHelthRecord.medicalHistory],
+        diagnoses: [...PatHelthRecord.diagnoses],
+        medicine: [...PatHelthRecord.medicines],
+        healthInsuranceName: PatHelthRecord.healthInsurance,
+      });
+      setPatHelthRecord(null);
+      setIsEditing(true);
     }
   };
 
-  /// step 2  get task id
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const data = await GetHealthRecord(accessToken, username);
+      setPatHelthRecord(data || null);
+    };
 
-  const getTaskIDS = async (): Promise<string | null> => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/tasks?assignee=" +
-          sessionStorage.getItem("username") +
-          "&group",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Fetched tasks:", data);
-
-        const firstTask = data.items?.find((task: Task) => task.isFirst);
-        if (firstTask) {
-          console.log("Fetched task ID:", firstTask.id);
-          return firstTask.id;
-        } else {
-          console.log("No tasks found for the user.");
-          return null;
-
-        }
-      } else {
-        console.error(" login failed");
-        return null;
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      return null;
-    }
-  };
-
-  /// step 3  post complete task with task id
-  const PostCompleteTask = async (taskid: string): Promise<void> => {
-    const sampledat ={ 
-      "username": sessionStorage.getItem("username"),
-      "allergies": newRecord.allergies.join(","),
-      "chronicConditions": newRecord.medicalHealthHistory.join(","),
-      "surgeries": newRecord.medicines.join(","),
-      "healthInsuranceName": newRecord.healthInsurance,
-    }
-    console.log(sessionStorage.getItem("username"))
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/tasks/${taskid}/complete`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify(sampledat),
-        }
-      );
-
-      if (response.ok) {
-      } else {
-        console.error(" login failed");
-       
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    
-    }
-  };
-
+    fetchTasks();
+  }, []);
   return (
-    <div className="Gesdiv">
+    <div className="Gesdivs">
       <div className="Titles">
         <h1>Gesundheitsdaten</h1>
       </div>
-      <main>
+      <main className="medicalinpputs">
         <div className="pateinRecord">
-          <h3>Krankengeschichte</h3>
-          <div className="additem">
-        
-            
+          <h3>Krankheiten</h3>
+          {PatHelthRecord ? (
+            <div>
+              {PatHelthRecord.medicalHistory.map((item, index) => (
+                <div key={index} className="item">
+                  <i className="fas fa-stethoscope"></i> {item}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="additem">
               <input
                 type="text"
                 value={newMedicalHistory}
                 onChange={handleMedicalHistoryChange}
               />
               <button type="button" onClick={addMedicalHistory}>
-             +
+                +
               </button>
-           
-          </div>
-          {newRecord.medicalHealthHistory.map((item, index) => (
-            <div className="item" key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <i className="fas fa-stethoscope"></i> {item}
-            <button  onClick={() => removeMedicalHistory(item)}>-</button>
-
+            </div>
+          )}
+          {newRecord.medicalHistory.map((item, index) => (
+            <div
+              className="item"
+              key={index}
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <i className="fas fa-stethoscope"></i> {item}
+              <button onClick={() => removeMedicalHistory(item)}>-</button>
             </div>
           ))}
         </div>
 
-        <section className="secondcol">
-          <div className="Medikamentenliste">
-            <h3>Medikamentenliste</h3>
-            <div className="additem">
-        
-                <input
-                  type="text"
-                  value={newMedicine}
-                  onChange={handleMedicineChange}
-                />
-                <button type="button" onClick={addMedicine}>
-                 +
-                </button>
-       
+        <div className="Medikamentenliste">
+          <h3>Medikamentenliste</h3>
+          {PatHelthRecord ? (
+            <div>
+              {PatHelthRecord.medicines.map((medikament, index) => (
+                <div key={index} className="itemlist">
+                  <i className="fas fa-pills medicine-icon medicine"></i>
+                  {medikament}
+                </div>
+              ))}
             </div>
-            {newRecord.medicines.map((medikament, index) => (
-              <div key={index} className="itemlist">
-                <i className="fas fa-pills medicine-icon medicine"></i>
-                {medikament}
-                <button  onClick={() => removeMedicine(medikament)}>-</button>
-
-              </div>
-            ))}
-          </div>
-          <div className="Medikamentenliste">
-            <h3>Allergien</h3>
+          ) : (
             <div className="additem">
-             
-               
-                <input
-                  type="text"
-                  value={newAllergy}
-                  onChange={handleAllergyChange}
-                />
-                <button type="button" onClick={addAllergy}>
+              <input
+                type="text"
+                value={newMedicine}
+                onChange={handleMedicineChange}
+              />
+              <button type="button" onClick={addMedicine}>
                 +
-                </button>
-       
+              </button>
             </div>
-            {newRecord.allergies.map((allergie, index) => (
-              <div key={index} className="itemlist" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <i className="fas fa-allergies allergy-icon allergy"></i>
+          )}
+          {newRecord.medicine.map((medikament, index) => (
+            <div key={index} className="itemlist">
+              <i className="fas fa-pills medicine-icon medicine"></i>
+              {medikament}
+              <button onClick={() => removeMedicine(medikament)}>-</button>
+            </div>
+          ))}
+        </div>
+        <div className="Medikamentenliste">
+          <h3>Allergien</h3>
+          {PatHelthRecord ? (
+            <div>
+              {PatHelthRecord.allergies.map((allergie, index) => (
+                <div key={index} className="itemlist">
+                  <i className="fas fa-allergies allergy-icon allergy"></i>
+                  {allergie}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="additem">
+              <input
+                type="text"
+                value={newAllergy}
+                onChange={handleAllergyChange}
+              />
+              <button type="button" onClick={addAllergy}>
+                +
+              </button>
+            </div>
+          )}
+          {newRecord.allergies.map((allergie, index) => (
+            <div
+              key={index}
+              className="itemlist"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <i className="fas fa-allergies allergy-icon allergy"></i>
 
-                {allergie}
-                <button   onClick={() => removeAllergy(allergie)}>-</button>
+              {allergie}
+              <button onClick={() => removeAllergy(allergie)}>-</button>
+            </div>
+          ))}
+        </div>
 
-              </div>
-            ))}
-          </div>
-        </section>
-        <div className="Laborergebnisse">
+        <div>
           <h2>Laborergebnisse und Diagnosen</h2>
-          <div className="additem">
-        
-           
+          {PatHelthRecord ? (
+            <div>
+              {PatHelthRecord.diagnoses.map((test, index) => (
+                <div key={index} className="additem">
+                  <strong>{test}</strong>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="additem">
               <input
                 type="text"
                 value={newDiagnosis}
                 onChange={handleDiagnosisChange}
               />
               <button type="button" onClick={addDiagnosis}>
-               +
+                +
               </button>
-          
-          </div>
-       
+            </div>
+          )}
           {newRecord.diagnoses.map((test, index) => (
             <div key={index} className="additem">
               <strong>{test}</strong>
               <button onClick={() => removeDiagnosis(test)}>-</button>
- 
             </div>
           ))}
         </div>
-        <div className="Laborergebnisse">
-          <h2>Krankenversicherung</h2>
-          <input
-            type="text"
-            value={newRecord.healthInsurance}
-            onChange={(e) => setNewRecord({ ...newRecord, healthInsurance: e .target.value })}
-            placeholder="Enter Health Insurance"
-          />
-
-        </div>
       </main>
-      <button onClick={handleSubmit}>
-        Neuen Gesundheitsdatensatz hinzufügen
-      </button>
+      <div className="Laborergebnisse">
+        <h2>Krankenversicherung</h2>
+        {PatHelthRecord === null ? (
+          <select
+            value={newRecord.healthInsuranceName}
+            onChange={(e) =>
+              setNewRecord({
+                ...newRecord,
+                healthInsuranceName: e.target.value,
+              })
+            }
+          >
+            <option value=""></option>
+            <option value="Health Insurance A">Health Insurance A</option>
+            <option value="Health Insurance B">Health Insurance B</option>
+            <option value="Health Insurance C">Health Insurance C</option>
+            <option value="Health Insurance D">Health Insurance D</option>
+          </select>
+        ) : (
+          <p>{PatHelthRecord?.healthInsurance}</p>
+        )}
+      </div>
+      <div className="medbtns">
+        {PatHelthRecord == null ? (
+          isready ? (
+            <button onClick={handleComplete}>Senden</button>
+
+          ) : (
+            <button onClick={handleSubmit}>Speichern</button>
+
+          )
+        ) : (
+          <div className="extrabtns">
+            <button onClick={handleDelete} style={{ marginRight: "10px" }}>
+              {isleave ? "Löschen" : "Verlassen der Praxis"}
+            </button>
+            <button onClick={handleisedited}>Bearbeiten</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -3,13 +3,7 @@ import "./css/Appointment.css";
 import delIcon from '../../assets/del_icon.jpg';
 import { apiCall } from "../TokenUtil";
 
-interface appointmentTask {
-  id: string;
-  processDefinitionKey: string;
-  creationDate: string;
-  formKey: string;
-  isFirst: boolean;
-}
+
 
 interface Appointment {
   id: number;
@@ -25,12 +19,14 @@ interface Doctor {
   lastname: string;
 }
 
-const accessToken = sessionStorage.getItem("accessToken")!;
+
+
+const AppointmentContainer: React.FC = () => {
+
+  const accessToken = sessionStorage.getItem("accessToken")!;
 const userId = sessionStorage.getItem("userId");
 const username = sessionStorage.getItem("username")!;
 const APPOINTMENT_URL = "http://localhost:8080/api/appoint";
-
-const AppointmentContainer: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentAppointments, setCurrentAppointments] = useState<Appointment[]>([]);
   const [savedAppointments, setSavedAppointments] = useState<Appointment[]>([]);
@@ -323,34 +319,7 @@ const AppointmentContainer: React.FC = () => {
     fetchDoctorsAndAppointmentsFromBackend(true);
   };
   
-  // ====================== Update Appointment =======================
-  const handleUpdate = async (appointmentId: string): Promise<void> => {
-    const updateAppointment = {
-      "id": appointmentId,
-      "patientName": username,
-      "docName": selectedDoctor, 
-      "date": selectedDate, 
-      "time": selectedTime,
-    }
-    try {
-      const response = await apiCall(APPOINTMENT_URL+"/edit/"+username,{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify(updateAppointment),
-      });
-      if (response.ok) {
-        console.error("Appointment Deleted");
-      } else {
-        console.error("Error Deleting Appointment");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    
-    }
-  }
+ 
 
   // ====================== Delete Appointment =======================
   const handleDelete = async (appointmentId: number): Promise<void> => {
@@ -426,17 +395,7 @@ const AppointmentContainer: React.FC = () => {
     </div>
 
     <div className="shcontainer">
-      <div className="Doctor">
-        <h1>
-          <span className="doctor-label">Arzt</span>
-          <select className="doctor-dropdown" onChange={handleDoctorChange}>
-          <option value="">Select a doctor</option>
-            {doctors.map((doctor) => (
-              <option key={doctor.username} value={doctor.username}>{doctor.username}</option>
-            ))}
-          </select>
-        </h1>
-      </div>
+    
 
       <div className="header">
         <i
@@ -465,6 +424,17 @@ const AppointmentContainer: React.FC = () => {
         ></i>
       </div>
       <div className="schedule">{generateSchedule()}</div>
+      <div className="Doctor">
+        <h1>
+          <span className="doctor-label">Arzt</span>
+          <select className="doctor-dropdown" onChange={handleDoctorChange}>
+          <option value="">Select a doctor</option>
+            {doctors.map((doctor) => (
+              <option key={doctor.username} value={doctor.username}>{doctor.username}</option>
+            ))}
+          </select>
+        </h1>
+      </div>
       <div className="final">
         <button onClick={handleAppointmentBooking}>Termin Buchen</button>
       </div>
