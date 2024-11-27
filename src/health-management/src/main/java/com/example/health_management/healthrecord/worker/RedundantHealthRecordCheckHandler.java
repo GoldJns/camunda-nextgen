@@ -28,14 +28,13 @@ public class RedundantHealthRecordCheckHandler {
 
         String username = (String) variables.get("username");
         boolean isEmpty = healthRecordRepository.findByUsername(username).isEmpty();
-        System.out.println(isEmpty);
-        if(isEmpty) {
+        if (isEmpty) {
             LOG.error("Creating health record proceeds. Health record doesnt exists for patient username {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("exists", false))
                     .send()
                     .join();
-        }else {
+        } else {
             LOG.error("Creating health record failed. Health record already exists for patient username {}", username);
             client.newCompleteCommand(job.getKey())
                     .variables(Collections.singletonMap("exists", true))

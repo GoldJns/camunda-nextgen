@@ -35,21 +35,20 @@ const DocTasks: React.FC = () => {
     const fetchTasks = async () => {
       
       const tasks = await getdocTaskIDs(accessToken);
-      const filteredTasks = tasks.filter((task) => task.formVersion >= 3);
 
-      setUserTasks(filteredTasks);
+      setUserTasks(tasks);
       setTotalTasks(userTasks.length);
 
-      if (filteredTasks.length > 0) {
-        setTaskId(filteredTasks[0].id);
-        setTasktask(filteredTasks[0].processName);
-        fetchTaskVariables(filteredTasks[0].id);
+      if (tasks.length > 0) {
+        setTaskId(tasks[0].id);
+        setTasktask(tasks[0].processName);
+        fetchTaskVariables(tasks[0].id);
         setTloading(false);
       }
     };
 
     fetchTasks();
-  }, [accessToken, userTasks]);
+  }, [accessToken]);
 
   const fetchTaskVariables = async (id: string) => {
     console.log(id);

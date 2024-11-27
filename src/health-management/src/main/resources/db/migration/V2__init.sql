@@ -1,4 +1,4 @@
-CREATE TABLE health_insurances
+CREATE TABLE IF NOT EXISTS health_insurances
 (
     name VARCHAR(255) PRIMARY KEY
 );
@@ -9,7 +9,7 @@ VALUES ('Health Insurance A'),
        ('Health Insurance C'),
        ('Health Insurance D');
 
-CREATE TABLE health_records
+CREATE TABLE IF NOT EXISTS health_records
 (
     id                     SERIAL PRIMARY KEY,
     user_id                VARCHAR(36)           NOT NULL,
@@ -24,14 +24,13 @@ CREATE TABLE health_records
     FOREIGN KEY (health_insurance) REFERENCES health_insurances (name)
 );
 
-CREATE TABLE appointment (
-                            id SERIAL PRIMARY KEY,
-                            user_id varchar(36),
-                            pat_name varchar(100),
-                            doc_name varchar(100),
-                            date DATE,
-                            time TIME,
-                            CONSTRAINT unique_user_appointment UNIQUE (user_id, doc_name, date, time),
-                            FOREIGN KEY (user_id) REFERENCES public.user_entity(id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS appointment (
+                             id SERIAL PRIMARY KEY,
+                             user_id varchar(36),
+                             pat_name varchar(100),
+                             doc_name varchar(100),
+                             date DATE,
+                             time TIME,
+                             CONSTRAINT unique_user_appointment UNIQUE (user_id, doc_name, date, time),
+                             FOREIGN KEY (user_id) REFERENCES public.user_entity(id) ON DELETE CASCADE
 );
-
