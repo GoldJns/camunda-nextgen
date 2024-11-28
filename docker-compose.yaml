@@ -522,6 +522,7 @@ services:
       dockerfile: "Dockerfile"
     ports:
       - "5173:80"
+
   backend:
     env_file:
       - .env
@@ -529,12 +530,13 @@ services:
       context: "src/health-management"
       dockerfile: Dockerfile
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/bitnami_keycloak
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/bitnami_keycloak
       - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
     ports:
       - 8080:8080
     depends_on:
       - postgres
+
 volumes:
   zeebe:
   elastic:
