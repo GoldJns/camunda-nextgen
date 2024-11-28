@@ -60,7 +60,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Replace with your allowed origin
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "Patch", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
@@ -71,7 +71,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http,
                                                           Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationConverter) throws Exception {
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource())); // Integrate CORS                                                            
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
         http.oauth2ResourceServer(resourceServer -> {
             resourceServer.jwt(jwtDecoder -> {
                 jwtDecoder.jwtAuthenticationConverter(jwtAuthenticationConverter);
@@ -117,7 +117,7 @@ public class SecurityConfig {
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper()
-                .registerModule(new JavaTimeModule()) // Register the Java 8 time module
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Optional: Avoid timestamps
+                .registerModule(new JavaTimeModule())
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 }

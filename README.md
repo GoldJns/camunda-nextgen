@@ -30,6 +30,8 @@ The alternative would be using docker compose. Camunda also provides a official 
 
 ![alt text](docs/image1.png)
 
+For a better look on the endpoints the backend provides, you can access swagger ui at `localhost:8080/swagger-ui/index.html`
+
 ## Project Retrospective
 
 This section deals about how we solved the problem, and which descisions we made. With look at the beginning the requirement was to use kubernetes. We took that approach and deployed the camunda stack with helm in a local minikube cluster. Then we created the helm charts for our backend and frontend. This required us also to create a automated workflow that pushes our docker images in the Github Container Registry. The created helm charts are located in the `helm` folder.After a while we saw that the kubernetes cluster claims a lot of ressources so we moved on and tested the camunda self hosted stack with docker compose, like shown in the project architecture section.

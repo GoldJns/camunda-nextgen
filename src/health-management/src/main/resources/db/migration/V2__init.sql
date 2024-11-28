@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS health_records
     user_id                VARCHAR(36)           NOT NULL,
     username               VARCHAR(10)           NOT NULL,
     allergies              VARCHAR(255),
-    medical_health_history VARCHAR(255),
+    medical_history        VARCHAR(255),
     diagnoses              VARCHAR(255),
     medicines              VARCHAR(255),
     health_insurance       VARCHAR(255),
