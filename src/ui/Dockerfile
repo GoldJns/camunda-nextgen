@@ -10,10 +10,9 @@ COPY . .
 
 RUN npm run build
 
-FROM nginxinc/nginx-unprivileged:1.26.1-alpine
+FROM nginx:1.24.0-alpine-slim
 
 WORKDIR /usr/share/nginx/html
-COPY /nginx-default.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app/dist/ .
 
