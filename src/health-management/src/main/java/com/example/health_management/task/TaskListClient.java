@@ -1,4 +1,4 @@
-package com.example.health_management;
+package com.example.health_management.task;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

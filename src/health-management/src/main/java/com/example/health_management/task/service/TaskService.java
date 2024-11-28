@@ -1,6 +1,7 @@
-package com.example.health_management.task;
+package com.example.health_management.task.service;
 
-import com.example.health_management.TaskListClient;
+import com.example.health_management.task.TaskListClient;
+import com.example.health_management.task.controller.TaskController;
 import io.camunda.tasklist.dto.*;
 import io.camunda.tasklist.exception.TaskListException;
 import org.slf4j.Logger;
