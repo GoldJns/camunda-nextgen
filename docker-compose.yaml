@@ -15,7 +15,7 @@ services:
     profiles: ["opensearch"]
     privileged: true
     user: root
-    command: [ "sysctl", "-w", "vm.max_map_count=262144" ]
+    command: ["sysctl", "-w", "vm.max_map_count=262144"]
 
   zeebe: # https://docs.camunda.io/docs/self-managed/platform-deployment/docker/#zeebe
     image: camunda/zeebe:${CAMUNDA_PLATFORM_VERSION}
@@ -39,7 +39,11 @@ services:
       - "JAVA_TOOL_OPTIONS=-Xms512m -Xmx512m"
     restart: always
     healthcheck:
-      test: [ "CMD-SHELL", "timeout 10s bash -c ':> /dev/tcp/127.0.0.1/9600' || exit 1" ]
+      test:
+        [
+          "CMD-SHELL",
+          "timeout 10s bash -c ':> /dev/tcp/127.0.0.1/9600' || exit 1",
+        ]
       interval: 30s
       timeout: 5s
       retries: 5
@@ -83,7 +87,11 @@ services:
       - management.endpoint.health.probes.enabled=true
       - ZEEBE_CLIENT_CONFIG_PATH=/tmp/zeebe_auth_cache
     healthcheck:
-      test: [ "CMD-SHELL", "wget -O - -q 'http://localhost:9600/actuator/health/readiness'" ]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -O - -q 'http://localhost:9600/actuator/health/readiness'",
+        ]
       interval: 30s
       timeout: 1s
       retries: 5
@@ -129,7 +137,11 @@ services:
       - management.endpoints.web.exposure.include=health
       - management.endpoint.health.probes.enabled=true
     healthcheck:
-      test: [ "CMD-SHELL", "wget -O - -q 'http://localhost:9600/actuator/health/readiness'" ]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -O - -q 'http://localhost:9600/actuator/health/readiness'",
+        ]
       interval: 30s
       timeout: 1s
       retries: 5
@@ -171,7 +183,8 @@ services:
       - management.endpoint.health.probes.enabled=true
     env_file: connector-secrets.txt
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health/readiness" ]
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health/readiness"]
       interval: 30s
       timeout: 1s
       retries: 5
@@ -207,7 +220,7 @@ services:
       - management.endpoints.web.exposure.include=health
       - management.endpoint.health.probes.enabled=true
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:8090/api/readyz" ]
+      test: ["CMD-SHELL", "curl -f http://localhost:8090/api/readyz"]
       interval: 30s
       timeout: 1s
       retries: 5
@@ -338,7 +351,15 @@ services:
       MULTITENANCY_ENABLED: ${MULTI_TENANCY_ENABLED}
       RESOURCE_PERMISSIONS_ENABLED: ${RESOURCE_AUTHORIZATIONS_ENABLED}
     healthcheck:
-      test: [ "CMD", "wget", "-q", "--tries=1", "--spider", "http://localhost:8082/actuator/health" ]
+      test:
+        [
+          "CMD",
+          "wget",
+          "-q",
+          "--tries=1",
+          "--spider",
+          "http://localhost:8082/actuator/health",
+        ]
       interval: 5s
       timeout: 15s
       retries: 30
@@ -365,7 +386,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: on-failure
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -377,7 +398,7 @@ services:
   keycloak: # https://hub.docker.com/r/bitnami/keycloak
     container_name: keycloak
     image: bitnami/keycloak:${KEYCLOAK_SERVER_VERSION}
-    profiles: [ "", "opensearch" ]
+    profiles: ["", "opensearch"]
     volumes:
       - keycloak-theme:/opt/bitnami/keycloak/themes/identity
       - ./keycloak-config/realm.json:/opt/bitnami/keycloak/data/import/realm.json
@@ -395,7 +416,7 @@ services:
       KEYCLOAK_EXTRA_ARGS: --import-realm
     restart: on-failure
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:18080/auth" ]
+      test: ["CMD", "curl", "-f", "http://localhost:18080/auth"]
       interval: 30s
       timeout: 15s
       retries: 5
@@ -435,7 +456,11 @@ services:
     restart: always
     healthcheck:
       # Single node OpenSearch clusters are considered 'yellow', see https://github.com/opensearch-project/opensearch-build/issues/4285
-      test: [ "CMD-SHELL", "curl -k -f http://localhost:9200/_cluster/health -u admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD} | grep -q -E 'yellow|green'" ]
+      test:
+        [
+          "CMD-SHELL",
+          "curl -k -f http://localhost:9200/_cluster/health -u admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD} | grep -q -E 'yellow|green'",
+        ]
       interval: 60s
       timeout: 10s
       retries: 5
@@ -464,7 +489,11 @@ services:
         hard: -1
     restart: always
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cat/health | grep -q green" ]
+      test:
+        [
+          "CMD-SHELL",
+          "curl -f http://localhost:9200/_cat/health | grep -q green",
+        ]
       interval: 30s
       timeout: 5s
       retries: 3
@@ -486,6 +515,13 @@ services:
       - ${SEARCH_DB}
     profiles:
       - kibana
+
+  frontend:
+    build:
+      context: "src/ui"
+      dockerfile: "Dockerfile"
+    ports:
+      - "5173:80"
 
 volumes:
   zeebe:
