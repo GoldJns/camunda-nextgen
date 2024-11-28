@@ -28,11 +28,6 @@ public class AppointmentController {
         return appointmentService.startCreateAppointmentProcess(username);
     }
 
-    @PostMapping("/edit/{username}")
-    public ResponseEntity<?> editAppointment(@PathVariable String username) {
-        return appointmentService.startEditAppointmentProcess(username);
-    }
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delteAppointment(@PathVariable long id) {
         return appointmentService.startDeleteAppointmentProcess(id);
@@ -56,7 +51,6 @@ public class AppointmentController {
         return appointmentService.findAll();
     }
 
-    // @RequestBody Map<String, Object> variables
     @GetMapping("/validate/")
     public boolean existsByMonthAndDayAndDateAndTime(@RequestParam("docName") String docName,
                                                     @RequestParam("date") LocalDate date, 

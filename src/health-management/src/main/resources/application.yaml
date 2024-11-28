@@ -59,8 +59,6 @@ process:
     appointment:
         create:
             process-id: "createAppointment"
-        edit:
-            process-id: "editAppointment"
         delete:
             process-id: "deleteAppointment"
 springdoc:

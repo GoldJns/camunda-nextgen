@@ -22,8 +22,6 @@ public class AppointmentService {
 
     @Value("${process.appointment.create.process-id}")
     private String createAppointmentProcessId;
-    @Value("${process.appointment.edit.process-id}")
-    private String editAppointmentProcessId;
     @Value("${process.appointment.delete.process-id}")
     private String deleteAppointmentProcessId;
 
@@ -39,14 +37,6 @@ public class AppointmentService {
 
     public AppointmentEntity save(Map<String, Object> variables, String userID) {
         AppointmentEntity appointment = new AppointmentEntity();
-        appointment.setUserID(userID);
-        setVariables(appointment, variables);
-        return appointmentRepository.save(appointment);
-    }
-
-    public AppointmentEntity update(Map<String, Object> variables, String userID, long appointmentID) {
-        AppointmentEntity appointment = new AppointmentEntity();
-        appointment.setId(appointmentID);
         appointment.setUserID(userID);
         setVariables(appointment, variables);
         return appointmentRepository.save(appointment);
@@ -80,24 +70,6 @@ public class AppointmentService {
         try { 
             var event = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(createAppointmentProcessId)
-                .latestVersion()
-                .variables(Map.of("username", username))
-                .send()
-                .join();
-
-            log.info("Started a process with key " + event.getProcessDefinitionKey() + ", instance key: " + event.getProcessInstanceKey());
-            
-            return ResponseEntity.ok("Process started successfully");
-        } catch (Exception e) {
-            log.error("Error starting process", e);
-            return ResponseEntity.status(500).body("Error starting process");
-        }
-    }
-
-    public ResponseEntity<?> startEditAppointmentProcess(String username) {
-        try { 
-            var event = zeebeClient.newCreateInstanceCommand()
-                .bpmnProcessId(editAppointmentProcessId)
                 .latestVersion()
                 .variables(Map.of("username", username))
                 .send()
